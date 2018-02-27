@@ -46,6 +46,6 @@ class ForecastsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def forecast_params
-      params.require(:forecast).permit(:farm_id, :forecast_type_id, :forecast_provider_id, :forecast_provider_forecast_ref, :generate_at, :begins_at, :horizon_minutes, :data)
+      params.require(:forecast).permit(:farm_id, :forecast_type_id, :forecast_provider_id, :forecast_provider_forecast_ref, :generated_at, :begins_at, :horizon_minutes, :data)
     end
 end
