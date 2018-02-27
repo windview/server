@@ -12,8 +12,11 @@
 
 ActiveRecord::Schema.define(version: 20180227173242) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "actuals", force: :cascade do |t|
-    t.integer "farm_id", null: false
+    t.bigint "farm_id", null: false
     t.datetime "timestamp", null: false
     t.float "actual_mw", null: false
     t.datetime "created_at", null: false
@@ -32,7 +35,7 @@ ActiveRecord::Schema.define(version: 20180227173242) do
 
   create_table "farms", force: :cascade do |t|
     t.string "name", null: false
-    t.integer "farm_provider_id", null: false
+    t.bigint "farm_provider_id", null: false
     t.string "farm_provider_ref"
     t.float "lat", null: false
     t.float "lng", null: false
@@ -62,9 +65,9 @@ ActiveRecord::Schema.define(version: 20180227173242) do
   end
 
   create_table "forecasts", force: :cascade do |t|
-    t.integer "farm_id", null: false
-    t.integer "forecast_type_id", null: false
-    t.integer "forecast_provider_id", null: false
+    t.bigint "farm_id", null: false
+    t.bigint "forecast_type_id", null: false
+    t.bigint "forecast_provider_id", null: false
     t.string "forecast_provider_forecast_ref"
     t.datetime "generate_at", null: false
     t.datetime "begins_at", null: false
@@ -78,4 +81,9 @@ ActiveRecord::Schema.define(version: 20180227173242) do
     t.index ["forecast_type_id"], name: "index_forecasts_on_forecast_type_id"
   end
 
+  add_foreign_key "actuals", "farms"
+  add_foreign_key "farms", "farm_providers"
+  add_foreign_key "forecasts", "farms"
+  add_foreign_key "forecasts", "forecast_providers"
+  add_foreign_key "forecasts", "forecast_types"
 end
