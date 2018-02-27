@@ -1,0 +1,2 @@
+class ForecastProvider < ApplicationRecord
+end

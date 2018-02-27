@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  farm_provider: one
+  farm_provider_ref: MyString
+  lat: 1.5
+  lng: 1.5
+  capacity_mw: 1.5
+
+two:
+  name: MyString
+  farm_provider: two
+  farm_provider_ref: MyString
+  lat: 1.5
+  lng: 1.5
+  capacity_mw: 1.5

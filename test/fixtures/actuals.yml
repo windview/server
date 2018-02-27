@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  farm: one
+  timestamp: 2018-02-27 11:32:42
+  actual_mw: 1.5
+
+two:
+  farm: two
+  timestamp: 2018-02-27 11:32:42
+  actual_mw: 1.5

@@ -1,0 +1,2 @@
+class FarmProvider < ApplicationRecord
+end
