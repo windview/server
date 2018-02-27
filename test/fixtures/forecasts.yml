@@ -5,7 +5,7 @@ one:
   forecast_type: one
   forecast_provider: one
   forecast_provider_forecast_ref:
-  generate_at: 2018-02-27 11:32:35
+  generated_at: 2018-02-27 11:32:35
   begins_at: 2018-02-27 11:32:35
   horizon_minutes: 1
   data: MyText
@@ -15,7 +15,7 @@ two:
   forecast_type: two
   forecast_provider: two
   forecast_provider_forecast_ref:
-  generate_at: 2018-02-27 11:32:35
+  generated_at: 2018-02-27 11:32:35
   begins_at: 2018-02-27 11:32:35
   horizon_minutes: 1
   data: MyText
@@ -25,7 +25,7 @@ no_forecasts:
   forecast_type: two
   forecast_provider: two
   forecast_provider_forecast_ref: MyString
-  generate_at: 2018-02-27 11:32:35
+  generated_at: 2018-02-27 11:32:35
   begins_at: 2018-02-27 11:32:35
   horizon_minutes: 1
   data: MyText

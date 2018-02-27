@@ -69,7 +69,7 @@ ActiveRecord::Schema.define(version: 20180227173242) do
     t.bigint "forecast_type_id", null: false
     t.bigint "forecast_provider_id", null: false
     t.string "forecast_provider_forecast_ref"
-    t.datetime "generate_at", null: false
+    t.datetime "generated_at", null: false
     t.datetime "begins_at", null: false
     t.integer "horizon_minutes", null: false
     t.text "data"

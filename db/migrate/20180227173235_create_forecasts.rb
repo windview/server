@@ -5,7 +5,7 @@ class CreateForecasts < ActiveRecord::Migration[5.1]
       t.references :forecast_type, foreign_key: true, null: false
       t.references :forecast_provider, foreign_key: true, null: false
       t.string :forecast_provider_forecast_ref
-      t.datetime :generate_at, null: false
+      t.datetime :generated_at, null: false
       t.datetime :begins_at, null: false
       t.integer :horizon_minutes, null: false
 

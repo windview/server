@@ -4,7 +4,6 @@ class CreateForecastProviders < ActiveRecord::Migration[5.1]
       t.string :name, null: false
       t.string :label, null: false
 
-
       t.timestamps
     end
 
