@@ -12,7 +12,7 @@ class ForecastTypesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create forecast_type" do
     assert_difference('ForecastType.count') do
-      post forecast_types_url, params: { forecast_type: { label: @forecast_type.label, name: @forecast_type.name } }, as: :json
+      post forecast_types_url, params: { forecast_type: { label: "#{@forecast_type.label} NEW", name: "#{@forecast_type.name}_new" } }, as: :json
     end
 
     assert_response 201
@@ -30,7 +30,7 @@ class ForecastTypesControllerTest < ActionDispatch::IntegrationTest
 
   test "should destroy forecast_type" do
     assert_difference('ForecastType.count', -1) do
-      delete forecast_type_url(@forecast_type), as: :json
+      delete forecast_type_url(forecast_types(:no_forecasts)), as: :json
     end
 
     assert_response 204

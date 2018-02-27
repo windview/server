@@ -1,9 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
-  label: MyString
+  name: farm_provider_a
+  label: Farm provider A
 
 two:
-  name: MyString
-  label: MyString
+  name: farm_provider_b
+  label: Farm provider B
+
+no_farms:
+  name: farm_provider_c
+  label: Farm provider C

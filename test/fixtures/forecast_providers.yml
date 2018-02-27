@@ -1,9 +1,14 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
-  label: MyString
+  name: forecast_provider_a
+  label: Forecast Provider A
 
 two:
-  name: MyString
-  label: MyString
+  name: forecast_provider_b
+  label: Forecast Provider B
+
+no_forecasts:
+  name: forecast_provider_c
+  label: Forecast Provider C
+

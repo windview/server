@@ -12,7 +12,7 @@ class ForecastProvidersControllerTest < ActionDispatch::IntegrationTest
 
   test "should create forecast_provider" do
     assert_difference('ForecastProvider.count') do
-      post forecast_providers_url, params: { forecast_provider: { label: @forecast_provider.label, name: @forecast_provider.name } }, as: :json
+      post forecast_providers_url, params: { forecast_provider: { label: "#{@forecast_provider.label} NEW", name: "#{@forecast_provider.name}_new" } }, as: :json
     end
 
     assert_response 201
@@ -30,7 +30,7 @@ class ForecastProvidersControllerTest < ActionDispatch::IntegrationTest
 
   test "should destroy forecast_provider" do
     assert_difference('ForecastProvider.count', -1) do
-      delete forecast_provider_url(@forecast_provider), as: :json
+      delete forecast_provider_url(forecast_providers(:no_forecasts)), as: :json
     end
 
     assert_response 204

@@ -12,7 +12,7 @@ class FarmProvidersControllerTest < ActionDispatch::IntegrationTest
 
   test "should create farm_provider" do
     assert_difference('FarmProvider.count') do
-      post farm_providers_url, params: { farm_provider: { label: @farm_provider.label, name: @farm_provider.name } }, as: :json
+      post farm_providers_url, params: { farm_provider: { label: "#{@farm_provider.label} NEW", name: "#{@farm_provider.name}_new" } }, as: :json
     end
 
     assert_response 201
@@ -30,7 +30,7 @@ class FarmProvidersControllerTest < ActionDispatch::IntegrationTest
 
   test "should destroy farm_provider" do
     assert_difference('FarmProvider.count', -1) do
-      delete farm_provider_url(@farm_provider), as: :json
+      delete farm_provider_url(farm_providers(:no_farms)), as: :json
     end
 
     assert_response 204

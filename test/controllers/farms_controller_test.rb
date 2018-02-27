@@ -30,7 +30,7 @@ class FarmsControllerTest < ActionDispatch::IntegrationTest
 
   test "should destroy farm" do
     assert_difference('Farm.count', -1) do
-      delete farm_url(@farm), as: :json
+      delete farm_url(farms(:no_forecasts_no_actuals)), as: :json
     end
 
     assert_response 204
