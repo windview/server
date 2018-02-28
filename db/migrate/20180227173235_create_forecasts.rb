@@ -15,6 +15,6 @@ class CreateForecasts < ActiveRecord::Migration[5.1]
     end
 
     add_index :forecasts, [:forecast_provider_forecast_ref, :forecast_provider_id], unique: true,
-        name: "forecast_provider_idx"
+        name: "forecast_provider_ref_idx"
   end
 end
