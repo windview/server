@@ -1,0 +1,1067 @@
+swagger: '2.0'
+servers:
+  - variables: {}
+    url: 'http://localhost:4000/'
+paths:
+  '/api/forecasts/{id}':
+    get:
+      tags:
+        - Forecasts
+      summary: Show forecast
+      responses:
+        '200':
+          description: Forecast
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForecastShowResponse'
+      parameters:
+        - schema:
+            type: integer
+            additionalProperties: true
+          required: true
+          name: id
+          in: path
+          example: 1
+          description: Forecast ID
+      operationId: ForecastController.show
+      description: Show a forecast by ID
+  /api/forecasts/latest:
+    get:
+      tags:
+        - Forecasts
+      summary: Get latest forecast
+      responses:
+        '200':
+          description: Forecasts
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForecastIndexResponse'
+      parameters:
+        - schema:
+            type: integer
+            additionalProperties: true
+          required: false
+          name: farm_id
+          in: query
+          example: 1
+          description: Farm ID
+        - schema:
+            type: integer
+            additionalProperties: true
+          required: false
+          name: provider_id
+          in: query
+          example: 1
+          description: Forecast Provider ID
+        - schema:
+            type: string
+            additionalProperties: true
+          required: false
+          name: type
+          in: query
+          example: point
+          description: Type of forecast to return
+      operationId: ForecastController.latest
+      description: Get latest forecast
+  /api/forecasts:
+    get:
+      tags:
+        - Forecasts
+      summary: List forecasts
+      responses:
+        '200':
+          description: Forecasts
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForecastIndexResponse'
+      parameters:
+        - schema:
+            type: integer
+            additionalProperties: true
+          required: false
+          name: farm_id
+          in: query
+          example: 1
+          description: Farm ID
+        - schema:
+            type: integer
+            additionalProperties: true
+          required: false
+          name: provider_id
+          in: query
+          example: 1
+          description: Forecast Provider ID
+        - schema:
+            type: string
+            additionalProperties: true
+          required: false
+          name: type
+          in: query
+          example: point
+          description: Type of forecast to return
+        - schema:
+            type: integer
+            additionalProperties: true
+          required: false
+          name: horizon_minutes
+          in: query
+          description: The horizon value in minutes to match.
+        - schema:
+            type: integer
+            additionalProperties: true
+          required: false
+          name: offset
+          in: query
+          example: 5
+          description: Number of matching forecasts to skip
+        - schema:
+            type: integer
+            additionalProperties: true
+          required: false
+          name: limit
+          in: query
+          example: 5
+          description: Maximum number of forecasts to return
+        - schema:
+            type: string
+            additionalProperties: true
+          required: false
+          name: order_by
+          in: query
+          example: generated_at
+          description: Field to order results by
+        - schema:
+            type: string
+            additionalProperties: true
+          required: false
+          name: order_dir
+          in: query
+          example: asc
+          description: Direction to order results
+      operationId: ForecastController.index
+      description: List forecasts
+  '/api/forecast_types/{id}':
+    get:
+      tags:
+        - Forecast Types
+      summary: Show forecast type
+      responses:
+        '200':
+          description: ForecastType
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForecastTypeShowResponse'
+      parameters:
+        - schema:
+            type: integer
+            additionalProperties: true
+          required: true
+          name: id
+          in: path
+          example: 1
+          description: Forecast Type ID
+      operationId: ForecastTypeController.show
+      description: Show a forecast type by ID
+  /api/forecast_types:
+    get:
+      tags:
+        - Forecast Types
+      summary: List forecast types
+      responses:
+        '200':
+          description: ForecastTypes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForecastTypeIndexResponse'
+      parameters: []
+      operationId: ForecastType.index
+      description: List forecast types
+  '/api/forecast_providers/{id}':
+    get:
+      tags:
+        - Forecast Providers
+      summary: Show forecast provider
+      responses:
+        '200':
+          description: ForecastProvider
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForecastProviderShowResponse'
+      parameters:
+        - schema:
+            type: integer
+            additionalProperties: true
+          required: true
+          name: id
+          in: path
+          example: 1
+          description: Forecast Provider ID
+      operationId: ForecastProviderController.show
+      description: Show a forecast provider by ID
+  '/api/forecast_providers/{forecast_provider_id}/forecasts/{id}':
+    delete:
+      tags:
+        - Forecasts
+      summary: Delete forecast
+      responses:
+        '204': {}
+      parameters:
+        - schema:
+            type: integer
+            additionalProperties: true
+          required: true
+          name: forecast_provider_id
+          in: path
+          example: 1
+          description: Forecast Provider ID
+        - schema:
+            type: integer
+            additionalProperties: true
+          required: true
+          name: id
+          in: path
+          example: 1
+          description: Forecast ID
+      operationId: ForecastController.delete
+      description: Delete a forecast
+  '/api/forecast_providers/{forecast_provider_id}/forecasts':
+    post:
+      tags:
+        - Forecasts
+      summary: Create forecast
+      responses:
+        '201':
+          description: Forecast
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForecastShowResponse'
+        '422':
+          description: Forecast
+          content:
+            application/json:
+              schema: {}
+      requestBody:
+        required: true
+        description: The forecast attributes
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ForecastCreateRequest'
+      parameters:
+        - schema:
+            type: integer
+            additionalProperties: true
+          required: true
+          name: forecast_provider_id
+          in: path
+          example: 1
+          description: Forecast Provider ID
+      operationId: ForecastController.create
+      description: Create a forecast
+  /api/forecast_providers:
+    get:
+      tags:
+        - Forecast Providers
+      summary: List forecast providers
+      responses:
+        '200':
+          description: ForecastProviders
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForecastProviderIndexResponse'
+      parameters: []
+      operationId: ForecastProviderController.index
+      description: List forecast providers
+  '/api/farms/{id}':
+    get:
+      tags:
+        - Farms
+      summary: Show farm
+      responses:
+        '200':
+          description: Farm
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FarmShowResponse'
+      parameters:
+        - schema:
+            type: integer
+            additionalProperties: true
+          required: true
+          name: id
+          in: path
+          example: 1
+          description: Farm ID
+      operationId: FarmController.show
+      description: Show a farm by ID
+  '/api/farms/{farm_id}/actuals/{id}':
+    delete:
+      tags:
+        - Actuals
+      summary: Delete an actual
+      responses:
+        '204': {}
+      parameters:
+        - schema:
+            type: integer
+            additionalProperties: true
+          required: true
+          name: farm_id
+          in: path
+          example: 1
+          description: Farm ID
+        - schema:
+            type: integer
+            additionalProperties: true
+          required: true
+          name: id
+          in: path
+          example: 1
+          description: Actual ID
+      operationId: ActualController.delete
+      description: Delete a actual power output observation for a given farm
+  '/api/farms/{farm_id}/actuals':
+    post:
+      tags:
+        - Actuals
+      summary: Create an actual
+      responses:
+        '201':
+          description: Actual
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActualShowResponse'
+        '422':
+          description: Actuals
+          content:
+            application/json:
+              schema: {}
+      requestBody:
+        required: true
+        description: The actual attributes
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ActualCreateRequest'
+      parameters:
+        - schema:
+            type: integer
+            additionalProperties: true
+          required: true
+          name: farm_id
+          in: path
+          example: 1
+          description: Farm ID
+      operationId: ActualController.create
+      description: Create a power output observation for the given farm.
+  /api/farms:
+    get:
+      tags:
+        - Farms
+      summary: List farms
+      responses:
+        '200':
+          description: Farms
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FarmIndexResponse'
+      parameters:
+        - schema:
+            type: integer
+            additionalProperties: true
+          required: false
+          name: offset
+          in: query
+          example: 5
+          description: Number of matching forecasts to skip
+        - schema:
+            type: integer
+            additionalProperties: true
+          required: false
+          name: limit
+          in: query
+          example: 5
+          description: Maximum number of forecasts to return
+        - schema:
+            type: string
+            additionalProperties: true
+          required: false
+          name: order_by
+          in: query
+          example: capacity_mw
+          description: Field to order results by
+        - schema:
+            type: string
+            additionalProperties: true
+          required: false
+          name: order_dir
+          in: query
+          example: asc
+          description: Direction to order results
+      operationId: FarmController.index
+      description: List farms
+  '/api/farm_providers/{id}':
+    get:
+      tags:
+        - Farm Providers
+      summary: Show farm provider
+      responses:
+        '200':
+          description: FarmProvider
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FarmProviderShowResponse'
+      parameters:
+        - schema:
+            type: integer
+            additionalProperties: true
+          required: true
+          name: id
+          in: path
+          example: 1
+          description: Farm Provider ID
+      operationId: FarmProviderController.show
+      description: Show a farm provider by ID
+  /api/farm_providers:
+    get:
+      tags:
+        - Farm Providers
+      summary: List farm providers
+      responses:
+        '200':
+          description: FarmProviders
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FarmProviderIndexProviderResponse'
+      parameters: []
+      operationId: FarmProviderController.index
+      description: List farm providers
+  '/api/actuals/{id}':
+    get:
+      tags:
+        - Actuals
+      summary: Show an actual
+      responses:
+        '200':
+          description: Actual
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActualShowResponse'
+      parameters:
+        - schema:
+            type: integer
+            additionalProperties: true
+          required: true
+          name: id
+          in: path
+          example: 1
+          description: Actual ID
+      operationId: ActualController.show
+      description: Show an actual power output observation for a given farm.
+  /api/actuals:
+    get:
+      tags:
+        - Actuals
+      summary: List actuals
+      responses:
+        '200':
+          description: Actuals
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActualIndexResponse'
+      parameters:
+        - schema:
+            type: integer
+            additionalProperties: true
+          required: false
+          name: farm_id
+          in: query
+          example: 1
+          description: Farm ID
+        - schema:
+            type: integer
+            additionalProperties: true
+          required: false
+          name: limit
+          in: query
+          example: 5
+          description: Maximum number of actuals to return
+        - schema:
+            type: string
+            additionalProperties: true
+          required: false
+          name: order_by
+          in: query
+          example: timestamp_utc
+          description: Field to order results by
+        - schema:
+            type: string
+            additionalProperties: true
+          required: false
+          name: order_dir
+          in: query
+          example: asc
+          description: Direction to order results
+        - schema:
+            type: string
+            additionalProperties: true
+          required: false
+          name: starting_at
+          in: query
+          example: '2017-04-14T07:15:00.000000'
+          description: Starting timestamp in UTC
+        - schema:
+            type: string
+            additionalProperties: true
+          required: false
+          name: ending_at
+          in: query
+          example: '2017-04-14T07:15:15.000000'
+          description: Ending timestamp in UTC
+      operationId: Actual.index
+      description: List the actual power output observation for a given farm.
+openapi: 3.0.0
+info:
+  version: '1.0'
+  title: Windview
+components:
+  schemas:
+    ForecastTypeShowResponse:
+      x-struct: Elixir.WindviewWeb.Schemas.ForecastTypeShowResponse
+      type: object
+      title: ForecastTypeShowResponse
+      properties:
+        forecast_type:
+          $ref: '#/components/schemas/Forecast Type'
+      description: Response schema for single forecast type
+      additionalProperties: false
+    ForecastTypeIndexResponse:
+      x-struct: Elixir.WindviewWeb.Schemas.ForecastTypeIndexResponse
+      type: object
+      title: ForecastTypeIndexResponse
+      properties:
+        forecast_types:
+          type: array
+          items:
+            $ref: '#/components/schemas/Forecast Type'
+          description: The forecast types details
+          additionalProperties: true
+      description: Response schema for list of forecast types
+      additionalProperties: false
+    ForecastShowResponse:
+      x-struct: Elixir.WindviewWeb.Schemas.ForecastShowResponse
+      type: object
+      title: ForecastShowResponse
+      properties:
+        forecast:
+          $ref: '#/components/schemas/Forecast'
+      description: Response schema for single forecast
+      additionalProperties: false
+    ForecastProviderShowResponse:
+      x-struct: Elixir.WindviewWeb.Schemas.ForecastProviderShowResponse
+      type: object
+      title: ForecastProviderShowResponse
+      properties:
+        forecast_provider:
+          $ref: '#/components/schemas/Forecast Provider'
+      description: Response schema for single forecast
+      additionalProperties: false
+    ForecastProviderIndexResponse:
+      x-struct: Elixir.WindviewWeb.Schemas.ForecastProviderIndexResponse
+      type: object
+      title: ForecastProviderIndexResponse
+      properties:
+        forecast_providers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Forecast Provider'
+          description: The forecasts details
+          additionalProperties: true
+      description: Response schema for list of forecast providers
+      additionalProperties: false
+    ForecastIndexResponse:
+      x-struct: Elixir.WindviewWeb.Schemas.ForecastIndexResponse
+      type: object
+      title: ForecastIndexResponse
+      properties:
+        forecasts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Forecast'
+          description: The forecasts details
+          additionalProperties: true
+      description: Response schema for list of forecasts
+      additionalProperties: false
+    ForecastCreateRequest:
+      x-struct: Elixir.WindviewWeb.Schemas.ForecastCreateRequest
+      type: object
+      title: ForecastCreateRequest
+      required:
+        - forecast
+      properties:
+        forecast:
+          type: object
+          title: Forecast
+          required:
+            - provider_forecast_ref
+            - farm_id
+            - begins_at
+            - generated_at
+            - horizon_minutes
+            - type
+            - data
+          properties:
+            type:
+              type: string
+              description: Type of forecast 'point' or 'probabilistic'
+              additionalProperties: true
+            provider_forecast_ref:
+              type: string
+              description: Reference (e.g. an id) to the forecast in the provider's system
+              additionalProperties: true
+            horizon_minutes:
+              type: integer
+              description: Forecast horizon in minutes
+              additionalProperties: true
+            generated_at:
+              type: string
+              description: Timestamp of actual
+              additionalProperties: true
+            farm_id:
+              type: integer
+              description: Farm ID
+              additionalProperties: true
+            data:
+              type: array
+              items:
+                type: array
+                description: |2
+                    Positionally defined values based on type of forecast
+                    
+                    * point
+                      1. UTC timestamp of forecast entry (string)
+                      1. forecast value in MW (number)
+                    * probabilistic
+                      1. UTC timestamp of forecast entry (string)
+                      1. 1st quantile forecast value in MW (number)
+                      1. 25th quantile forecast value in MW (number)
+                      1. 50th quantile forecast value in MW (number)
+                      1. 75th quantile forecast value in MW (number)
+                      1. 99th quantile forecast value in MW (number)
+                additionalProperties: false
+              description: The forecast data
+              additionalProperties: false
+            begins_at:
+              type: string
+              description: Timestamp of actual
+              additionalProperties: true
+          description: A forecast
+          additionalProperties: false
+      example:
+        forecast:
+          type: probabilistic
+          provider_forecast_ref: 8123c45e-c442-11e7-a0dd-8019346dc012
+          horizon_minutes: 10080
+          generated_at: '2017-11-08T11:06:08.151000Z'
+          farm_id: 3
+          data:
+            - - '2012-07-01T06:00:00Z'
+              - 0.002265
+              - 0.030678
+              - 0.053068
+              - 0.078155
+              - 0.119901
+            - - '2012-07-01T07:00:00Z'
+              - 0.001503
+              - 0.035193
+              - 0.060025
+              - 0.083806
+              - 0.125948
+            - - '2012-07-01T08:00:00Z'
+              - 0.001539
+              - 0.025189
+              - 0.047912
+              - 0.067608
+              - 0.113922
+          begins_at: '2017-11-08T11:06:08.151000Z'
+      description: Creates single forecast
+      additionalProperties: false
+    Forecast Type:
+      x-struct: Elixir.WindviewWeb.Schemas.ForecastType
+      type: object
+      title: Forecast Type
+      required:
+        - id
+        - atom
+        - label
+      properties:
+        label:
+          type: string
+          description: Displayable label for type.
+          additionalProperties: true
+        id:
+          type: integer
+          description: Forecast Type ID
+          additionalProperties: true
+        atom:
+          type: string
+          description: Unique string name for type.
+          additionalProperties: true
+      example:
+        label: Probabilistic Forecast
+        id: 1
+        atom: probabilistic
+      description: A forecast type
+      additionalProperties: false
+    Forecast Provider:
+      x-struct: Elixir.WindviewWeb.Schemas.ForecastProvider
+      type: object
+      title: Forecast Provider
+      required:
+        - id
+        - atom
+        - label
+      properties:
+        label:
+          type: string
+          description: Displayable label for provider.
+          additionalProperties: true
+        id:
+          type: integer
+          description: Forecast Providder ID
+          additionalProperties: true
+        atom:
+          type: string
+          description: Unique string name for provider.
+          additionalProperties: true
+      example:
+        label: argusprima
+        id: 1
+        atom: argusprima
+      description: A forecast
+      additionalProperties: false
+    Forecast:
+      x-struct: Elixir.WindviewWeb.Schemas.Forecast
+      type: object
+      title: Forecast
+      required:
+        - id
+        - provider_id
+        - provider_forecast_ref
+        - farm_id
+        - begins_at
+        - generated_at
+        - horizon_minutes
+        - type
+        - data
+      properties:
+        type:
+          type: string
+          description: Type of forecast 'point' or 'probabilistic'
+          additionalProperties: true
+        provider_id:
+          type: integer
+          description: Forecast Provider ID
+          additionalProperties: true
+        provider_forecast_ref:
+          type: string
+          description: Reference (e.g. an id) to the forecast in the provider's system
+          additionalProperties: true
+        id:
+          type: integer
+          description: Forecast ID
+          additionalProperties: true
+        horizon_minutes:
+          type: integer
+          description: Forecast horizon in minutes
+          additionalProperties: true
+        generated_at:
+          type: string
+          description: Timestamp of actual
+          additionalProperties: true
+        farm_id:
+          type: integer
+          description: Farm ID
+          additionalProperties: true
+        data:
+          type: array
+          items:
+            type: array
+            description: |2
+                Positionally defined values based on type of forecast
+                
+                * point
+                  1. UTC timestamp of forecast entry (string)
+                  1. forecast value in MW (number)
+                * probabilistic
+                  1. UTC timestamp of forecast entry (string)
+                  1. 1st quantile forecast value in MW (number)
+                  1. 25th quantile forecast value in MW (number)
+                  1. 50th quantile forecast value in MW (number)
+                  1. 75th quantile forecast value in MW (number)
+                  1. 99th quantile forecast value in MW (number)
+            additionalProperties: false
+          description: The forecast data
+          additionalProperties: false
+        begins_at:
+          type: string
+          description: Timestamp of actual
+          additionalProperties: true
+      example:
+        type: probabilistic
+        provider_id: 1
+        provider_forecast_ref: 8123c45e-c442-11e7-a0dd-8019346dc012
+        id: 63
+        horizon_minutes: 10080
+        generated_at: '2017-11-08T11:06:08.151000Z'
+        farm_id: 3
+        data:
+          - - '2012-07-01T06:00:00Z'
+            - 0.002265
+            - 0.030678
+            - 0.053068
+            - 0.078155
+            - 0.119901
+          - - '2012-07-01T07:00:00Z'
+            - 0.001503
+            - 0.035193
+            - 0.060025
+            - 0.083806
+            - 0.125948
+          - - '2012-07-01T08:00:00Z'
+            - 0.001539
+            - 0.025189
+            - 0.047912
+            - 0.067608
+            - 0.113922
+        begins_at: '2017-11-08T11:06:08.151000Z'
+      description: A forecast
+      additionalProperties: false
+    FarmShowResponse:
+      x-struct: Elixir.WindviewWeb.Schemas.FarmShowResponse
+      type: object
+      title: FarmShowResponse
+      properties:
+        farm:
+          $ref: '#/components/schemas/Farm'
+      description: Response schema for single farm
+      additionalProperties: false
+    FarmProviderShowResponse:
+      x-struct: Elixir.WindviewWeb.Schemas.FarmProviderShowResponse
+      type: object
+      title: FarmProviderShowResponse
+      properties:
+        farm_provider:
+          $ref: '#/components/schemas/Farm Provider'
+      description: Response schema for single farm
+      additionalProperties: false
+    FarmProviderIndexProviderResponse:
+      x-struct: Elixir.WindviewWeb.Schemas.FarmProviderIndexProviderResponse
+      type: object
+      title: FarmProviderIndexProviderResponse
+      properties:
+        farm_providers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Farm Provider'
+          description: The farms details
+          additionalProperties: true
+      description: Response schema for list of farm providers
+      additionalProperties: false
+    FarmIndexResponse:
+      x-struct: Elixir.WindviewWeb.Schemas.FarmIndexResponse
+      type: object
+      title: FarmIndexResponse
+      properties:
+        farms:
+          type: array
+          items:
+            $ref: '#/components/schemas/Farm'
+          description: The farms details
+          additionalProperties: true
+      description: Response schema for list of farms
+      additionalProperties: false
+    Farm Provider:
+      x-struct: Elixir.WindviewWeb.Schemas.FarmProvider
+      type: object
+      title: Farm Provider
+      required:
+        - id
+        - atom
+        - label
+      properties:
+        label:
+          type: string
+          description: Displayable label for provider.
+          additionalProperties: true
+        id:
+          type: integer
+          description: Farm Providder ID
+          additionalProperties: true
+        atom:
+          type: string
+          description: Unique string name for provider.
+          additionalProperties: true
+      example:
+        label: NREL WIND Toolkit
+        id: 1
+        atom: windtoolkit
+      description: A wind farm
+      additionalProperties: false
+    Farm:
+      x-struct: Elixir.WindviewWeb.Schemas.Farm
+      type: object
+      title: Farm
+      required:
+        - id
+        - farm_provider_id
+        - name
+        - longitude
+        - latitude
+        - capacity_mw
+      properties:
+        name:
+          type: string
+          description: Farm name
+          additionalProperties: true
+        longitude:
+          type: number
+          format: float
+          description: Longitude of farm location
+          additionalProperties: true
+        latitude:
+          type: number
+          format: float
+          description: Latitude of farm location
+          additionalProperties: true
+        id:
+          type: integer
+          description: Farm ID
+          additionalProperties: true
+        farm_provider_id:
+          type: integer
+          description: Farm Provider ID
+          additionalProperties: true
+        farm_provider_farm_ref:
+          type: string
+          description: Reference (e.g. an id) to the farm in the provider's system
+          additionalProperties: true
+        capacity_mw:
+          type: number
+          format: float
+          description: Farm power capacity in Megawatts (MW)
+          additionalProperties: true
+      example:
+        provider_id: 1
+        provider_farm_ref: '84659'
+        name: WIND Toolkit Site 84659
+        longitude: -105.691376
+        latitude: 42.915577
+        id: 1
+        capacity_mw: 16
+      description: A wind farm
+      additionalProperties: false
+    ActualShowResponse:
+      x-struct: Elixir.WindviewWeb.Schemas.ActualShowResponse
+      type: object
+      title: ActualShowResponse
+      properties:
+        actual:
+          $ref: '#/components/schemas/Actual'
+      description: Response schema for single actual
+      additionalProperties: false
+    ActualIndexResponse:
+      x-struct: Elixir.WindviewWeb.Schemas.ActualIndexResponse
+      type: object
+      title: ActualIndexResponse
+      properties:
+        actuals:
+          type: array
+          items:
+            $ref: '#/components/schemas/Actual'
+          description: Then actuals details
+          additionalProperties: true
+      description: Response schema for list ofn actuals
+      additionalProperties: false
+    ActualCreateRequest:
+      x-struct: Elixir.WindviewWeb.Schemas.ActualCreateRequest
+      type: object
+      title: ActualCreateRequest
+      required:
+        - actual
+      properties:
+        actual:
+          type: object
+          title: Actual
+          required:
+            - actual_mw
+            - timestamp_utc
+          properties:
+            timestamp_utc:
+              type: string
+              description: Timestamp of actual
+              additionalProperties: true
+            actual_mw:
+              type: number
+              description: Actual power observed
+              additionalProperties: true
+          description: An actual
+          additionalProperties: false
+      example:
+        actual:
+          timestamp_utc: '2017-11-08T11:06:08.151000Z'
+          actual_mw: 2.38
+      description: An actual
+      additionalProperties: false
+    Actual:
+      x-struct: Elixir.WindviewWeb.Schemas.Actual
+      type: object
+      title: Actual
+      required:
+        - id
+        - farm_id
+        - actual_mw
+        - timestamp_utc
+      properties:
+        timestamp_utc:
+          type: string
+          description: Timestamp of actual
+          additionalProperties: true
+        id:
+          type: integer
+          description: Actual ID
+          additionalProperties: true
+        farm_id:
+          type: integer
+          description: Farm ID
+          additionalProperties: true
+        actual_mw:
+          type: number
+          format: float
+          description: Actual power observed
+          additionalProperties: true
+      example:
+        timestamp_utc: '2017-11-08T11:06:08.151000Z'
+        id: 63
+        farm_id: 3
+        actual_mw: 2.38
+      description: An actual
+      additionalProperties: false
+definitions:
+  Pet:
+    $ref: "definitions/pet.yaml"

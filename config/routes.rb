@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  mount SwaggerUiEngine::Engine, at: "/api_docs"
   scope "api" do
     resources :actuals
     resources :forecasts
