@@ -1,30 +1,20 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  farm: one
-  forecast_type: one
-  forecast_provider: one
-  forecast_provider_forecast_ref:
+a:
+  farm: a
+  forecast_type: a
+  forecast_provider: a
+  forecast_provider_ref:
   generated_at: 2018-02-27 11:32:35
   begins_at: 2018-02-27 11:32:35
   horizon_minutes: 1
   data: "[[]]"
 
-two:
-  farm: two
-  forecast_type: two
-  forecast_provider: two
-  forecast_provider_forecast_ref:
-  generated_at: 2018-02-27 11:32:35
-  begins_at: 2018-02-27 11:32:35
-  horizon_minutes: 1
-  data: "[[]]"
-
-no_forecasts:
-  farm: two
-  forecast_type: two
-  forecast_provider: two
-  forecast_provider_forecast_ref:
+b:
+  farm: b
+  forecast_type: b
+  forecast_provider: b
+  forecast_provider_ref:
   generated_at: 2018-02-27 11:32:35
   begins_at: 2018-02-27 11:32:35
   horizon_minutes: 1

@@ -1,13 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
+a:
   name: farm_provider_a
   label: Farm provider A
 
-two:
+b:
   name: farm_provider_b
   label: Farm provider B
 
 no_farms:
-  name: farm_provider_c
-  label: Farm provider C
+  name: farm_provider_no_farms
+  label: Farm provider No Farms

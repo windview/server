@@ -1,13 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
+a:
   name: forecast_type_a
   label: Forecast Type A
 
-two:
+b:
   name: forecast_type_b
   label: Forecast Type B
 
 no_forecasts:
-  name: forecast_type_c
-  label: Forecast Type C
+  name: forecast_type_no_forecasts
+  label: Forecast Type No Forecasts

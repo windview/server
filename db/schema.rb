@@ -68,7 +68,7 @@ ActiveRecord::Schema.define(version: 20180227173242) do
     t.bigint "farm_id", null: false
     t.bigint "forecast_type_id", null: false
     t.bigint "forecast_provider_id", null: false
-    t.string "forecast_provider_forecast_ref"
+    t.string "forecast_provider_ref"
     t.datetime "generated_at", null: false
     t.datetime "begins_at", null: false
     t.integer "horizon_minutes", null: false
@@ -76,8 +76,8 @@ ActiveRecord::Schema.define(version: 20180227173242) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["farm_id"], name: "index_forecasts_on_farm_id"
-    t.index ["forecast_provider_forecast_ref", "forecast_provider_id"], name: "forecast_provider_idx", unique: true
     t.index ["forecast_provider_id"], name: "index_forecasts_on_forecast_provider_id"
+    t.index ["forecast_provider_ref", "forecast_provider_id"], name: "forecast_provider_ref_idx", unique: true
     t.index ["forecast_type_id"], name: "index_forecasts_on_forecast_type_id"
   end
 
