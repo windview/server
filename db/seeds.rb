@@ -49,16 +49,16 @@ usgs_farm_provider = FarmProvider.create!({
 farm = Farm.create!({
     name: "A WTK Farm",
     farm_provider: usgs_farm_provider,
-    farm_provider_ref: "57762",
-    lat: 1.5,
-    lng: 1.5,
+    farm_provider_farm_ref: "57762",
+    latitude: 1.5,
+    longitude: 1.5,
     capacity_mw: 2.3
 })
 
 Forecast.create!({
   forecast_type: point_forecast_type,
   forecast_provider: argusprima_forecast_provider,
-  forecast_provider_ref: "6d614f80-d4c1-11e7-9c9e-8019346dc012",
+  forecast_provider_forecast_ref: "6d614f80-d4c1-11e7-9c9e-8019346dc012",
   farm: farm,
   generated_at: "2017-11-29 04:54:48.849000+00:00",
   begins_at: "2012-07-02 05:00:00+00:00",
@@ -218,7 +218,7 @@ Forecast.create!({
 Forecast.create!({
   forecast_type: probabilistic_forecast_type,
   forecast_provider: argusprima_forecast_provider,
-  forecast_provider_ref: "7d614f80-d4c1-11e7-9c9e-8019346dc012",
+  forecast_provider_forecast_ref: "7d614f80-d4c1-11e7-9c9e-8019346dc012",
   farm: farm,
   generated_at: "2017-11-29 04:54:48.849000+00:00",
   begins_at: "2012-07-02 05:00:00+00:00",

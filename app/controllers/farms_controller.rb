@@ -51,9 +51,7 @@ class FarmsController < ApplicationController
         .transform_keys {|key|
         case key
         when 'provider_id' then 'farm_provider_id'
-        when 'provider_ref' then 'farm_provider_ref'
-        when 'longitude' then 'lng'
-        when 'latitude' then 'lat'
+        when 'provider_ref' then 'farm_provider_farm_ref'
         else
           key
         end

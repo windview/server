@@ -25,7 +25,7 @@ class FarmsControllerTest < ActionDispatch::IntegrationTest
   test "should create farm" do
     assert_difference('Farm.count') do
       post farms_url, params: {
-        farm: farm_api_attrs(@farm_a).except("id")
+        farm: other_farm_api_attrs()
       }, as: :json
     end
 
@@ -33,12 +33,12 @@ class FarmsControllerTest < ActionDispatch::IntegrationTest
 
     returned = response.parsed_body
     expected = {
-      "farm" => farm_api_attrs(@farm_a)
+      "farm" => other_farm_api_attrs()
     }
 
     diff = HashDiff.diff expected, returned
     assert diff == [
-      ["~", "farm.id", expected["farm"]["id"], returned["farm"]["id"]]
+      ["+", "farm.id", returned["farm"]["id"]]
     ]
   end
 
@@ -57,17 +57,18 @@ class FarmsControllerTest < ActionDispatch::IntegrationTest
 
   test "should update farm" do
     patch farm_url(@farm_a), params: {
-      farm: farm_api_attrs(@farm_b)
+      farm: other_farm_api_attrs()
     }, as: :json
 
     assert_response 200
 
     returned = response.parsed_body
     expected = {
-      "farm" => farm_api_attrs(@farm_b).merge({"id" => @farm_a.id})
+      "farm" => farm_api_attrs(@farm_a).merge(other_farm_api_attrs())
     }
 
     diff = HashDiff.diff expected, returned
+    puts "XAJA diff: #{diff}"
     assert diff == [ ]
   end
 
@@ -85,9 +86,20 @@ class FarmsControllerTest < ActionDispatch::IntegrationTest
       "name" => f.name,
       "capacity_mw" => f.capacity_mw,
       "provider_id" => f.farm_provider_id,
-      "provider_farm_ref" => f.farm_provider_ref,
-      "longitude" => f.lng,
-      "latitude" => f.lat
+      "provider_farm_ref" => f.farm_provider_farm_ref,
+      "longitude" => f.longitude,
+      "latitude" => f.latitude
+    }
+  end
+
+  def other_farm_api_attrs()
+    {
+      "name" => "Other Farm",
+      "capacity_mw" => 5.5,
+      "provider_id" => @farm_a.farm_provider_id,
+      "provider_farm_ref" => "otherfarm",
+      "longitude" => 20.1,
+      "latitude" => 20.2
     }
   end
 end

@@ -36,14 +36,15 @@ ActiveRecord::Schema.define(version: 20180227173242) do
   create_table "farms", force: :cascade do |t|
     t.string "name", null: false
     t.bigint "farm_provider_id", null: false
-    t.string "farm_provider_ref"
-    t.float "lat", null: false
-    t.float "lng", null: false
+    t.string "farm_provider_farm_ref"
+    t.float "latitude", null: false
+    t.float "longitude", null: false
     t.float "capacity_mw"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["farm_provider_farm_ref", "farm_provider_id"], name: "index_farms_on_farm_provider_farm_ref_and_farm_provider_id", unique: true
     t.index ["farm_provider_id"], name: "index_farms_on_farm_provider_id"
-    t.index ["farm_provider_ref", "farm_provider_id"], name: "index_farms_on_farm_provider_ref_and_farm_provider_id", unique: true
+    t.index ["name", "farm_provider_id"], name: "index_farms_on_name_and_farm_provider_id", unique: true
   end
 
   create_table "forecast_providers", force: :cascade do |t|
@@ -68,7 +69,7 @@ ActiveRecord::Schema.define(version: 20180227173242) do
     t.bigint "farm_id", null: false
     t.bigint "forecast_type_id", null: false
     t.bigint "forecast_provider_id", null: false
-    t.string "forecast_provider_ref"
+    t.string "forecast_provider_forecast_ref"
     t.datetime "generated_at", null: false
     t.datetime "begins_at", null: false
     t.integer "horizon_minutes", null: false
@@ -76,8 +77,8 @@ ActiveRecord::Schema.define(version: 20180227173242) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["farm_id"], name: "index_forecasts_on_farm_id"
+    t.index ["forecast_provider_forecast_ref", "forecast_provider_id"], name: "forecast_provider_forecast_ref_idx", unique: true
     t.index ["forecast_provider_id"], name: "index_forecasts_on_forecast_provider_id"
-    t.index ["forecast_provider_ref", "forecast_provider_id"], name: "forecast_provider_ref_idx", unique: true
     t.index ["forecast_type_id"], name: "index_forecasts_on_forecast_type_id"
   end
 
