@@ -1,12 +1,12 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-a:
-  name: forecast_type_a
-  label: Forecast Type A
+point:
+  name: point
+  label: Point Forecast
 
-b:
-  name: forecast_type_b
-  label: Forecast Type B
+probabilistic:
+  name: probabilistic
+  label: Probabilistic Forecast
 
 no_forecasts:
   name: forecast_type_no_forecasts

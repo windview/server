@@ -2,7 +2,7 @@
 
 a:
   farm: a
-  forecast_type: a
+  forecast_type: point
   forecast_provider: a
   forecast_provider_forecast_ref:
   generated_at: 2018-02-27 11:32:35
@@ -12,7 +12,7 @@ a:
 
 b:
   farm: b
-  forecast_type: b
+  forecast_type: point
   forecast_provider: b
   forecast_provider_forecast_ref:
   generated_at: 2018-02-27 11:32:35

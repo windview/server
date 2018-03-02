@@ -46,6 +46,23 @@ class ForecastsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def forecast_params
-      params.require(:forecast).permit(:farm_id, :forecast_type_id, :forecast_provider_id, :forecast_provider_ref, :generated_at, :begins_at, :horizon_minutes, :data)
+      # NOTE AJA: have to permit! until rails supports permitting array of arrays
+      params.require(:forecast)
+        .permit!
+        .transform_keys {|key|
+          case key
+          when 'provider_id' then 'forecast_provider_id'
+          when 'provider_forecast_ref' then 'forecast_provider_forecast_ref'
+          else
+            key
+          end
+        }
+        .tap {|p|
+          if p.keys.include?('type')
+            type_name = p.delete('type')
+            forecast_type = ForecastType.where(name: type_name).first()
+            p['forecast_type_id'] = forecast_type.id
+          end
+        }
     end
 end

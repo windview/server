@@ -46,6 +46,13 @@ class ForecastTypesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def forecast_type_params
-      params.require(:forecast_type).permit(:name, :label)
+      params.require(:forecast_type).permit(:atom, :label)
+        .transform_keys {|key|
+        case key
+        when 'atom' then 'name'
+        else
+          key
+        end
+      }
     end
 end

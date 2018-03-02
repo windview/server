@@ -2,7 +2,7 @@ require 'test_helper'
 
 class ForecastTypesControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @forecast_type_a, @forecast_type_b, @forecast_type_no_forecasts = forecast_types(:a, :b, :no_forecasts)
+    @forecast_type_point, @forecast_type_probabilistic, @forecast_type_no_forecasts = forecast_types(:point, :probabilistic, :no_forecasts)
   end
 
   test "should get index" do
@@ -12,8 +12,8 @@ class ForecastTypesControllerTest < ActionDispatch::IntegrationTest
     returned = response.parsed_body
     expected = {
       "forecast_types" => [
-        forecast_type_api_attrs(@forecast_type_a),
-        forecast_type_api_attrs(@forecast_type_b),
+        forecast_type_api_attrs(@forecast_type_point),
+        forecast_type_api_attrs(@forecast_type_probabilistic),
         forecast_type_api_attrs(@forecast_type_no_forecasts)
       ]
     }
@@ -43,12 +43,12 @@ class ForecastTypesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should show forecast type" do
-    get forecast_type_url(@forecast_type_a), as: :json
+    get forecast_type_url(@forecast_type_point), as: :json
     assert_response :success
 
     returned = response.parsed_body
     expected = {
-      "forecast_type" => forecast_type_api_attrs(@forecast_type_a)
+      "forecast_type" => forecast_type_api_attrs(@forecast_type_point)
     }
 
     diff = HashDiff.diff expected, returned
@@ -56,7 +56,7 @@ class ForecastTypesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update forecast type" do
-    patch forecast_type_url(@forecast_type_a), params: {
+    patch forecast_type_url(@forecast_type_point), params: {
       forecast_type: other_forecast_type_api_attrs()
     }, as: :json
 
@@ -64,7 +64,7 @@ class ForecastTypesControllerTest < ActionDispatch::IntegrationTest
 
     returned = response.parsed_body
     expected = {
-      "forecast_type" => forecast_type_api_attrs(@forecast_type_a).merge(other_forecast_type_api_attrs())
+      "forecast_type" => forecast_type_api_attrs(@forecast_type_point).merge(other_forecast_type_api_attrs())
     }
 
     diff = HashDiff.diff expected, returned
