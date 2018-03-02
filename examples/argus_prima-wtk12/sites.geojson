@@ -1,0 +1,264 @@
+{
+  "type": "FeatureCollection",
+  "totalFeatures": 12,
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "wind_speed": 7.51,
+        "site_id": 57762,
+        "power_curve": "2",
+        "gid": 57763,
+        "fraction_of_usable_area": 1,
+        "capacity_factor": 0.412,
+        "capacity": 16
+      },
+      "id": "wind_3tier_site_metadata.57763",
+      "geometry_name": "the_geom",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -88.933807,
+          40.858997
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "wind_speed": 7.38,
+        "site_id": 59262,
+        "power_curve": "2",
+        "gid": 59263,
+        "fraction_of_usable_area": 1,
+        "capacity_factor": 0.398,
+        "capacity": 16
+      },
+      "id": "wind_3tier_site_metadata.59263",
+      "geometry_name": "the_geom",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -88.428833,
+          40.954533
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "wind_speed": 7.12,
+        "site_id": 62193,
+        "power_curve": "2",
+        "gid": 62194,
+        "fraction_of_usable_area": 0.9999,
+        "capacity_factor": 0.374,
+        "capacity": 16
+      },
+      "id": "wind_3tier_site_metadata.62194",
+      "geometry_name": "the_geom",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -88.521423,
+          41.203598
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "wind_speed": 7.19,
+        "site_id": 59923,
+        "power_curve": "2",
+        "gid": 59924,
+        "fraction_of_usable_area": 1,
+        "capacity_factor": 0.379,
+        "capacity": 16
+      },
+      "id": "wind_3tier_site_metadata.59924",
+      "geometry_name": "the_geom",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -88.397369,
+          41.008224
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "wind_speed": 7.4,
+        "site_id": 61473,
+        "power_curve": "3",
+        "gid": 61474,
+        "fraction_of_usable_area": 0.5136,
+        "capacity_factor": 0.473,
+        "capacity": 10
+      },
+      "id": "wind_3tier_site_metadata.61474",
+      "geometry_name": "the_geom",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -88.651123,
+          41.1567
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "wind_speed": 7.15,
+        "site_id": 61256,
+        "power_curve": "3",
+        "gid": 61257,
+        "fraction_of_usable_area": 1,
+        "capacity_factor": 0.431,
+        "capacity": 16
+      },
+      "id": "wind_3tier_site_metadata.61257",
+      "geometry_name": "the_geom",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -88.751617,
+          41.14497
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "wind_speed": 9.52,
+        "site_id": 87335,
+        "power_curve": "2",
+        "gid": 87336,
+        "fraction_of_usable_area": 0.8452,
+        "capacity_factor": 0.502,
+        "capacity": 14
+      },
+      "id": "wind_3tier_site_metadata.87336",
+      "geometry_name": "the_geom",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -105.848633,
+          43.088959
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "wind_speed": 8.79,
+        "site_id": 86039,
+        "power_curve": "2",
+        "gid": 86040,
+        "fraction_of_usable_area": 1,
+        "capacity_factor": 0.468,
+        "capacity": 16
+      },
+      "id": "wind_3tier_site_metadata.86040",
+      "geometry_name": "the_geom",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -105.80777,
+          42.998878
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "wind_speed": 8.76,
+        "site_id": 86317,
+        "power_curve": "2",
+        "gid": 86318,
+        "fraction_of_usable_area": 1,
+        "capacity_factor": 0.462,
+        "capacity": 16
+      },
+      "id": "wind_3tier_site_metadata.86318",
+      "geometry_name": "the_geom",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -106.012909,
+          42.99897
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "wind_speed": 8.89,
+        "site_id": 86595,
+        "power_curve": "2",
+        "gid": 86596,
+        "fraction_of_usable_area": 1,
+        "capacity_factor": 0.473,
+        "capacity": 16
+      },
+      "id": "wind_3tier_site_metadata.86596",
+      "geometry_name": "the_geom",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -105.990829,
+          43.019753
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "wind_speed": 9.37,
+        "site_id": 86865,
+        "power_curve": "2",
+        "gid": 86866,
+        "fraction_of_usable_area": 0.8173,
+        "capacity_factor": 0.508,
+        "capacity": 14
+      },
+      "id": "wind_3tier_site_metadata.86866",
+      "geometry_name": "the_geom",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -105.842377,
+          43.052013
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "wind_speed": 8.49,
+        "site_id": 84659,
+        "power_curve": "2",
+        "gid": 84660,
+        "fraction_of_usable_area": 1,
+        "capacity_factor": 0.444,
+        "capacity": 16
+      },
+      "id": "wind_3tier_site_metadata.84660",
+      "geometry_name": "the_geom",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -105.691376,
+          42.915577
+        ]
+      }
+    }
+  ],
+  "crs": {
+    "type": "name",
+    "properties": {
+      "name": "urn:ogc:def:crs:EPSG::4326"
+    }
+  }
+}
