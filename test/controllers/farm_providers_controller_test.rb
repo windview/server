@@ -2,8 +2,7 @@ require 'test_helper'
 
 class FarmProvidersControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @farm_provider_a, @farm_provider_b, @farm_provider_no_farms = farm_providers(
-        :a, :b, :no_farms)
+    @farm_provider_a, @farm_provider_b, @farm_provider_no_farms = farm_providers(:a, :b, :no_farms)
   end
 
   test "should get index" do
@@ -26,7 +25,7 @@ class FarmProvidersControllerTest < ActionDispatch::IntegrationTest
   test "should create farm provider" do
     assert_difference('FarmProvider.count') do
       post farm_providers_url, params: {
-        farm: farm_provider_api_attrs(@farm_provider_a).except("id")
+        farm_provider: other_farm_provider_api_attrs()
       }, as: :json
     end
 
@@ -34,16 +33,16 @@ class FarmProvidersControllerTest < ActionDispatch::IntegrationTest
 
     returned = response.parsed_body
     expected = {
-      "farm_provider" => farm_provider_api_attrs(@farm_provider_a)
+      "farm_provider" => other_farm_provider_api_attrs()
     }
 
     diff = HashDiff.diff expected, returned
     assert diff == [
-      ["~", "farm.id", expected["farm_provider"]["id"], returned["farm_provider"]["id"]]
+      ["+", "farm_provider.id", returned["farm_provider"]["id"]]
     ]
   end
 
-  test "should show farm provider" do
+  test "should show farm_provider" do
     get farm_provider_url(@farm_provider_a), as: :json
     assert_response :success
 
@@ -53,20 +52,19 @@ class FarmProvidersControllerTest < ActionDispatch::IntegrationTest
     }
 
     diff = HashDiff.diff expected, returned
-    puts "XAJA| diff: #{diff}"
     assert diff == [ ]
   end
 
   test "should update farm provider" do
     patch farm_provider_url(@farm_provider_a), params: {
-      farm_provider: new_farm_provider_api_attrs(@farm_provider_b)
+      farm_provider: other_farm_provider_api_attrs()
     }, as: :json
 
     assert_response 200
 
     returned = response.parsed_body
     expected = {
-      "farm_provider" => farm_provider_api_attrs(@farm_provider_b).merge({"id" => @farm_provider_a.id})
+      "farm_provider" => farm_provider_api_attrs(@farm_provider_a).merge(other_farm_provider_api_attrs())
     }
 
     diff = HashDiff.diff expected, returned
@@ -89,10 +87,10 @@ class FarmProvidersControllerTest < ActionDispatch::IntegrationTest
     }
   end
 
-  def new_farm_provider_api_attrs(f)
+  def other_farm_provider_api_attrs()
     {
-      "atom" => "#{f.name}_new" ,
-      "label" => "#{f.label}_new"
+      "atom" => "other_farm_provider",
+      "label" => "Other Farm Provider"
     }
   end
 end

@@ -68,7 +68,6 @@ class FarmsControllerTest < ActionDispatch::IntegrationTest
     }
 
     diff = HashDiff.diff expected, returned
-    puts "XAJA diff: #{diff}"
     assert diff == [ ]
   end
 

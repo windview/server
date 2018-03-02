@@ -3,7 +3,7 @@ class FarmProvidersController < ApplicationController
 
   # GET /farm_providers
   def index
-    @farm_providers = FarmProvider.all
+    @farm_providers = FarmProvider.all.order('name asc')
 
     render json: @farm_providers
   end
@@ -46,6 +46,13 @@ class FarmProvidersController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def farm_provider_params
-      params.require(:farm_provider).permit(:name, :label)
+      params.require(:farm_provider).permit(:atom, :label)
+        .transform_keys {|key|
+        case key
+        when 'atom' then 'name'
+        else
+          key
+        end
+      }
     end
 end

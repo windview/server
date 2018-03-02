@@ -46,6 +46,13 @@ class ForecastProvidersController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def forecast_provider_params
-      params.require(:forecast_provider).permit(:name, :label)
+      params.require(:forecast_provider).permit(:atom, :label)
+        .transform_keys {|key|
+        case key
+        when 'atom' then 'name'
+        else
+          key
+        end
+      }
     end
 end

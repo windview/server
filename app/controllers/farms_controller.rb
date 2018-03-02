@@ -47,11 +47,11 @@ class FarmsController < ApplicationController
     # Only allow a trusted parameter "white list" through.
     def farm_params
       params.require(:farm)
-        .permit(:name, :provider_id, :provider_ref, :longitude, :latitude, :capacity_mw)
+        .permit(:name, :provider_id, :provider_farm_ref, :longitude, :latitude, :capacity_mw)
         .transform_keys {|key|
         case key
         when 'provider_id' then 'farm_provider_id'
-        when 'provider_ref' then 'farm_provider_farm_ref'
+        when 'provider_farm_ref' then 'farm_provider_farm_ref'
         else
           key
         end
