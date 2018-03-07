@@ -14,6 +14,7 @@ class ForecastsControllerTest < ActionDispatch::IntegrationTest
       "forecasts" => [
         forecast_api_attrs(@forecast_a),
         forecast_api_attrs(@forecast_b),
+        forecast_api_attrs(forecasts(:for_forecasts_only))
       ]
     }
 

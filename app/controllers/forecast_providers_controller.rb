@@ -35,7 +35,9 @@ class ForecastProvidersController < ApplicationController
 
   # DELETE /forecast_providers/1
   def destroy
-    @forecast_provider.destroy
+    if !@forecast_provider.destroy
+      render json: @forecast_provider.errors, status: :unprocessable_entity
+    end
   end
 
   private

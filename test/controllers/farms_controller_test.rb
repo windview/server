@@ -14,7 +14,9 @@ class FarmsControllerTest < ActionDispatch::IntegrationTest
       "farms" => [
         farm_api_attrs(@farm_a),
         farm_api_attrs(@farm_b),
-        farm_api_attrs(@farm_no_forecasts_no_actuals)
+        farm_api_attrs(@farm_no_forecasts_no_actuals),
+        farm_api_attrs(farms(:actuals_only)),
+        farm_api_attrs(farms(:forecasts_only))
       ]
     }
 
@@ -432,6 +434,35 @@ class FarmsControllerTest < ActionDispatch::IntegrationTest
     diff = HashDiff.diff expected, returned
     assert diff == [ ], msg: diff
   end
+
+  test "should fail to delete farm if referenced by a forecast" do
+    delete farm_url(farms(:forecasts_only)), as: :json
+
+    assert_response 422
+
+    returned = response.parsed_body
+    expected = {
+      "base" => ['Cannot delete record because dependent forecasts exist']
+    }
+
+    diff = HashDiff.diff expected, returned
+    assert diff == [ ], msg: diff
+  end
+
+  test "should fail to delete farm if referenced by an actual" do
+    delete farm_url(farms(:actuals_only)), as: :json
+
+    assert_response 422
+
+    returned = response.parsed_body
+    expected = {
+      "base" => ['Cannot delete record because dependent actuals exist']
+    }
+
+    diff = HashDiff.diff expected, returned
+    assert diff == [ ], msg: diff
+  end
+
   def farm_api_attrs(f)
     {
       "id" => f.id,

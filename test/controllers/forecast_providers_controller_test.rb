@@ -111,6 +111,20 @@ class ForecastProvidersControllerTest < ActionDispatch::IntegrationTest
     assert diff == [ ], msg: diff
   end
 
+  test "should fail to delete forecast provider if referenced by a forecast" do
+    delete forecast_provider_url(@forecast_provider_a), as: :json
+
+    assert_response 422
+
+    returned = response.parsed_body
+    expected = {
+      "base" => ['Cannot delete record because dependent forecasts exist']
+    }
+
+    diff = HashDiff.diff expected, returned
+    assert diff == [ ], msg: diff
+  end
+
   def forecast_provider_api_attrs(f)
     {
       "id" => f.id,

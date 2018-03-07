@@ -14,6 +14,7 @@ class ActualsControllerTest < ActionDispatch::IntegrationTest
       "actuals" => [
         actual_api_attrs(@actual_a),
         actual_api_attrs(@actual_b),
+        actual_api_attrs(actuals(:for_actuals_only))
       ]
     }
 

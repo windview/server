@@ -35,7 +35,9 @@ class FarmsController < ApplicationController
 
   # DELETE /farms/1
   def destroy
-    @farm.destroy
+    if !@farm.destroy
+      render json: @farm.errors, status: :unprocessable_entity
+    end
   end
 
   private

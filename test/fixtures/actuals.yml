@@ -9,3 +9,8 @@ b:
   farm: b
   timestamp: 2018-02-27 11:32:42
   actual_mw: 1.5
+
+for_actuals_only:
+  farm: actuals_only
+  timestamp: 2018-02-27 11:32:42
+  actual_mw: 1.5

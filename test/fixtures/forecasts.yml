@@ -19,3 +19,13 @@ b:
   begins_at: 2018-02-27 11:32:35
   horizon_minutes: 1
   data: "[[]]"
+
+for_forecasts_only:
+  farm: forecasts_only
+  forecast_type: point
+  forecast_provider: b
+  forecast_provider_forecast_ref:
+  generated_at: 2018-02-27 11:32:35
+  begins_at: 2018-02-27 11:32:35
+  horizon_minutes: 1
+  data: "[[]]"

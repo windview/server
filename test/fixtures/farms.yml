@@ -23,3 +23,19 @@ no_forecasts_no_actuals:
   latitude: 3.2
   longitude: 3.3
   capacity_mw: 3.4
+
+actuals_only:
+  name: Farm with Actuals Only
+  farm_provider: b
+  farm_provider_farm_ref: 
+  latitude: 3.2
+  longitude: 3.3
+  capacity_mw: 3.4
+
+forecasts_only:
+  name: Farm with Forecasts Only
+  farm_provider: b
+  farm_provider_farm_ref: 
+  latitude: 3.2
+  longitude: 3.3
+  capacity_mw: 3.4
