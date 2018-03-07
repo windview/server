@@ -18,7 +18,7 @@ class ActualsControllerTest < ActionDispatch::IntegrationTest
     }
 
     diff = HashDiff.diff expected, returned
-    assert diff == []
+    assert diff == [], msg: diff
   end
 
   test "should create actual" do
@@ -38,7 +38,7 @@ class ActualsControllerTest < ActionDispatch::IntegrationTest
     diff = HashDiff.diff expected, returned
     assert diff == [
       ["+", "actual.id", returned["actual"]["id"]]
-    ]
+    ], msg: diff
   end
 
   test "should show actual" do
@@ -51,7 +51,7 @@ class ActualsControllerTest < ActionDispatch::IntegrationTest
     }
 
     diff = HashDiff.diff expected, returned
-    assert diff == [ ]
+    assert diff == [ ], msg: diff
   end
 
   test "should update actual" do
@@ -67,7 +67,7 @@ class ActualsControllerTest < ActionDispatch::IntegrationTest
     }
 
     diff = HashDiff.diff expected, returned
-    assert diff == [ ]
+    assert diff == [ ], msg: diff
   end
 
   test "should destroy actual" do
@@ -76,6 +76,97 @@ class ActualsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response 204
+  end
+
+
+  test "should fail to create without a farm id" do
+    attrs = other_actual_api_attrs().except('farm_id')
+
+    post actuals_url, params: {
+      actual: attrs
+    }, as: :json
+
+    assert_response 422
+
+    returned = response.parsed_body
+    expected = {
+      "farm" => ['must exist', 'can\'t be blank']
+    }
+
+    diff = HashDiff.diff expected, returned
+    assert diff == [ ]
+  end
+
+  test "should fail to create with bad farm id" do
+    attrs = other_actual_api_attrs().merge('farm_id' => -1)
+
+    post actuals_url, params: {
+      actual: attrs
+    }, as: :json
+
+    assert_response 422
+
+    returned = response.parsed_body
+    expected = {
+      "farm" => ['must exist', 'can\'t be blank']
+    }
+
+    diff = HashDiff.diff expected, returned
+    assert diff == [ ], msg: diff
+  end
+
+  test "should fail to create without actual mw" do
+    attrs = other_actual_api_attrs().except('actual_mw')
+
+    post actuals_url, params: {
+      actual: attrs
+    }, as: :json
+
+    assert_response 422
+
+    returned = response.parsed_body
+    expected = {
+      "actual_mw" => ['can\'t be blank', 'is not a number']
+    }
+
+    diff = HashDiff.diff expected, returned
+    assert diff == [ ], msg: diff
+  end
+
+  test "should fail to create with bad actual mw: not a number" do
+    attrs = other_actual_api_attrs().merge('actual_mw' => 'adf')
+
+    post actuals_url, params: {
+      actual: attrs
+    }, as: :json
+
+    assert_response 422
+
+    returned = response.parsed_body
+    expected = {
+      "actual_mw" => ['is not a number']
+    }
+
+    diff = HashDiff.diff expected, returned
+    assert diff == [ ], msg: diff
+  end
+
+  test "should fail to create with bad actual mw: negative" do
+    attrs = other_actual_api_attrs().merge('actual_mw' => -34)
+
+    post actuals_url, params: {
+      actual: attrs
+    }, as: :json
+
+    assert_response 422
+
+    returned = response.parsed_body
+    expected = {
+      "actual_mw" => ['must be greater than or equal to 0']
+    }
+
+    diff = HashDiff.diff expected, returned
+    assert diff == [ ], msg: diff
   end
 
   def actual_api_attrs(a)
