@@ -13,21 +13,22 @@ class Forecast < ApplicationRecord
   validates :data, presence: true
   validate :data_is_json_array_of_arrays
 
+  @@BAD_DATA_VALUE_MSG = "must be a JSON array of arrays"
   def data_is_json_array_of_arrays
     if data.present?
       begin
         parsed_data = JSON.parse(data)
       rescue JSON::ParserError 
-        errors.add(:data, "must be a JSON array of arrays")
+        errors.add(:data, @@BAD_DATA_VALUE_MSG)
         return
       end
 
       if !parsed_data.is_a?(Array)
-        errors.add(:data, "must be a JSON array of arrays")
+        errors.add(:data, @@BAD_DATA_VALUE_MSG)
       elsif parsed_data.count < 1
-        errors.add(:data, "must be a JSON array of arrays")
+        errors.add(:data, @@BAD_DATA_VALUE_MSG)
       elsif parsed_data.any? { |e| !e.is_a?(Array) }
-        errors.add(:data, "must be a JSON array of arrays")
+        errors.add(:data, @@BAD_DATA_VALUE_MSG)
       end
     end
   end
