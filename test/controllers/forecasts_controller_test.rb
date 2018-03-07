@@ -43,6 +43,78 @@ class ForecastsControllerTest < ActionDispatch::IntegrationTest
     ]
   end
 
+  test "should fail to create without a farm id" do
+    attrs = other_forecast_api_attrs().except('farm_id')
+
+    post forecasts_url, params: {
+      forecast: attrs
+    }, as: :json
+
+    assert_response 422
+
+    returned = response.parsed_body
+    expected = {
+      "farm" => ['must exist', 'can\'t be blank']
+    }
+
+    diff = HashDiff.diff expected, returned
+    assert diff == [ ]
+  end
+
+  test "should fail to create with bad farm id" do
+    attrs = other_forecast_api_attrs().merge('farm_id' => -1)
+
+    post forecasts_url, params: {
+      forecast: attrs
+    }, as: :json
+
+    assert_response 422
+
+    returned = response.parsed_body
+    expected = {
+      "farm" => ['must exist', 'can\'t be blank']
+    }
+
+    diff = HashDiff.diff expected, returned
+    assert diff == [ ], msg: diff
+  end
+
+  test "should fail to create without a forecast type" do
+    attrs = other_forecast_api_attrs().except('type')
+
+    post forecasts_url, params: {
+      forecast: attrs
+    }, as: :json
+
+    assert_response 422
+
+    returned = response.parsed_body
+    expected = {
+      "forecast_type" => ['must exist', 'can\'t be blank']
+    }
+
+    diff = HashDiff.diff expected, returned
+    assert diff == [ ], msg: diff
+  end
+
+  test "should fail to create with bad forecast type" do
+    attrs = other_forecast_api_attrs().merge('type' => 'random')
+
+    post forecasts_url, params: {
+      forecast: attrs
+    }, as: :json
+
+    assert_response 422
+
+    returned = response.parsed_body
+    expected = {
+      "forecast_type" => ['must exist', 'can\'t be blank']
+    }
+
+    diff = HashDiff.diff expected, returned
+    assert diff == [ ], msg: diff
+  end
+
   test "should fail to create with duplicate provider ref" do
     attrs = other_forecast_api_attrs().merge('provider_forecast_ref' => '1234')
 
@@ -64,7 +136,7 @@ class ForecastsControllerTest < ActionDispatch::IntegrationTest
     }
 
     diff = HashDiff.diff expected, returned
-    assert diff == [ ]
+    assert diff == [ ], msg: diff
   end
 
   test "should create multiple with null provider ref" do
@@ -113,7 +185,7 @@ class ForecastsControllerTest < ActionDispatch::IntegrationTest
     }
 
     diff = HashDiff.diff expected, returned
-    assert diff == [ ]
+    assert diff == [ ], msg: diff
   end
 
   test "should update forecast" do
@@ -129,7 +201,7 @@ class ForecastsControllerTest < ActionDispatch::IntegrationTest
     }
 
     diff = HashDiff.diff expected, returned
-    assert diff == [ ]
+    assert diff == [ ], msg: diff
   end
 
   test "should destroy forecast" do
@@ -138,6 +210,204 @@ class ForecastsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response 204
+  end
+
+  test "should fail to create without a begins at" do
+    attrs = other_forecast_api_attrs().except('begins_at')
+
+    post forecasts_url, params: {
+      forecast: attrs
+    }, as: :json
+
+    assert_response 422
+
+    returned = response.parsed_body
+    expected = {
+      "begins_at" => ['can\'t be blank']
+    }
+
+    diff = HashDiff.diff expected, returned
+    assert diff == [ ], msg: diff
+  end
+
+  test "should fail to create without a generated at" do
+    attrs = other_forecast_api_attrs().except('generated_at')
+
+    post forecasts_url, params: {
+      forecast: attrs
+    }, as: :json
+
+    assert_response 422
+
+    returned = response.parsed_body
+    expected = {
+      "generated_at" => ['can\'t be blank']
+    }
+
+    diff = HashDiff.diff expected, returned
+    assert diff == [ ], msg: diff
+  end
+
+  test "should fail to create without horizon minutes" do
+    attrs = other_forecast_api_attrs().except('horizon_minutes')
+
+    post forecasts_url, params: {
+      forecast: attrs
+    }, as: :json
+
+    assert_response 422
+
+    returned = response.parsed_body
+    expected = {
+      "horizon_minutes" => ['can\'t be blank', 'is not a number']
+    }
+
+    diff = HashDiff.diff expected, returned
+    assert diff == [ ], msg: diff
+  end
+
+  test "should fail to create with bad horizon minutes: not a number" do
+    attrs = other_forecast_api_attrs().merge('horizon_minutes' => 'adf')
+
+    post forecasts_url, params: {
+      forecast: attrs
+    }, as: :json
+
+    assert_response 422
+
+    returned = response.parsed_body
+    expected = {
+      "horizon_minutes" => ['is not a number']
+    }
+
+    diff = HashDiff.diff expected, returned
+    assert diff == [ ], msg: diff
+  end
+
+  test "should fail to create with bad horizon minutes: negative" do
+    attrs = other_forecast_api_attrs().merge('horizon_minutes' => -34)
+
+    post forecasts_url, params: {
+      forecast: attrs
+    }, as: :json
+
+    assert_response 422
+
+    returned = response.parsed_body
+    expected = {
+      "horizon_minutes" => ['must be greater than 0']
+    }
+
+    diff = HashDiff.diff expected, returned
+    assert diff == [ ], msg: diff
+  end
+
+  test "should fail to create with bad horizon minutes: not an integer" do
+    attrs = other_forecast_api_attrs().merge('horizon_minutes' => 3.4)
+
+    post forecasts_url, params: {
+      forecast: attrs
+    }, as: :json
+
+    assert_response 422
+
+    returned = response.parsed_body
+    expected = {
+      "horizon_minutes" => ['must be an integer']
+    }
+
+    diff = HashDiff.diff expected, returned
+    assert diff == [ ], msg: diff
+  end
+
+  test "should fail to create without a data" do
+    attrs = other_forecast_api_attrs().except('data')
+
+    post forecasts_url, params: {
+      forecast: attrs
+    }, as: :json
+
+    assert_response 422
+
+    returned = response.parsed_body
+    expected = {
+      "data" => ['can\'t be blank']
+    }
+
+    diff = HashDiff.diff expected, returned
+    assert diff == [ ], msg: diff
+  end
+
+  test "should fail to create bad data: hash instead of array" do
+    attrs = other_forecast_api_attrs().merge('data' => '{}')
+
+    post forecasts_url, params: {
+      forecast: attrs
+    }, as: :json
+
+    assert_response 422
+
+    returned = response.parsed_body
+    expected = {
+      "data" => ['must be a JSON array of arrays']
+    }
+
+    diff = HashDiff.diff expected, returned
+    assert diff == [ ], msg: diff
+  end
+
+  test "should fail to create bad data: empty 1D array" do
+    attrs = other_forecast_api_attrs().merge('data' => '[]')
+
+    post forecasts_url, params: {
+      forecast: attrs
+    }, as: :json
+
+    assert_response 422
+
+    returned = response.parsed_body
+    expected = {
+      "data" => ['must be a JSON array of arrays']
+    }
+
+    diff = HashDiff.diff expected, returned
+    assert diff == [ ], msg: diff
+  end
+
+  test "should fail to create bad data: any item is not an array" do
+    attrs = other_forecast_api_attrs().merge('data' => '[[], {}]')
+
+    post forecasts_url, params: {
+      forecast: attrs
+    }, as: :json
+
+    assert_response 422
+
+    returned = response.parsed_body
+    expected = {
+      "data" => ['must be a JSON array of arrays']
+    }
+
+    diff = HashDiff.diff expected, returned
+    assert diff == [ ], msg: diff
+  end
+
+  test "should fail to create bad data: not JSON" do
+    attrs = other_forecast_api_attrs().merge('data' => '<data> bad </data>')
+
+    post forecasts_url, params: {
+      forecast: attrs
+    }, as: :json
+
+    assert_response 422
+
+    returned = response.parsed_body
+    expected = {
+      "data" => ['must be a JSON array of arrays']
+    }
+
+    diff = HashDiff.diff expected, returned
+    assert diff == [ ], msg: diff
   end
 
   def forecast_api_attrs(f)

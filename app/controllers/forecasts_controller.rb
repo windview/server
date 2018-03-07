@@ -61,7 +61,7 @@ class ForecastsController < ApplicationController
           if p.keys.include?('type')
             type_name = p.delete('type')
             forecast_type = ForecastType.where(name: type_name).first()
-            p['forecast_type_id'] = forecast_type.id
+            p['forecast_type_id'] = (forecast_type ? forecast_type.id : nil)
           end
         }
     end

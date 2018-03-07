@@ -25,7 +25,7 @@ class Forecast < ApplicationRecord
       if !parsed_data.is_a?(Array)
         errors.add(:data, "must be a JSON array of arrays")
       elsif parsed_data.count < 1
-        errors.add(:data, "must have at least one element in array")
+        errors.add(:data, "must be a JSON array of arrays")
       elsif parsed_data.any? { |e| !e.is_a?(Array) }
         errors.add(:data, "must be a JSON array of arrays")
       end

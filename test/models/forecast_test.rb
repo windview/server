@@ -75,7 +75,7 @@ class ForecastTest < ActiveSupport::TestCase
     forecast = forecasts(:a)
     forecast.data = "[]"
     assert forecast.save == false
-    assert forecast.errors[:data].include?('must have at least one element in array')
+    assert forecast.errors[:data].include?('must be a JSON array of arrays')
   end
 
   test "data that top level array element is not an array is invalid" do
