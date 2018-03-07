@@ -22,8 +22,6 @@ class ForecastsControllerTest < ActionDispatch::IntegrationTest
     assert diff == []
   end
 
-  # TODO AJA: what happens when bad farm_id
-  # TODO AJA: test error messages
   test "should create forecast" do
     assert_difference('Forecast.count') do
       post forecasts_url, params: {
