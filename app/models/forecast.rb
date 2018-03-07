@@ -6,6 +6,7 @@ class Forecast < ApplicationRecord
   validates :farm, presence: true
   validates :forecast_type, presence: true
   validates :forecast_provider, presence: true
+  validates :forecast_provider_forecast_ref, uniqueness: { scope: :forecast_provider_id }, allow_blank: true
   validates :generated_at, presence: true
   validates :begins_at, presence: true
   validates :horizon_minutes, presence: true, numericality: { greater_than: 0, only_integer: true }

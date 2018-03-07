@@ -43,6 +43,66 @@ class ForecastsControllerTest < ActionDispatch::IntegrationTest
     ]
   end
 
+  test "should fail to create with duplicate provider ref" do
+    attrs = other_forecast_api_attrs().merge('provider_forecast_ref' => '1234')
+
+    assert_difference('Forecast.count') do
+      post forecasts_url, params: {
+        forecast: attrs
+      }, as: :json
+    end
+
+    post forecasts_url, params: {
+      forecast: attrs
+    }, as: :json
+
+    assert_response 422
+
+    returned = response.parsed_body
+    expected = {
+      "forecast_provider_forecast_ref" => ['has already been taken']
+    }
+
+    diff = HashDiff.diff expected, returned
+    assert diff == [ ]
+  end
+
+  test "should create multiple with null provider ref" do
+    attrs = other_forecast_api_attrs().except('provider_forecast_ref')
+    assert_difference('Forecast.count') do
+      post forecasts_url, params: {
+        forecast: attrs
+      }, as: :json
+      assert_response 201
+    end
+
+    assert_difference('Forecast.count') do
+      post forecasts_url, params: {
+        forecast: attrs
+      }, as: :json
+      assert_response 201
+    end
+
+  end
+
+  test "should create multiple with same provider ref but different providers" do
+    attrs = other_forecast_api_attrs().merge('provider_forecast_ref' => '1234')
+    assert_difference('Forecast.count') do
+      post forecasts_url, params: {
+        forecast: attrs.merge('provider_id' => @forecast_a.forecast_provider_id)
+      }, as: :json
+      assert_response 201
+    end
+
+    assert_difference('Forecast.count') do
+      post forecasts_url, params: {
+        forecast: attrs.merge('provider_id' => @forecast_b.forecast_provider_id)
+      }, as: :json
+      assert_response 201
+    end
+
+  end
+
   test "should show forecast" do
     get forecast_url(@forecast_a), as: :json
     assert_response :success
