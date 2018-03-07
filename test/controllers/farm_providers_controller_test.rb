@@ -79,6 +79,38 @@ class FarmProvidersControllerTest < ActionDispatch::IntegrationTest
     assert_response 204
   end
 
+  test "should fail to create farm provider if no name" do
+    post farm_providers_url, params: {
+      farm_provider: other_farm_provider_api_attrs().except('atom')
+    }, as: :json
+
+    assert_response 422
+
+    returned = response.parsed_body
+    expected = {
+      "name" => ['can\'t be blank']
+    }
+
+    diff = HashDiff.diff expected, returned
+    assert diff == [ ], msg: diff
+  end
+
+  test "should fail to create farm provider if no label" do
+    post farm_providers_url, params: {
+      farm_provider: other_farm_provider_api_attrs().except('label')
+    }, as: :json
+
+    assert_response 422
+
+    returned = response.parsed_body
+    expected = {
+      "label" => ['can\'t be blank']
+    }
+
+    diff = HashDiff.diff expected, returned
+    assert diff == [ ], msg: diff
+  end
+
   def farm_provider_api_attrs(f)
     {
       "id" => f.id,
