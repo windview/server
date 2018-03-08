@@ -3,9 +3,60 @@ class ForecastsController < ApplicationController
 
   # GET /forecasts
   def index
-    @forecasts = Forecast.all
+    @forecasts = Forecast
+    if params['farm_id']
+      farm = Farm.find(params['farm_id'])
+      @forecasts = @forecasts.where(farm_id: farm.id)
+    end
+    if params['provider_id']
+      forecast_provider = ForecastProvider.find(params['provider_id'])
+      @forecasts = @forecasts.where(forecast_provider_id: forecast_provider.id)
+    end
+    if params['type']
+      forecast_type = ForecastType.find_by!(name: params['type'])
+      @forecasts = @forecasts.where(forecast_type_id: forecast_type.id)
+    end
+    if params['horizon_minutes']
+      @forecasts = @forecasts.where(horizon_minutes: params['horizon_minutes'])
+    end
+    limit = params['limit'] || 1000
+    @forecasts = @forecasts.limit(limit)
 
-    render json: @forecasts
+    offset = params['offset'] || 0
+    @forecasts = @forecasts.offset(offset)
+
+    order_by = 'generated_at'
+    if ['generated_at', 'begins_at'].include?(params['order_by'])
+      order_by = params['order_by']
+    end
+
+    order_dir = 'desc'
+    if ['asc', 'desc'].include?(params['order_dir'])
+      order_dir = params['order_dir']
+    end
+
+    @forecasts = @forecasts.order("#{order_by} #{order_dir}")
+
+    render json: @forecasts.all
+  end
+
+  # GET /forecasts/latest
+  def latest
+    @forecasts = Forecast.order('generated_at DESC').limit(1)
+    if params['farm_id']
+      farm = Farm.find(params['farm_id'])
+      @forecasts = @forecasts.where(farm_id: farm.id)
+    end
+    if params['provider_id']
+      forecast_provider = ForecastProvider.find(params['provider_id'])
+      @forecasts = @forecasts.where(forecast_provider_id: forecast_provider.id)
+    end
+    if params['type']
+      forecast_type = ForecastType.find_by!(name: params['type'])
+      @forecasts = @forecasts.where(forecast_type_id: forecast_type.id)
+    end
+
+    render json: @forecasts.first
   end
 
   # GET /forecasts/1

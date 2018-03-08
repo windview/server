@@ -5,8 +5,8 @@ a:
   forecast_type: point
   forecast_provider: a
   forecast_provider_forecast_ref:
-  generated_at: 2018-02-27 11:32:35
-  begins_at: 2018-02-27 11:32:35
+  generated_at: 2018-02-27 06:32:35
+  begins_at: 2018-02-27 07:32:35
   horizon_minutes: 1
   data: "[[]]"
 
@@ -15,8 +15,8 @@ b:
   forecast_type: point
   forecast_provider: b
   forecast_provider_forecast_ref:
-  generated_at: 2018-02-27 11:32:35
-  begins_at: 2018-02-27 11:32:35
+  generated_at: 2018-02-27 08:32:35
+  begins_at: 2018-02-27 09:32:35
   horizon_minutes: 1
   data: "[[]]"
 
@@ -25,7 +25,48 @@ for_forecasts_only:
   forecast_type: point
   forecast_provider: b
   forecast_provider_forecast_ref:
-  generated_at: 2018-02-27 11:32:35
+  generated_at: 2018-02-27 10:32:35
   begins_at: 2018-02-27 11:32:35
   horizon_minutes: 1
   data: "[[]]"
+
+latest_probabilistic_for_farm_a:
+  farm: a
+  forecast_type: probabilistic
+  forecast_provider: b
+  forecast_provider_forecast_ref:
+  generated_at: 2040-03-01 05:11:11
+  begins_at: 2040-03-01 06:11:11
+  horizon_minutes: 1440
+  data: "[[]]"
+
+latest_for_farm_a:
+  farm: a
+  forecast_type: point
+  forecast_provider: b
+  forecast_provider_forecast_ref:
+  generated_at: 2040-06-01 05:11:11
+  begins_at: 2040-06-01 06:11:11
+  horizon_minutes: 1440
+  data: "[[]]"
+
+latest_for_forecast_provider_a:
+  farm: a
+  forecast_type: point
+  forecast_provider: a
+  forecast_provider_forecast_ref:
+  generated_at: 2040-05-01 05:11:11
+  begins_at: 2040-05-01 06:11:11
+  horizon_minutes: 1440
+  data: "[[]]"
+
+latest:
+  farm: b
+  forecast_type: point
+  forecast_provider: b
+  forecast_provider_forecast_ref:
+  generated_at: 2040-07-01 05:11:11
+  begins_at: 2040-07-01 06:11:11
+  horizon_minutes: 1440
+  data: "[[]]"
+

@@ -11,15 +11,195 @@ class ForecastsControllerTest < ActionDispatch::IntegrationTest
 
     returned = response.parsed_body
     expected = {
-      "forecasts" => [
-        forecast_api_attrs(@forecast_a),
+      'forecasts' => [
+        forecast_api_attrs(forecasts(:latest)),
+        forecast_api_attrs(forecasts(:latest_for_farm_a)),
+        forecast_api_attrs(forecasts(:latest_for_forecast_provider_a)),
+        forecast_api_attrs(forecasts(:latest_probabilistic_for_farm_a)),
+        forecast_api_attrs(forecasts(:for_forecasts_only)),
         forecast_api_attrs(@forecast_b),
-        forecast_api_attrs(forecasts(:for_forecasts_only))
+        forecast_api_attrs(@forecast_a)
       ]
     }
 
     diff = HashDiff.diff expected, returned
-    assert diff == []
+    assert diff == [], msg: diff
+  end
+
+  test "should get index by specified farm_id" do
+    get forecasts_url(farm_id: farms(:b)), as: :json
+    assert_response :success
+
+    returned = response.parsed_body
+    expected = {
+      'forecasts' => [
+        forecast_api_attrs(forecasts(:latest)),
+        forecast_api_attrs(@forecast_b)
+      ]
+    }
+
+    diff = HashDiff.diff expected, returned
+    assert diff == [], msg: diff
+  end
+
+  test "should get index by specified provider_id" do
+    get forecasts_url(provider_id: forecast_providers(:b).id), as: :json
+    assert_response :success
+
+    returned = response.parsed_body
+    expected = {
+      'forecasts' => [
+        forecast_api_attrs(forecasts(:latest)),
+        forecast_api_attrs(forecasts(:latest_for_farm_a)),
+        forecast_api_attrs(forecasts(:latest_probabilistic_for_farm_a)),
+        forecast_api_attrs(forecasts(:for_forecasts_only)),
+        forecast_api_attrs(@forecast_b)
+      ]
+    }
+
+    diff = HashDiff.diff expected, returned
+    assert diff == [], msg: diff
+  end
+
+  test "should get index by specified type" do
+    get forecasts_url(type: 'probabilistic'), as: :json
+    assert_response :success
+
+    returned = response.parsed_body
+    expected = {
+      'forecasts' => [
+        forecast_api_attrs(forecasts(:latest_probabilistic_for_farm_a))
+      ]
+    }
+
+    diff = HashDiff.diff expected, returned
+    assert diff == [], msg: diff
+  end
+
+  test "should get index by specified horizon minutes" do
+    get forecasts_url(horizon_minutes: 1440), as: :json
+    assert_response :success
+
+    returned = response.parsed_body
+    expected = {
+      'forecasts' => [
+        forecast_api_attrs(forecasts(:latest)),
+        forecast_api_attrs(forecasts(:latest_for_farm_a)),
+        forecast_api_attrs(forecasts(:latest_for_forecast_provider_a)),
+        forecast_api_attrs(forecasts(:latest_probabilistic_for_farm_a)),
+      ]
+    }
+
+    diff = HashDiff.diff expected, returned
+    assert diff == [], msg: diff
+  end
+
+  test "should get index by specified offset, limit, order by, and order dir" do
+    get forecasts_url(offset: 1, limit: 2, order_by: 'generated_at', order_dir: 'asc'), as: :json
+    assert_response :success
+
+    returned = response.parsed_body
+    expected = {
+      'forecasts' => [
+        forecast_api_attrs(@forecast_b),
+        forecast_api_attrs(forecasts(:for_forecasts_only)),
+      ]
+    }
+
+    diff = HashDiff.diff expected, returned
+    assert diff == [], msg: diff
+  end
+
+  test "should get latest forecast" do
+    get forecasts_latest_url, as: :json
+    assert_response :success
+
+    returned = response.parsed_body
+    expected = {
+      'forecast' => forecast_api_attrs(forecasts(:latest))
+    }
+
+    diff = HashDiff.diff expected, returned
+    assert diff == [], msg: diff
+  end
+
+  test "should get latest forecast for specified farm" do
+    get forecasts_latest_url(farm_id: farms(:a).id), as: :json
+    assert_response :success
+
+    returned = response.parsed_body
+    expected = {
+      'forecast' => forecast_api_attrs(forecasts(:latest_for_farm_a))
+    }
+
+    diff = HashDiff.diff expected, returned
+    assert diff == [], msg: diff
+  end
+
+  test "should return 404 if specified farm doesn't exist" do
+    get forecasts_latest_url(farm_id: -1), as: :json
+    assert_response :not_found
+
+    returned = response.parsed_body
+    expected = {
+      'errors' => { 'detail' => 'Resource not found' }
+    }
+
+    diff = HashDiff.diff expected, returned
+    assert diff == [], msg: diff
+  end
+
+  test "should get latest forecast for specified provider" do
+    get forecasts_latest_url(provider_id: forecast_providers(:a).id), as: :json
+    assert_response :success
+
+    returned = response.parsed_body
+    expected = {
+      'forecast' => forecast_api_attrs(forecasts(:latest_for_forecast_provider_a))
+    }
+
+    diff = HashDiff.diff expected, returned
+    assert diff == [], msg: diff
+  end
+
+  test "should return 404 if specified provider doesn't exist" do
+    get forecasts_latest_url(provider_id: -1), as: :json
+    assert_response :not_found
+
+    returned = response.parsed_body
+    expected = {
+      'errors' => { 'detail' => 'Resource not found' }
+    }
+
+    diff = HashDiff.diff expected, returned
+    assert diff == [], msg: diff
+  end
+
+
+  test "should get latest forecast of specified type" do
+    get forecasts_latest_url(type: 'probabilistic'), as: :json
+    assert_response :success
+
+    returned = response.parsed_body
+    expected = {
+      'forecast' => forecast_api_attrs(forecasts(:latest_probabilistic_for_farm_a))
+    }
+
+    diff = HashDiff.diff expected, returned
+    assert diff == [], msg: diff
+  end
+
+  test "should return 404 if specified type doesn't exist" do
+    get forecasts_latest_url(type: 'ooga'), as: :json
+    assert_response :not_found
+
+    returned = response.parsed_body
+    expected = {
+      'errors' => { 'detail' => 'Resource not found' }
+    }
+
+    diff = HashDiff.diff expected, returned
+    assert diff == [], msg: diff
   end
 
   test "should create forecast" do
@@ -33,13 +213,13 @@ class ForecastsControllerTest < ActionDispatch::IntegrationTest
 
     returned = response.parsed_body
     expected = {
-      "forecast" => other_forecast_api_attrs()
+      'forecast' => other_forecast_api_attrs()
     }
 
     diff = HashDiff.diff expected, returned
     assert diff == [
-      ["+", "forecast.id", returned["forecast"]["id"]]
-    ]
+      ['+', 'forecast.id', returned['forecast']['id']]
+    ], msg: diff
   end
 
   test "should fail to create without a farm id" do
@@ -53,11 +233,11 @@ class ForecastsControllerTest < ActionDispatch::IntegrationTest
 
     returned = response.parsed_body
     expected = {
-      "farm" => ['must exist', 'can\'t be blank']
+      'farm' => ['must exist', 'can\'t be blank']
     }
 
     diff = HashDiff.diff expected, returned
-    assert diff == [ ]
+    assert diff == [ ], msg: diff
   end
 
   test "should fail to create with bad farm id" do
@@ -71,7 +251,7 @@ class ForecastsControllerTest < ActionDispatch::IntegrationTest
 
     returned = response.parsed_body
     expected = {
-      "farm" => ['must exist', 'can\'t be blank']
+      'farm' => ['must exist', 'can\'t be blank']
     }
 
     diff = HashDiff.diff expected, returned
@@ -89,7 +269,7 @@ class ForecastsControllerTest < ActionDispatch::IntegrationTest
 
     returned = response.parsed_body
     expected = {
-      "forecast_type" => ['must exist', 'can\'t be blank']
+      'forecast_type' => ['must exist', 'can\'t be blank']
     }
 
     diff = HashDiff.diff expected, returned
@@ -107,7 +287,7 @@ class ForecastsControllerTest < ActionDispatch::IntegrationTest
 
     returned = response.parsed_body
     expected = {
-      "forecast_type" => ['must exist', 'can\'t be blank']
+      'forecast_type' => ['must exist', 'can\'t be blank']
     }
 
     diff = HashDiff.diff expected, returned
@@ -131,7 +311,7 @@ class ForecastsControllerTest < ActionDispatch::IntegrationTest
 
     returned = response.parsed_body
     expected = {
-      "forecast_provider_forecast_ref" => ['has already been taken']
+      'forecast_provider_forecast_ref' => ['has already been taken']
     }
 
     diff = HashDiff.diff expected, returned
@@ -180,7 +360,7 @@ class ForecastsControllerTest < ActionDispatch::IntegrationTest
 
     returned = response.parsed_body
     expected = {
-      "forecast" => forecast_api_attrs(@forecast_a)
+      'forecast' => forecast_api_attrs(@forecast_a)
     }
 
     diff = HashDiff.diff expected, returned
@@ -196,7 +376,7 @@ class ForecastsControllerTest < ActionDispatch::IntegrationTest
 
     returned = response.parsed_body
     expected = {
-      "forecast" => forecast_api_attrs(@forecast_a).merge(other_forecast_api_attrs())
+      'forecast' => forecast_api_attrs(@forecast_a).merge(other_forecast_api_attrs())
     }
 
     diff = HashDiff.diff expected, returned
@@ -222,7 +402,7 @@ class ForecastsControllerTest < ActionDispatch::IntegrationTest
 
     returned = response.parsed_body
     expected = {
-      "begins_at" => ['can\'t be blank']
+      'begins_at' => ['can\'t be blank']
     }
 
     diff = HashDiff.diff expected, returned
@@ -240,7 +420,7 @@ class ForecastsControllerTest < ActionDispatch::IntegrationTest
 
     returned = response.parsed_body
     expected = {
-      "generated_at" => ['can\'t be blank']
+      'generated_at' => ['can\'t be blank']
     }
 
     diff = HashDiff.diff expected, returned
@@ -258,7 +438,7 @@ class ForecastsControllerTest < ActionDispatch::IntegrationTest
 
     returned = response.parsed_body
     expected = {
-      "horizon_minutes" => ['can\'t be blank', 'is not a number']
+      'horizon_minutes' => ['can\'t be blank', 'is not a number']
     }
 
     diff = HashDiff.diff expected, returned
@@ -276,7 +456,7 @@ class ForecastsControllerTest < ActionDispatch::IntegrationTest
 
     returned = response.parsed_body
     expected = {
-      "horizon_minutes" => ['is not a number']
+      'horizon_minutes' => ['is not a number']
     }
 
     diff = HashDiff.diff expected, returned
@@ -294,7 +474,7 @@ class ForecastsControllerTest < ActionDispatch::IntegrationTest
 
     returned = response.parsed_body
     expected = {
-      "horizon_minutes" => ['must be greater than 0']
+      'horizon_minutes' => ['must be greater than 0']
     }
 
     diff = HashDiff.diff expected, returned
@@ -312,7 +492,7 @@ class ForecastsControllerTest < ActionDispatch::IntegrationTest
 
     returned = response.parsed_body
     expected = {
-      "horizon_minutes" => ['must be an integer']
+      'horizon_minutes' => ['must be an integer']
     }
 
     diff = HashDiff.diff expected, returned
@@ -330,7 +510,7 @@ class ForecastsControllerTest < ActionDispatch::IntegrationTest
 
     returned = response.parsed_body
     expected = {
-      "data" => ['can\'t be blank']
+      'data' => ['can\'t be blank']
     }
 
     diff = HashDiff.diff expected, returned
@@ -348,7 +528,7 @@ class ForecastsControllerTest < ActionDispatch::IntegrationTest
 
     returned = response.parsed_body
     expected = {
-      "data" => ['must be a JSON array of arrays']
+      'data' => ['must be a JSON array of arrays']
     }
 
     diff = HashDiff.diff expected, returned
@@ -366,7 +546,7 @@ class ForecastsControllerTest < ActionDispatch::IntegrationTest
 
     returned = response.parsed_body
     expected = {
-      "data" => ['must be a JSON array of arrays']
+      'data' => ['must be a JSON array of arrays']
     }
 
     diff = HashDiff.diff expected, returned
@@ -384,7 +564,7 @@ class ForecastsControllerTest < ActionDispatch::IntegrationTest
 
     returned = response.parsed_body
     expected = {
-      "data" => ['must be a JSON array of arrays']
+      'data' => ['must be a JSON array of arrays']
     }
 
     diff = HashDiff.diff expected, returned
@@ -402,7 +582,7 @@ class ForecastsControllerTest < ActionDispatch::IntegrationTest
 
     returned = response.parsed_body
     expected = {
-      "data" => ['must be a JSON array of arrays']
+      'data' => ['must be a JSON array of arrays']
     }
 
     diff = HashDiff.diff expected, returned
@@ -411,28 +591,28 @@ class ForecastsControllerTest < ActionDispatch::IntegrationTest
 
   def forecast_api_attrs(f)
     {
-      "id" => f.id,
-      "type" => f.forecast_type.name,
-      "farm_id" => f.farm.id,
-      "provider_id" => f.forecast_provider_id,
-      "provider_forecast_ref" => f.forecast_provider_forecast_ref,
-      "horizon_minutes" => f.horizon_minutes,
-      "begins_at" => f.begins_at.iso8601,
-      "generated_at" => f.generated_at.iso8601,
-      "data" => JSON.parse(f.data)
+      'id' => f.id,
+      'type' => f.forecast_type.name,
+      'farm_id' => f.farm.id,
+      'provider_id' => f.forecast_provider_id,
+      'provider_forecast_ref' => f.forecast_provider_forecast_ref,
+      'horizon_minutes' => f.horizon_minutes,
+      'begins_at' => f.begins_at.iso8601,
+      'generated_at' => f.generated_at.iso8601,
+      'data' => JSON.parse(f.data)
     }
   end
 
   def other_forecast_api_attrs()
     {
-      "type" => "point",
-      "farm_id" => @forecast_a.farm_id,
-      "provider_id" => @forecast_a.forecast_provider_id,
-      "provider_forecast_ref" => "otherforecast",
-      "horizon_minutes" => 60,
-      "begins_at" => @forecast_a.begins_at.iso8601,
-      "generated_at" => @forecast_a.generated_at.iso8601,
-      "data" => [[0, 0]]
+      'type' => 'point',
+      'farm_id' => @forecast_a.farm_id,
+      'provider_id' => @forecast_a.forecast_provider_id,
+      'provider_forecast_ref' => 'otherforecast',
+      'horizon_minutes' => 60,
+      'begins_at' => @forecast_a.begins_at.iso8601,
+      'generated_at' => @forecast_a.generated_at.iso8601,
+      'data' => [[0, 0]]
     }
   end
 end
