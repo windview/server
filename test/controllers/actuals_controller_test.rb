@@ -12,9 +12,109 @@ class ActualsControllerTest < ActionDispatch::IntegrationTest
     returned = response.parsed_body
     expected = {
       "actuals" => [
-        actual_api_attrs(@actual_a),
-        actual_api_attrs(@actual_b),
+        actual_api_attrs(actuals(:b4)),
+        actual_api_attrs(actuals(:b3)),
+        actual_api_attrs(actuals(:b2)),
+        actual_api_attrs(actuals(:b1)),
+        actual_api_attrs(actuals(:a1)),
+        actual_api_attrs(actuals(:b0)),
+        actual_api_attrs(actuals(:a0)),
+        actual_api_attrs(actuals(:for_actuals_only)),
+        actual_api_attrs(actuals(:b)),
+        actual_api_attrs(actuals(:a))
+      ]
+    }
+
+    diff = HashDiff.diff expected, returned
+    assert diff == [], msg: diff
+  end
+
+  test "should get index for specific farm" do
+    get actuals_url(farm_id: farms(:b).id, as: :json)
+    assert_response :success
+
+    returned = response.parsed_body
+    expected = {
+      "actuals" => [
+        actual_api_attrs(actuals(:b4)),
+        actual_api_attrs(actuals(:b3)),
+        actual_api_attrs(actuals(:b2)),
+        actual_api_attrs(actuals(:b1)),
+        actual_api_attrs(actuals(:b0)),
+        actual_api_attrs(actuals(:b))
+      ]
+    }
+
+    diff = HashDiff.diff expected, returned
+    assert diff == [], msg: diff
+  end
+
+  test "should get index entries after a specified start time" do
+    get actuals_url(starting_at: '2018-02-27T01:32:42Z', as: :json)
+    assert_response :success
+
+    returned = response.parsed_body
+    expected = {
+      "actuals" => [
+        actual_api_attrs(actuals(:b4)),
+        actual_api_attrs(actuals(:b3)),
+        actual_api_attrs(actuals(:b2)),
+        actual_api_attrs(actuals(:b1)),
+        actual_api_attrs(actuals(:a1)),
+        actual_api_attrs(actuals(:b0))
+      ]
+    }
+
+    diff = HashDiff.diff expected, returned
+    assert diff == [], msg: diff
+  end
+
+  test "should get index entries before a specified ending time" do
+    get actuals_url(ending_at: '2018-02-27T01:32:42Z', as: :json)
+    assert_response :success
+
+    returned = response.parsed_body
+    expected = {
+      "actuals" => [
+        actual_api_attrs(actuals(:b0)),
+        actual_api_attrs(actuals(:a0)),
+        actual_api_attrs(actuals(:for_actuals_only)),
+        actual_api_attrs(actuals(:b)),
+        actual_api_attrs(actuals(:a))
+      ]
+    }
+
+    diff = HashDiff.diff expected, returned
+    assert diff == [], msg: diff
+  end
+
+  test "should get index entries between a specified starting and ending times" do
+    get actuals_url(starting_at: '2018-01-11T03:32:42Z', ending_at: '2018-02-27T01:32:42Z', as: :json)
+    assert_response :success
+
+    returned = response.parsed_body
+    expected = {
+      "actuals" => [
+        actual_api_attrs(actuals(:b0)),
+        actual_api_attrs(actuals(:a0)),
         actual_api_attrs(actuals(:for_actuals_only))
+      ]
+    }
+
+    diff = HashDiff.diff expected, returned
+    assert diff == [], msg: diff
+  end
+
+  test "should get index by specified offset, limit, order by, and order dir" do
+    get actuals_url(order_by: :actual_mw, order_dir: :asc, offset: 2, limit: 3, as: :json)
+    assert_response :success
+
+    returned = response.parsed_body
+    expected = {
+      "actuals" => [
+        actual_api_attrs(actuals(:for_actuals_only)),
+        actual_api_attrs(actuals(:a0)),
+        actual_api_attrs(actuals(:a1))
       ]
     }
 

@@ -3,9 +3,38 @@ class ActualsController < ApplicationController
 
   # GET /actuals
   def index
-    @actuals = Actual.all
+    @actuals = Actual
+    if params['farm_id']
+      farm = Farm.find(params['farm_id'])
+      @actuals = @actuals.where(farm_id: farm.id)
+    end
 
-    render json: @actuals
+    if params['starting_at']
+      @actuals = @actuals.where('timestamp >= ?', params[:starting_at])
+    end
+
+    if params['ending_at']
+      @actuals = @actuals.where('timestamp <= ?', params[:ending_at])
+    end
+
+    limit = params['limit'] || 1000
+    @actuals = @actuals.limit(limit)
+
+    offset = params['offset'] || 0
+    @actuals = @actuals.offset(offset)
+
+    order_by = 'timestamp'
+    if ['timestamp', 'actual_mw'].include?(params['order_by'])
+      order_by = params['order_by']
+    end
+
+    order_dir = 'desc'
+    if ['asc', 'desc'].include?(params['order_dir'])
+      order_dir = params['order_dir']
+    end
+    @actuals = @actuals.order("#{order_by} #{order_dir}")
+
+    render json: @actuals.all
   end
 
   # GET /actuals/1

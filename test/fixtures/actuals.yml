@@ -2,15 +2,51 @@
 
 a:
   farm: a
-  timestamp: 2018-02-27 11:32:42
-  actual_mw: 1.5
+  timestamp: 2018-01-11 01:32:42
+  actual_mw: 0.5
 
 b:
   farm: b
-  timestamp: 2018-02-27 11:32:42
-  actual_mw: 1.5
+  timestamp: 2018-01-11 02:32:42
+  actual_mw: 0.7
 
 for_actuals_only:
   farm: actuals_only
-  timestamp: 2018-02-27 11:32:42
-  actual_mw: 1.5
+  timestamp: 2018-01-11 03:32:42
+  actual_mw: 0.9
+
+a0:
+  farm: a
+  timestamp: 2018-02-27 01:02:42
+  actual_mw: 1.1
+
+b0:
+  farm: b
+  timestamp: 2018-02-27 01:32:42
+  actual_mw: 2.0
+
+a1:
+  farm: a
+  timestamp: 2018-02-27 02:02:42
+  actual_mw: 1.2
+
+b1:
+  farm: b
+  timestamp: 2018-02-27 02:32:42
+  actual_mw: 2.1
+
+b2:
+  farm: b
+  timestamp: 2018-02-27 03:32:42
+  actual_mw: 2.2
+
+b3:
+  farm: b
+  timestamp: 2018-02-27 04:32:42
+  actual_mw: 2.3
+
+b4:
+  farm: b
+  timestamp: 2018-02-27 05:32:42
+  actual_mw: 2.4
+
