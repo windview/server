@@ -67,7 +67,7 @@ The other one is a fictional week-ahead using the same data as each day-ahead.
 
 #### Load sites
 
-** WIP **
+**WIP**
 
 ```bash
 $ rails load:wtk_sites[examples/argus_prima-wtk_texas_under_10mw/sites.geojson] 
