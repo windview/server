@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  mount SwaggerUiEngine::Engine, at: "/api_docs"
+  get '/apidocs' => redirect('/swagger/dist/index.html?url=/openapi.json')
   scope "api" do
     resources :actuals
 

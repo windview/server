@@ -1,0 +1,1350 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Windview Server API",
+    "description": "Windview Server API\n",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/v2"
+    }
+  ],
+  "paths": {
+    "/api/forecasts": {
+      "get": {
+        "summary": "List forecasts",
+        "description": "Returns a ist of forecasts matching the specified paramters",
+        "operationId": "ForecastsController.index",
+        "tags": [
+          "Forecasts"
+        ],
+        "responses": {
+          "200": {
+            "description": "List of Forecasts",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForecastIndexResponse"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "in": "query",
+            "name": "farm_id",
+            "description": "Farm ID",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "provider_id",
+            "description": "Forecast Provider ID",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "type",
+            "description": "Type of forecast to return",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "horizon_minutes",
+            "description": "The horizon value in minutes to match.",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "description": "Number of matching forecasts to skip",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "Maximum number of forecasts to return",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "order_by",
+            "description": "Field to order results by",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "description": "Direction to order results",
+            "name": "order_dir",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/forecasts/{id}": {
+      "get": {
+        "summary": "Show a forecast by ID",
+        "description": "Returns a single forecast for the given ID",
+        "operationId": "ForecastsController.show",
+        "tags": [
+          "Forecasts"
+        ],
+        "responses": {
+          "200": {
+            "description": "Get a forecast by ID.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForecastShowResponse"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Forecast ID",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ]
+      }
+    },
+    "/api/forecasts/latest": {
+      "get": {
+        "summary": "Show the latest forecast",
+        "description": "Returns the most recent forecast matching the given parameters",
+        "operationId": "ForecastsController.latest",
+        "tags": [
+          "Forecasts"
+        ],
+        "responses": {
+          "200": {
+            "description": "A Forecast",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForecastShowResponse"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "in": "query",
+            "name": "farm_id",
+            "description": "Farm ID",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "provider_id",
+            "description": "Forecast Provider ID",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "type",
+            "description": "Type of forecast to return",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/forecast_providers/{forecast_provider_id}/forecasts/{id}": {
+      "delete": {
+        "summary": "Delete a forecast",
+        "description": "Delete a forecast",
+        "operationId": "ForecastsController.delete",
+        "tags": [
+          "Forecasts"
+        ],
+        "responses": {
+          "204": {
+            "description": "Forecast successfully deleted"
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "forecast_provider_id",
+            "description": "Forecast Provider ID",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Forecast ID",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ]
+      }
+    },
+    "/api/forecast_providers/{forecast_provider_id}/forecasts": {
+      "post": {
+        "summary": "Create a new forecast",
+        "description": "Create a forecast",
+        "operationId": "ForecastsController.create",
+        "tags": [
+          "Forecasts"
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "The forecast attributes",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ForecastCreateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Forecast sucessfully created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForecastShowResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Forecast delete failed"
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "forecast_provider_id",
+            "description": "Forecast Provider ID",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ]
+      }
+    },
+    "/api/forecast_types": {
+      "get": {
+        "summary": "List forecast types",
+        "operationId": "ForecastType.index",
+        "description": "List the types of forecasts supported by this server.",
+        "tags": [
+          "Forecast Types"
+        ],
+        "responses": {
+          "200": {
+            "description": "ForecastTypes",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForecastTypeIndexResponse"
+                }
+              }
+            }
+          }
+        },
+        "parameters": []
+      }
+    },
+    "/api/forecast_types/{id}": {
+      "get": {
+        "summary": "Show Forecast Type",
+        "operationId": "ForecastTypesController.show",
+        "description": "Show a forecast type by ID",
+        "tags": [
+          "Forecast Types"
+        ],
+        "responses": {
+          "200": {
+            "description": "ForecastType",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForecastTypeShowResponse"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Forecast Type ID",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ]
+      }
+    },
+    "/api/forecast_providers": {
+      "get": {
+        "summary": "List forecast providers",
+        "operationId": "ForecastProvidersController.index",
+        "description": "List forecast providers",
+        "tags": [
+          "Forecast Providers"
+        ],
+        "responses": {
+          "200": {
+            "description": "ForecastProviders",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForecastProviderIndexResponse"
+                }
+              }
+            }
+          }
+        },
+        "parameters": []
+      }
+    },
+    "/api/forecast_providers/{id}": {
+      "get": {
+        "summary": "Show forecast provider",
+        "operationId": "ForecastProvidersController.show",
+        "description": "Show a forecast provider by ID",
+        "tags": [
+          "Forecast Providers"
+        ],
+        "responses": {
+          "200": {
+            "description": "ForecastProvider",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForecastProviderShowResponse"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Forecast Provider ID",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ]
+      }
+    },
+    "/api/farms": {
+      "get": {
+        "summary": "List farms",
+        "operationId": "FarmController.index",
+        "description": "List farms",
+        "tags": [
+          "Farms"
+        ],
+        "responses": {
+          "200": {
+            "description": "Farms",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FarmIndexResponse"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "in": "query",
+            "name": "offset",
+            "description": "Number of matching forecasts to skip",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "Maximum number of forecasts to return",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "order_by",
+            "description": "Field to order results by",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "order_dir",
+            "description": "Direction to order results",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/farms/{id}": {
+      "get": {
+        "summary": "Show farm",
+        "operationId": "FarmsController.show",
+        "description": "Show a farm by ID",
+        "tags": [
+          "Farms"
+        ],
+        "responses": {
+          "200": {
+            "description": "Farm",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FarmShowResponse"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Farm ID",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ]
+      }
+    },
+    "/api/actuals": {
+      "get": {
+        "summary": "List actuals",
+        "operationId": "ActualsController.index",
+        "description": "List the actual power output observation for a given farm.",
+        "tags": [
+          "Actuals"
+        ],
+        "responses": {
+          "200": {
+            "description": "Actuals",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActualIndexResponse"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "in": "query",
+            "name": "farm_id",
+            "description": "Farm ID",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "Maximum number of actuals to return",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "order_by",
+            "description": "Field to order results by",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "order_dir",
+            "description": "Direction to order results",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "starting_at",
+            "description": "Starting timestamp in UTC",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "ending_at",
+            "description": "Ending timestamp in UTC",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/actuals/{id}": {
+      "get": {
+        "summary": "Show an actual",
+        "operationId": "ActualsController.show",
+        "description": "Show an actual power output observation for a given farm.",
+        "tags": [
+          "Actuals"
+        ],
+        "responses": {
+          "200": {
+            "description": "Actual",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActualShowResponse"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Actual ID",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ]
+      }
+    },
+    "/api/farms/{farm_id}/actuals/{id}": {
+      "delete": {
+        "summary": "Delete an actual",
+        "operationId": "ActualsController.delete",
+        "description": "Delete a actual power output observation for a given farm",
+        "tags": [
+          "Actuals"
+        ],
+        "responses": {
+          "204": {
+            "description": "Actual successfully deleted"
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "farm_id",
+            "description": "Farm ID",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Actual ID",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ]
+      }
+    },
+    "/api/farms/{farm_id}/actuals": {
+      "post": {
+        "summary": "Create an actual",
+        "operationId": "ActualsController.create",
+        "description": "Create a power output observation for the given farm.",
+        "tags": [
+          "Actuals"
+        ],
+        "responses": {
+          "201": {
+            "description": "Actual",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActualShowResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Actuals"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "description": "The actual attributes",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActualCreateRequest"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "farm_id",
+            "description": "Farm ID",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ]
+      }
+    },
+    "/api/farm_providers": {
+      "get": {
+        "summary": "List farm providers",
+        "operationId": "FarmProviderSController.index",
+        "description": "List farm providers",
+        "tags": [
+          "Farm Providers"
+        ],
+        "responses": {
+          "200": {
+            "description": "FarmProviders",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FarmProviderIndexResponse"
+                }
+              }
+            }
+          }
+        },
+        "parameters": []
+      }
+    },
+    "/api/farm_providers/{id}": {
+      "get": {
+        "summary": "Show farm provider",
+        "operationId": "FarmProviderSController.show",
+        "description": "Show a farm provider by ID",
+        "tags": [
+          "Farm Providers"
+        ],
+        "responses": {
+          "200": {
+            "description": "FarmProvider",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FarmProviderShowResponse"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Farm Provider ID",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Forecast": {
+        "type": "object",
+        "title": "Forecast",
+        "required": [
+          "id",
+          "provider_id",
+          "provider_forecast_ref",
+          "farm_id",
+          "begins_at",
+          "generated_at",
+          "horizon_minutes",
+          "type",
+          "data"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "Type of forecast 'point' or 'probabilistic'",
+            "additionalProperties": true
+          },
+          "provider_id": {
+            "type": "integer",
+            "description": "Forecast Provider ID",
+            "additionalProperties": true
+          },
+          "provider_forecast_ref": {
+            "type": "string",
+            "description": "Reference (e.g. an id) to the forecast in the provider's system",
+            "additionalProperties": true
+          },
+          "id": {
+            "type": "integer",
+            "description": "Forecast ID",
+            "additionalProperties": true
+          },
+          "horizon_minutes": {
+            "type": "integer",
+            "description": "Forecast horizon in minutes",
+            "additionalProperties": true
+          },
+          "generated_at": {
+            "type": "string",
+            "description": "Timestamp of actual",
+            "additionalProperties": true
+          },
+          "farm_id": {
+            "type": "integer",
+            "description": "Farm ID",
+            "additionalProperties": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": {},
+              "description": "  Positionally defined values based on type of forecast\n  \n  * point\n    1. UTC timestamp of forecast entry (string)\n    1. forecast value in MW (number)\n  * probabilistic\n    1. UTC timestamp of forecast entry (string)\n    1. 1st quantile forecast value in MW (number)\n    1. 25th quantile forecast value in MW (number)\n    1. 50th quantile forecast value in MW (number)\n    1. 75th quantile forecast value in MW (number)\n    1. 99th quantile forecast value in MW (number)\n",
+              "additionalProperties": false
+            },
+            "description": "The forecast data",
+            "additionalProperties": false
+          },
+          "begins_at": {
+            "type": "string",
+            "description": "Timestamp of actual",
+            "additionalProperties": true
+          }
+        },
+        "example": {
+          "type": "probabilistic",
+          "provider_id": 1,
+          "provider_forecast_ref": "8123c45e-c442-11e7-a0dd-8019346dc012",
+          "id": 63,
+          "horizon_minutes": 10080,
+          "generated_at": "2017-11-08T11:06:08.151000Z",
+          "farm_id": 3,
+          "data": [
+            [
+              "2012-07-01T06:00:00Z",
+              0.002265,
+              0.030678,
+              0.053068,
+              0.078155,
+              0.119901
+            ],
+            [
+              "2012-07-01T07:00:00Z",
+              0.001503,
+              0.035193,
+              0.060025,
+              0.083806,
+              0.125948
+            ],
+            [
+              "2012-07-01T08:00:00Z",
+              0.001539,
+              0.025189,
+              0.047912,
+              0.067608,
+              0.113922
+            ]
+          ],
+          "begins_at": "2017-11-08T11:06:08.151000Z"
+        },
+        "description": "A forecast",
+        "additionalProperties": false
+      },
+      "ForecastIndexResponse": {
+        "title": "ForecastIndexResponse",
+        "type": "object",
+        "properties": {
+          "forecasts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Forecast"
+            },
+            "description": "The forecasts details",
+            "additionalProperties": true
+          }
+        },
+        "description": "Response schema for index of forecasts",
+        "additionalProperties": false
+      },
+      "ForecastShowResponse": {
+        "title": "ForecastShowResponse",
+        "type": "object",
+        "properties": {
+          "forecast": {
+            "$ref": "#/components/schemas/Forecast"
+          }
+        },
+        "description": "Response schema for single forecast",
+        "additionalProperties": false
+      },
+      "ForecastCreateRequest": {
+        "title": "ForecastCreateRequest",
+        "type": "object",
+        "required": [
+          "forecast"
+        ],
+        "properties": {
+          "forecast": {
+            "type": "object",
+            "title": "Forecast",
+            "required": [
+              "provider_forecast_ref",
+              "farm_id",
+              "begins_at",
+              "generated_at",
+              "horizon_minutes",
+              "type",
+              "data"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "description": "Type of forecast 'point' or 'probabilistic'",
+                "additionalProperties": true
+              },
+              "provider_forecast_ref": {
+                "type": "string",
+                "description": "Reference (e.g. an id) to the forecast in the provider's system",
+                "additionalProperties": true
+              },
+              "horizon_minutes": {
+                "type": "integer",
+                "description": "Forecast horizon in minutes",
+                "additionalProperties": true
+              },
+              "generated_at": {
+                "type": "string",
+                "description": "Timestamp of actual",
+                "additionalProperties": true
+              },
+              "farm_id": {
+                "type": "integer",
+                "description": "Farm ID",
+                "additionalProperties": true
+              },
+              "data": {
+                "type": "array",
+                "items": {
+                  "type": "array",
+                  "items": {},
+                  "description": "  Positionally defined values based on type of forecast\n  \n  * point\n    1. UTC timestamp of forecast entry (string)\n    1. forecast value in MW (number)\n  * probabilistic\n    1. UTC timestamp of forecast entry (string)\n    1. 1st quantile forecast value in MW (number)\n    1. 25th quantile forecast value in MW (number)\n    1. 50th quantile forecast value in MW (number)\n    1. 75th quantile forecast value in MW (number)\n    1. 99th quantile forecast value in MW (number)\n",
+                  "additionalProperties": false
+                },
+                "description": "The forecast data",
+                "additionalProperties": false
+              },
+              "begins_at": {
+                "type": "string",
+                "description": "Timestamp of actual",
+                "additionalProperties": true
+              }
+            },
+            "description": "A forecast",
+            "additionalProperties": false
+          }
+        },
+        "example": {
+          "forecast": {
+            "type": "probabilistic",
+            "provider_forecast_ref": "8123c45e-c442-11e7-a0dd-8019346dc012",
+            "horizon_minutes": 10080,
+            "generated_at": "2017-11-08T11:06:08.151000Z",
+            "farm_id": 3,
+            "data": [
+              [
+                "2012-07-01T06:00:00Z",
+                0.002265,
+                0.030678,
+                0.053068,
+                0.078155,
+                0.119901
+              ],
+              [
+                "2012-07-01T07:00:00Z",
+                0.001503,
+                0.035193,
+                0.060025,
+                0.083806,
+                0.125948
+              ],
+              [
+                "2012-07-01T08:00:00Z",
+                0.001539,
+                0.025189,
+                0.047912,
+                0.067608,
+                0.113922
+              ]
+            ],
+            "begins_at": "2017-11-08T11:06:08.151000Z"
+          }
+        },
+        "description": "Creates single forecast",
+        "additionalProperties": false
+      },
+      "ForecastType": {
+        "title": "Forecast Type",
+        "type": "object",
+        "required": [
+          "id",
+          "atom",
+          "label"
+        ],
+        "properties": {
+          "label": {
+            "type": "string",
+            "description": "Displayable label for type.",
+            "additionalProperties": true
+          },
+          "id": {
+            "type": "integer",
+            "description": "Forecast Type ID",
+            "additionalProperties": true
+          },
+          "atom": {
+            "type": "string",
+            "description": "Unique string name for type.",
+            "additionalProperties": true
+          }
+        },
+        "example": {
+          "label": "Probabilistic Forecast",
+          "id": 1,
+          "atom": "probabilistic"
+        },
+        "description": "A forecast type",
+        "additionalProperties": false
+      },
+      "ForecastTypeShowResponse": {
+        "title": "ForecastTypeShowResponse",
+        "type": "object",
+        "properties": {
+          "forecast_type": {
+            "$ref": "#/components/schemas/ForecastType"
+          }
+        },
+        "description": "Response schema for single forecast type",
+        "additionalProperties": false
+      },
+      "ForecastTypeIndexResponse": {
+        "title": "ForecastTypeIndexResponse",
+        "type": "object",
+        "properties": {
+          "forecast_types": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ForecastType"
+            },
+            "description": "The forecast types details",
+            "additionalProperties": true
+          }
+        },
+        "description": "Response schema for list of forecast types",
+        "additionalProperties": false
+      },
+      "ForecastProvider": {
+        "title": "Forecast Provider",
+        "type": "object",
+        "required": [
+          "id",
+          "atom",
+          "label"
+        ],
+        "properties": {
+          "label": {
+            "type": "string",
+            "description": "Displayable label for provider.",
+            "additionalProperties": true
+          },
+          "id": {
+            "type": "integer",
+            "description": "Forecast Providder ID",
+            "additionalProperties": true
+          },
+          "atom": {
+            "type": "string",
+            "description": "Unique string name for provider.",
+            "additionalProperties": true
+          }
+        },
+        "example": {
+          "label": "argusprima",
+          "id": 1,
+          "atom": "argusprima"
+        },
+        "description": "A forecast",
+        "additionalProperties": false
+      },
+      "ForecastProviderShowResponse": {
+        "title": "ForecastProviderShowResponse",
+        "type": "object",
+        "properties": {
+          "forecast_provider": {
+            "$ref": "#/components/schemas/ForecastProvider"
+          }
+        },
+        "description": "Response schema for single forecast",
+        "additionalProperties": false
+      },
+      "ForecastProviderIndexResponse": {
+        "title": "ForecastProviderIndexResponse",
+        "type": "object",
+        "properties": {
+          "forecast_providers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ForecastProvider"
+            },
+            "description": "The forecasts details",
+            "additionalProperties": true
+          }
+        },
+        "description": "Response schema for list of forecast providers",
+        "additionalProperties": false
+      },
+      "Farm": {
+        "title": "Farm",
+        "type": "object",
+        "required": [
+          "id",
+          "farm_provider_id",
+          "name",
+          "longitude",
+          "latitude",
+          "capacity_mw"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Farm name",
+            "additionalProperties": true
+          },
+          "longitude": {
+            "type": "number",
+            "format": "float",
+            "description": "Longitude of farm location",
+            "additionalProperties": true
+          },
+          "latitude": {
+            "type": "number",
+            "format": "float",
+            "description": "Latitude of farm location",
+            "additionalProperties": true
+          },
+          "id": {
+            "type": "integer",
+            "description": "Farm ID",
+            "additionalProperties": true
+          },
+          "farm_provider_id": {
+            "type": "integer",
+            "description": "Farm Provider ID",
+            "additionalProperties": true
+          },
+          "farm_provider_farm_ref": {
+            "type": "string",
+            "description": "Reference (e.g. an id) to the farm in the provider's system",
+            "additionalProperties": true
+          },
+          "capacity_mw": {
+            "type": "number",
+            "format": "float",
+            "description": "Farm power capacity in Megawatts (MW)",
+            "additionalProperties": true
+          }
+        },
+        "example": {
+          "provider_id": 1,
+          "provider_farm_ref": "84659",
+          "name": "WIND Toolkit Site 84659",
+          "longitude": -105.691376,
+          "latitude": 42.915577,
+          "id": 1,
+          "capacity_mw": 16
+        },
+        "description": "A wind farm",
+        "additionalProperties": false
+      },
+      "FarmShowResponse": {
+        "title": "FarmShowResponse",
+        "type": "object",
+        "properties": {
+          "farm": {
+            "$ref": "#/components/schemas/Farm"
+          }
+        },
+        "description": "Response schema for single farm",
+        "additionalProperties": false
+      },
+      "FarmIndexResponse": {
+        "title": "FarmIndexResponse",
+        "type": "object",
+        "properties": {
+          "farms": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Farm"
+            },
+            "description": "The farms details",
+            "additionalProperties": true
+          }
+        },
+        "description": "Response schema for list of farms",
+        "additionalProperties": false
+      },
+      "Actual": {
+        "title": "Actual",
+        "type": "object",
+        "required": [
+          "id",
+          "farm_id",
+          "actual_mw",
+          "timestamp_utc"
+        ],
+        "properties": {
+          "timestamp_utc": {
+            "type": "string",
+            "description": "Timestamp of actual",
+            "additionalProperties": true
+          },
+          "id": {
+            "type": "integer",
+            "description": "Actual ID",
+            "additionalProperties": true
+          },
+          "farm_id": {
+            "type": "integer",
+            "description": "Farm ID",
+            "additionalProperties": true
+          },
+          "actual_mw": {
+            "type": "number",
+            "format": "float",
+            "description": "Actual power observed",
+            "additionalProperties": true
+          }
+        },
+        "example": {
+          "timestamp_utc": "2017-11-08T11:06:08.151000Z",
+          "id": 63,
+          "farm_id": 3,
+          "actual_mw": 2.38
+        },
+        "description": "An actual",
+        "additionalProperties": false
+      },
+      "ActualShowResponse": {
+        "title": "ActualShowResponse",
+        "type": "object",
+        "properties": {
+          "actual": {
+            "$ref": "#/components/schemas/Actual"
+          }
+        },
+        "description": "Response schema for single actual",
+        "additionalProperties": false
+      },
+      "ActualIndexResponse": {
+        "title": "ActualIndexResponse",
+        "type": "object",
+        "properties": {
+          "actuals": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Actual"
+            },
+            "description": "Then actuals details",
+            "additionalProperties": true
+          }
+        },
+        "description": "Response schema for list ofn actuals",
+        "additionalProperties": false
+      },
+      "ActualCreateRequest": {
+        "title": "ActualCreateRequest",
+        "type": "object",
+        "required": [
+          "actual"
+        ],
+        "properties": {
+          "actual": {
+            "type": "object",
+            "title": "Actual",
+            "required": [
+              "actual_mw",
+              "timestamp_utc"
+            ],
+            "properties": {
+              "timestamp_utc": {
+                "type": "string",
+                "description": "Timestamp of actual",
+                "additionalProperties": true
+              },
+              "actual_mw": {
+                "type": "number",
+                "description": "Actual power observed",
+                "additionalProperties": true
+              }
+            },
+            "description": "An actual",
+            "additionalProperties": false
+          }
+        },
+        "example": {
+          "actual": {
+            "timestamp_utc": "2017-11-08T11:06:08.151000Z",
+            "actual_mw": 2.38
+          }
+        },
+        "description": "An actual",
+        "additionalProperties": false
+      },
+      "FarmProviderShowResponse": {
+        "title": "FarmProviderShowResponse",
+        "type": "object",
+        "properties": {
+          "farm_provider": {
+            "$ref": "#/components/schemas/FarmProvider"
+          }
+        },
+        "description": "Response schema for single farm",
+        "additionalProperties": false
+      },
+      "FarmProviderIndexResponse": {
+        "title": "FarmProviderIndexResponse",
+        "type": "object",
+        "properties": {
+          "farm_providers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FarmProvider"
+            },
+            "description": "The farms details",
+            "additionalProperties": true
+          }
+        },
+        "description": "Response schema for list of farm providers",
+        "additionalProperties": false
+      },
+      "FarmProvider": {
+        "title": "Farm Provider",
+        "type": "object",
+        "required": [
+          "id",
+          "atom",
+          "label"
+        ],
+        "properties": {
+          "label": {
+            "type": "string",
+            "description": "Displayable label for provider.",
+            "additionalProperties": true
+          },
+          "id": {
+            "type": "integer",
+            "description": "Farm Providder ID",
+            "additionalProperties": true
+          },
+          "atom": {
+            "type": "string",
+            "description": "Unique string name for provider.",
+            "additionalProperties": true
+          }
+        },
+        "example": {
+          "label": "NREL WIND Toolkit",
+          "id": 1,
+          "atom": "windtoolkit"
+        },
+        "description": "A wind farm",
+        "additionalProperties": false
+      }
+    }
+  }
+}
