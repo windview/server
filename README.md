@@ -75,7 +75,8 @@ Loaded 229 of 229 sites
 
 #### Generate forecasts
 
-** NOT WORKING YET **
+**WIP**
+
 ```bash
 $ rails gen_forecasts:texas[argusprima,./examples/argus_prima-wtk_texas_under_10mw/forecasts]
 Loading files from ./examples/argus_prima-wtk_texas_under_10mw/forecasts... 
