@@ -1,0 +1,15 @@
+{
+  "name": "windview-api-tck",
+  "version": "1.0.0",
+  "description": "Technology compatibility kit for the WindView API.",
+  "main": "index.js",
+  "dependencies": {
+    "newman": "^3.9.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "newman run windview-postman.json"
+  },
+  "author": "",
+  "license": "ISC"
+}

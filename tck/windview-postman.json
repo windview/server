@@ -1,0 +1,1692 @@
+{
+	"info": {
+		"_postman_id": "ae81d38e-f91f-4234-ba52-fe300c5bdf81",
+		"name": "client api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "list forecast types",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f45db019-01d7-4e04-99ee-4224241439d4",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"let schema = pm.variables.get(\"schema.response.list_forecast_types\");",
+							"",
+							"pm.test(\"Matches JSON Schema\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    var valid = tv4.validate(jsonData, schema, true, true);",
+							"    if (!valid) {",
+							"        console.log(JSON.stringify(tv4.error, null, 4));",
+							"    }",
+							"    pm.expect(valid).to.be.true;",
+							"});",
+							"",
+							"pm.test(\"Contains expected types.\", () => {",
+							"    const expected = [",
+							"        {",
+							"            \"label\": \"Probabilistic Forecast\",",
+							"            \"atom\": \"probabilistic\"",
+							"        },",
+							"        {",
+							"            \"label\": \"Point Forecast\",",
+							"            \"atom\": \"point\"",
+							"        }",
+							"    ];",
+							"    const received = pm.response.json().forecast_types;",
+							"",
+							"    util.containsExpected(received, expected);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"value": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/api/forecast_types",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"forecast_types"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "list forecast providers",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c58a7f4b-716f-4ce6-9af3-ab12ef35a6a1",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"let schema = pm.variables.get(\"schema.response.list_forecast_providers\");",
+							"",
+							"pm.test(\"Matches JSON Schema\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    var valid = tv4.validate(jsonData, schema, true, true);",
+							"    if (!valid) {",
+							"        console.log(JSON.stringify(tv4.error, null, 4));",
+							"    }",
+							"    pm.expect(valid).to.be.true;",
+							"});",
+							"",
+							"pm.test(\"Contains expected forecast providers.\", () => {",
+							"    const expected = [",
+							"        {",
+							"            \"label\": \"Provider A\",",
+							"            \"atom\": \"a_forecast_provider\"",
+							"        },",
+							"        {",
+							"            \"label\": \"Provider B\",",
+							"            \"atom\": \"b_forecast_provider\"",
+							"        },",
+							"        {",
+							"            \"label\": \"Provider C\",",
+							"            \"atom\": \"c_forecast_provider\"",
+							"        }",
+							"    ];",
+							"    const received = pm.response.json().forecast_providers;",
+							"",
+							"    util.containsExpected(received, expected);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"value": ""
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{host}}/api/forecast_providers",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"forecast_providers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "list farm providers",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "926c7b4d-0427-44f5-ad95-35c7869cf8dd",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"let schema = pm.variables.get(\"schema.response.list_farm_providers\");",
+							"",
+							"pm.test(\"Matches JSON Schema\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    var valid = tv4.validate(jsonData, schema, true, true);",
+							"    if (!valid) {",
+							"        console.log(JSON.stringify(tv4.error, null, 4));",
+							"    }",
+							"    pm.expect(valid).to.be.true;",
+							"});",
+							"",
+							"pm.test(\"Contains expected farm providers.\", () => {",
+							"    const expected = [",
+							"        {",
+							"            \"label\": \"Provider A\",",
+							"            \"atom\": \"a_farm_provider\"",
+							"        },",
+							"        {",
+							"            \"label\": \"Provider B\",",
+							"            \"atom\": \"b_farm_provider\"",
+							"        },",
+							"        {",
+							"            \"label\": \"Provider C\",",
+							"            \"atom\": \"c_farm_provider\"",
+							"        }",
+							"    ];",
+							"    const received = pm.response.json().farm_providers;",
+							"",
+							"    util.containsExpected(received, expected);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"value": ""
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{host}}/api/farm_providers",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"farm_providers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "list farms",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c0e52cce-b5d0-4d84-8a7c-026a35dc4c5f",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"let schema = pm.variables.get(\"schema.response.list_farms\");",
+							"",
+							"pm.test(\"Matches JSON Schema\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    var valid = tv4.validate(jsonData, schema, true, true);",
+							"    if (!valid) {",
+							"        console.log(JSON.stringify(tv4.error, null, 4));",
+							"    }",
+							"    pm.expect(valid).to.be.true;",
+							"});",
+							"",
+							"pm.test(\"Contains expected farms.\", () => {",
+							"    const expected = [",
+							"        {",
+							"            \"name\": \"A Farm 1\",",
+							"            \"capacity_mw\": 10,",
+							"            \"latitude\": 38.1,",
+							"            \"longitude\": -96.1,",
+							"            \"provider_id\": 11,",
+							"            \"provider_farm_ref\": \"a_farm_1_ref\"",
+							"        },",
+							"        {",
+							"            \"name\": \"A Farm 2\",",
+							"            \"capacity_mw\": 20,",
+							"            \"latitude\": 38.2,",
+							"            \"longitude\": -96.2,",
+							"            \"provider_id\": 11,",
+							"            \"provider_farm_ref\": \"a_farm_2_ref\"",
+							"        },",
+							"        {",
+							"            \"name\": \"A Farm 3\",",
+							"            \"capacity_mw\": 30,",
+							"            \"latitude\": 38.3,",
+							"            \"longitude\": -96.3,",
+							"            \"provider_id\": 11,",
+							"            \"provider_farm_ref\": \"a_farm_3_ref\"",
+							"        },",
+							"        {",
+							"            \"name\": \"B Farm 1\",",
+							"            \"capacity_mw\": 10,",
+							"            \"latitude\": 38.1,",
+							"            \"longitude\": -96.1,",
+							"            \"provider_id\": 12,",
+							"            \"provider_farm_ref\": \"b_farm_1_ref\"",
+							"        },",
+							"        {",
+							"            \"name\": \"B Farm 2\",",
+							"            \"capacity_mw\": 20,",
+							"            \"latitude\": 38.2,",
+							"            \"longitude\": -96.2,",
+							"            \"provider_id\": 11,",
+							"            \"provider_farm_ref\": \"b_farm_2_ref\"",
+							"        }",
+							"    ];",
+							"    const received = pm.response.json().farms;",
+							"",
+							"    util.containsExpected(received, expected);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"value": ""
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{host}}/api/farms",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"farms"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get forecast by id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "fc9a3158-794f-432c-a070-1476c812e00a",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"let schema = pm.variables.get(\"schema.response.list_forecasts\");",
+							"let expected;",
+							"",
+							"pm.test(\"Matches JSON Schema\", () => {",
+							"    var jsonData = pm.response.json();",
+							"    var valid = tv4.validate(jsonData, schema);",
+							"    if (!valid) {",
+							"        console.log(JSON.stringify(tv4.error, null, 4));",
+							"    }",
+							"    pm.expect(valid).to.be.true;",
+							"    ",
+							"    expected = jsonData.forecasts[1];",
+							"});",
+							"",
+							"",
+							"pm.sendRequest(`${pm.variables.get(\"host\")}/api/forecasts/${expected.id}`, (err, response) => {",
+							"    pm.test(\"Status code is 200\", function () {",
+							"        pm.expect(response).to.have.status(200);",
+							"    });",
+							"    ",
+							"    schema = pm.variables.get(\"schema.response.get_forecast\");",
+							"    ",
+							"    pm.test(\"Matches JSON Schema\", function () {",
+							"        var jsonData = response.json();",
+							"        var valid = tv4.validate(jsonData, schema, true, true);",
+							"        if (!valid) {",
+							"            console.log(JSON.stringify(tv4.error, null, 4));",
+							"        }",
+							"        pm.expect(valid).to.be.true;",
+							"    });",
+							"    ",
+							"    pm.test(\"Response eql expected\", function () {",
+							"        var jsonData = response.json();",
+							"        pm.expect(expected).to.be.eql(jsonData.forecast);",
+							"    });",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"value": ""
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{host}}/api/forecasts",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"forecasts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get forecast by invalid id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8b133e92-2cc7-45b8-92e9-c7421e56eac7",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"let schema = pm.variables.get(\"schema.response.error_general\");",
+							"",
+							"",
+							"pm.test(\"Matches JSON Schema\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    var valid = tv4.validate(jsonData, schema, true, true);",
+							"    if (!valid) {",
+							"        console.log(JSON.stringify(tv4.error, null, 4));",
+							"    }",
+							"    pm.expect(valid).to.be.true;",
+							"    ",
+							"    pm.expect(jsonData.errors.detail).to.be.equal(\"Forecast not found\");",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"value": ""
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{host}}/api/forecasts/0",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"forecasts",
+						"0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "list forecasts",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8582618f-e000-491d-ab8a-0cf86fb476c5",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"let schema = pm.variables.get(\"schema.response.list_forecasts\");",
+							"",
+							"pm.test(\"Matches JSON Schema\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    var valid = tv4.validate(jsonData, schema);",
+							"    if (!valid) {",
+							"        console.log(JSON.stringify(tv4.error, null, 4));",
+							"    }",
+							"    pm.expect(valid).to.be.true;",
+							"});",
+							"",
+							"pm.test(\"Contains expected forecasts.\", () => {",
+							"    const expected = [",
+							"        {",
+							"            \"farm_id\": 257,",
+							"            \"generated_at\": \"2021-04-14T07:30:00Z\",",
+							"            \"begins_at\": \"2021-04-14T08:30:00Z\",",
+							"            \"horizon_minutes\": 1440,",
+							"            \"provider_id\": 11,",
+							"            \"provider_forecast_ref\": \"a_a_forecast_6\",",
+							"            \"data\": [",
+							"                []",
+							"            ],",
+							"            \"type\": \"probabilistic\"",
+							"        },",
+							"        {",
+							"            \"farm_id\": 258,",
+							"            \"generated_at\": \"2021-04-14T07:00:00Z\",",
+							"            \"begins_at\": \"2021-04-14T08:00:00Z\",",
+							"            \"horizon_minutes\": 1440,",
+							"            \"provider_id\": 11,",
+							"            \"provider_forecast_ref\": \"a_a_forecast_9\",",
+							"            \"data\": [",
+							"                []",
+							"            ],",
+							"            \"type\": \"point\"",
+							"        },",
+							"        {",
+							"            \"farm_id\": 257,",
+							"            \"generated_at\": \"2021-04-14T07:00:00Z\",",
+							"            \"begins_at\": \"2021-04-14T08:00:00Z\",",
+							"            \"horizon_minutes\": 1440,",
+							"            \"provider_id\": 11,",
+							"            \"provider_forecast_ref\": \"a_a_forecast_3\",",
+							"            \"data\": [",
+							"                []",
+							"            ],",
+							"            \"type\": \"point\"",
+							"        },",
+							"        {",
+							"            \"farm_id\": 257,",
+							"            \"generated_at\": \"2021-04-14T06:30:00Z\",",
+							"            \"begins_at\": \"2021-04-14T07:30:00Z\",",
+							"            \"horizon_minutes\": 1440,",
+							"            \"provider_id\": 11,",
+							"            \"provider_forecast_ref\": \"a_a_forecast_5\",",
+							"            \"data\": [",
+							"                []",
+							"            ],",
+							"            \"type\": \"probabilistic\"",
+							"        },",
+							"        {",
+							"            \"farm_id\": 258,",
+							"            \"generated_at\": \"2021-04-14T06:00:00Z\",",
+							"            \"begins_at\": \"2021-04-14T07:00:00Z\",",
+							"            \"horizon_minutes\": 1440,",
+							"            \"provider_id\": 11,",
+							"            \"provider_forecast_ref\": \"a_a_forecast_8\",",
+							"            \"data\": [",
+							"                []",
+							"            ],",
+							"            \"type\": \"point\"",
+							"        },",
+							"        {",
+							"            \"farm_id\": 257,",
+							"            \"generated_at\": \"2021-04-14T06:00:00Z\",",
+							"            \"begins_at\": \"2021-04-14T07:00:00Z\",",
+							"            \"horizon_minutes\": 1440,",
+							"            \"provider_id\": 11,",
+							"            \"provider_forecast_ref\": \"a_a_forecast_2\",",
+							"            \"data\": [",
+							"                []",
+							"            ],",
+							"            \"type\": \"point\"",
+							"        },",
+							"        {",
+							"            \"farm_id\": 257,",
+							"            \"generated_at\": \"2021-04-14T05:30:00Z\",",
+							"            \"begins_at\": \"2021-04-14T06:30:00Z\",",
+							"            \"horizon_minutes\": 1440,",
+							"            \"provider_id\": 11,",
+							"            \"provider_forecast_ref\": \"a_a_forecast_4\",",
+							"            \"data\": [",
+							"                []",
+							"            ],",
+							"            \"type\": \"probabilistic\"",
+							"        },",
+							"        {",
+							"            \"farm_id\": 257,",
+							"            \"generated_at\": \"2021-04-14T05:00:00Z\",",
+							"            \"begins_at\": \"2021-04-14T06:00:00Z\",",
+							"            \"horizon_minutes\": 1440,",
+							"            \"provider_id\": 11,",
+							"            \"provider_forecast_ref\": \"a_a_forecast_1\",",
+							"            \"data\": [",
+							"                []",
+							"            ],",
+							"            \"type\": \"point\"",
+							"        },",
+							"        {",
+							"            \"farm_id\": 258,",
+							"            \"generated_at\": \"2021-04-14T05:00:00Z\",",
+							"            \"begins_at\": \"2021-04-14T06:00:00Z\",",
+							"            \"horizon_minutes\": 1440,",
+							"            \"provider_id\": 11,",
+							"            \"provider_forecast_ref\": \"a_a_forecast_7\",",
+							"            \"data\": [",
+							"                []",
+							"            ],",
+							"            \"type\": \"point\"",
+							"        }",
+							"    ];",
+							"    const received = pm.response.json().forecasts;",
+							"",
+							"    util.containsExpected(received, expected);",
+							"});"
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "6fd01d3d-3e92-465b-a9ec-5eac071ac6c1",
+						"type": "text/javascript",
+						"exec": [
+							"const list_forecasts_schema = {",
+							"    \"type\": \"object\",",
+							"    \"properties\": {",
+							"        \"requried\": [",
+							"            \"forecasts\"",
+							"        ],",
+							"        \"forecasts\": {",
+							"            \"type\": \"array\",",
+							"            \"items\": {",
+							"                \"type\": \"object\",",
+							"                \"required\": [",
+							"                    \"type\",",
+							"                    \"provider_id\",",
+							"                    \"provider_forecast_ref\",",
+							"                    \"id\",",
+							"                    \"horizon_minutes\",",
+							"                    \"generated_at\",",
+							"                    \"farm_id\",",
+							"                    \"data\",",
+							"                    \"begins_at\"",
+							"                ],",
+							"                \"properties\": {",
+							"                    \"type\": { \"type\": \"string\", \"enum\": [\"point\", \"probabilistic\" ] },",
+							"                    \"provider_id\": { \"type\": \"integer\" },",
+							"                    \"provider_forecast_ref\": { \"type\": \"string\" },",
+							"                    \"id\": { \"type\": \"integer\" },",
+							"                    \"horizon_minutes\": { \"type\": \"integer\" },",
+							"                    \"generated_at\": { \"type\": \"string\" },",
+							"                    \"farm_id\": { \"type\": \"integer\" },",
+							"                    \"data\": { \"type\": \"array\" },",
+							"                    \"begins_at\": { \"type\": \"string\" }",
+							"                }",
+							"            }",
+							"        }",
+							"    }",
+							"}"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{host}}/api/forecasts",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"forecasts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "list forecasts with pagination",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "94d80f73-78ec-4690-b749-de1d46d0b34f",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"let schema = pm.variables.get(\"schema.response.list_forecasts\");",
+							"",
+							"pm.test(\"Matches JSON Schema\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    var valid = tv4.validate(jsonData, schema);",
+							"    if (!valid) {",
+							"        console.log(JSON.stringify(tv4.error, null, 4));",
+							"    }",
+							"    pm.expect(valid).to.be.true;",
+							"});",
+							"",
+							"pm.test(\"Contains expected forecasts.\", () => {",
+							"    const expected = [",
+							"        {",
+							"            //\"farm_id\": 257,",
+							"            \"generated_at\": \"2021-04-14T05:30:00Z\",",
+							"            \"begins_at\": \"2021-04-14T06:30:00Z\",",
+							"            \"horizon_minutes\": 1440,",
+							"            \"provider_id\": 11,",
+							"            \"provider_forecast_ref\": \"a_a_forecast_4\",",
+							"            \"data\": [",
+							"                []",
+							"            ],",
+							"            \"type\": \"probabilistic\"",
+							"        },",
+							"        {",
+							"            //\"farm_id\": 257,",
+							"            \"generated_at\": \"2021-04-14T06:00:00Z\",",
+							"            \"begins_at\": \"2021-04-14T07:00:00Z\",",
+							"            \"horizon_minutes\": 1440,",
+							"            \"provider_id\": 11,",
+							"            \"provider_forecast_ref\": \"a_a_forecast_2\",",
+							"            \"data\": [",
+							"                []",
+							"            ],",
+							"            \"type\": \"point\"",
+							"        },",
+							"        {",
+							"            //\"farm_id\": 258,",
+							"            \"generated_at\": \"2021-04-14T06:00:00Z\",",
+							"            \"begins_at\": \"2021-04-14T07:00:00Z\",",
+							"            \"horizon_minutes\": 1440,",
+							"            \"provider_id\": 11,",
+							"            \"provider_forecast_ref\": \"a_a_forecast_8\",",
+							"            \"data\": [",
+							"                []",
+							"            ],",
+							"            \"type\": \"point\"",
+							"        },",
+							"        {",
+							"            //\"farm_id\": 257,",
+							"            \"generated_at\": \"2021-04-14T06:30:00Z\",",
+							"            \"begins_at\": \"2021-04-14T07:30:00Z\",",
+							"            \"horizon_minutes\": 1440,",
+							"            \"provider_id\": 11,",
+							"            \"provider_forecast_ref\": \"a_a_forecast_5\",",
+							"            \"data\": [",
+							"                []",
+							"            ],",
+							"            \"type\": \"probabilistic\"",
+							"        },",
+							"        {",
+							"            //\"farm_id\": 257,",
+							"            \"generated_at\": \"2021-04-14T07:00:00Z\",",
+							"            \"begins_at\": \"2021-04-14T08:00:00Z\",",
+							"            \"horizon_minutes\": 1440,",
+							"            \"provider_id\": 11,",
+							"            \"provider_forecast_ref\": \"a_a_forecast_3\",",
+							"            \"data\": [",
+							"                []",
+							"            ],",
+							"            \"type\": \"point\"",
+							"        }",
+							"    ];",
+							"    const received = pm.response.json().forecasts;",
+							"",
+							"    util.containsExpected(received, expected);",
+							"});"
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "6fd01d3d-3e92-465b-a9ec-5eac071ac6c1",
+						"type": "text/javascript",
+						"exec": [
+							"const list_forecasts_schema = {",
+							"    \"type\": \"object\",",
+							"    \"properties\": {",
+							"        \"requried\": [",
+							"            \"forecasts\"",
+							"        ],",
+							"        \"forecasts\": {",
+							"            \"type\": \"array\",",
+							"            \"items\": {",
+							"                \"type\": \"object\",",
+							"                \"required\": [",
+							"                    \"type\",",
+							"                    \"provider_id\",",
+							"                    \"provider_forecast_ref\",",
+							"                    \"id\",",
+							"                    \"horizon_minutes\",",
+							"                    \"generated_at\",",
+							"                    \"farm_id\",",
+							"                    \"data\",",
+							"                    \"begins_at\"",
+							"                ],",
+							"                \"properties\": {",
+							"                    \"type\": { \"type\": \"string\", \"enum\": [\"point\", \"probabilistic\" ] },",
+							"                    \"provider_id\": { \"type\": \"integer\" },",
+							"                    \"provider_forecast_ref\": { \"type\": \"string\" },",
+							"                    \"id\": { \"type\": \"integer\" },",
+							"                    \"horizon_minutes\": { \"type\": \"integer\" },",
+							"                    \"generated_at\": { \"type\": \"string\" },",
+							"                    \"farm_id\": { \"type\": \"integer\" },",
+							"                    \"data\": { \"type\": \"array\" },",
+							"                    \"begins_at\": { \"type\": \"string\" }",
+							"                }",
+							"            }",
+							"        }",
+							"    }",
+							"}"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{host}}/api/forecasts?order_by=generated_at&order_dir=asc&offset=2&limit=5",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"forecasts"
+					],
+					"query": [
+						{
+							"key": "order_by",
+							"value": "generated_at"
+						},
+						{
+							"key": "order_dir",
+							"value": "asc"
+						},
+						{
+							"key": "offset",
+							"value": "2"
+						},
+						{
+							"key": "limit",
+							"value": "5"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "list forecasts with invalid parameter",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0e667268-0701-4de0-bc1c-03c2cb25ee90",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 422\", function () {",
+							"    pm.response.to.have.status(422);",
+							"});",
+							"",
+							"let schema = pm.variables.get(\"schema.response.invalid_params\");",
+							"",
+							"pm.test(\"Matches JSON Schema\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    var valid = tv4.validate(jsonData, schema);",
+							"    if (!valid) {",
+							"        console.log(JSON.stringify(tv4.error, null, 4));",
+							"    }",
+							"    pm.expect(valid).to.be.true;",
+							"});",
+							"",
+							"pm.test(\"Error has all bad parameters\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.errors.invalid_params).to.have.members([\"badparam\", \"foo\"]);",
+							"});"
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "43a18ab5-3515-4c3c-a50b-02259798ff29",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{host}}/api/forecasts?order_dir=asc&offset=2&limit=5&badparam=yy&foo=bar",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"forecasts"
+					],
+					"query": [
+						{
+							"key": "order_dir",
+							"value": "asc"
+						},
+						{
+							"key": "offset",
+							"value": "2"
+						},
+						{
+							"key": "limit",
+							"value": "5"
+						},
+						{
+							"key": "badparam",
+							"value": "yy"
+						},
+						{
+							"key": "foo",
+							"value": "bar"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "list forecasts by forecast type",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "09b53849-ee95-422f-b9be-04c4b375ec76",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"let schema = pm.variables.get(\"schema.response.list_forecasts\");",
+							"",
+							"pm.test(\"Matches JSON Schema\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    var valid = tv4.validate(jsonData, schema);",
+							"    if (!valid) {",
+							"        console.log(JSON.stringify(tv4.error, null, 4));",
+							"    }",
+							"    pm.expect(valid).to.be.true;",
+							"});",
+							"",
+							"pm.test(\"All point forecasts.\", function() {",
+							"    var jsonData = pm.response.json();",
+							"    var forecasts = jsonData.forecasts;",
+							"    pm.expect(forecasts.length).to.be.equal(6);",
+							"    forecasts.forEach((f) => {",
+							"        pm.expect(f.type).to.be.equal(\"point\");",
+							"    });",
+							"});",
+							"",
+							"pm.test(\"Contains expected forecasts.\", () => {",
+							"    const expected = [",
+							"        {",
+							"            \"generated_at\": \"2021-04-14T07:00:00Z\",",
+							"            \"begins_at\": \"2021-04-14T08:00:00Z\",",
+							"            \"horizon_minutes\": 1440,",
+							"            \"provider_id\": 11,",
+							"            \"provider_forecast_ref\": \"a_a_forecast_9\",",
+							"            \"data\": [",
+							"                []",
+							"            ],",
+							"            \"type\": \"point\"",
+							"        },",
+							"        {",
+							"            \"generated_at\": \"2021-04-14T07:00:00Z\",",
+							"            \"begins_at\": \"2021-04-14T08:00:00Z\",",
+							"            \"horizon_minutes\": 1440,",
+							"            \"provider_id\": 11,",
+							"            \"provider_forecast_ref\": \"a_a_forecast_3\",",
+							"            \"data\": [",
+							"                []",
+							"            ],",
+							"            \"type\": \"point\"",
+							"        },",
+							"        {",
+							"            \"generated_at\": \"2021-04-14T06:00:00Z\",",
+							"            \"begins_at\": \"2021-04-14T07:00:00Z\",",
+							"            \"horizon_minutes\": 1440,",
+							"            \"provider_id\": 11,",
+							"            \"provider_forecast_ref\": \"a_a_forecast_8\",",
+							"            \"data\": [",
+							"                []",
+							"            ],",
+							"            \"type\": \"point\"",
+							"        },",
+							"        {",
+							"            \"generated_at\": \"2021-04-14T06:00:00Z\",",
+							"            \"begins_at\": \"2021-04-14T07:00:00Z\",",
+							"            \"horizon_minutes\": 1440,",
+							"            \"provider_id\": 11,",
+							"            \"provider_forecast_ref\": \"a_a_forecast_2\",",
+							"            \"data\": [",
+							"                []",
+							"            ],",
+							"            \"type\": \"point\"",
+							"        },",
+							"        {",
+							"            \"generated_at\": \"2021-04-14T05:00:00Z\",",
+							"            \"begins_at\": \"2021-04-14T06:00:00Z\",",
+							"            \"horizon_minutes\": 1440,",
+							"            \"provider_id\": 11,",
+							"            \"provider_forecast_ref\": \"a_a_forecast_7\",",
+							"            \"data\": [",
+							"                []",
+							"            ],",
+							"            \"type\": \"point\"",
+							"        },",
+							"        {",
+							"            \"generated_at\": \"2021-04-14T05:00:00Z\",",
+							"            \"begins_at\": \"2021-04-14T06:00:00Z\",",
+							"            \"horizon_minutes\": 1440,",
+							"            \"provider_id\": 11,",
+							"            \"provider_forecast_ref\": \"a_a_forecast_1\",",
+							"            \"data\": [",
+							"                []",
+							"            ],",
+							"            \"type\": \"point\"",
+							"        }",
+							"    ];",
+							"    const received = pm.response.json().forecasts;",
+							"",
+							"    util.containsExpected(received, expected);",
+							"});"
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "a6f16077-3cd9-4eb1-836b-cf4f2ab71c71",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{host}}/api/forecasts?type=point",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"forecasts"
+					],
+					"query": [
+						{
+							"key": "type",
+							"value": "point"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "list forecasts with invalid forecast type value",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "729df31d-9c8c-4909-8f0f-3c2a5d3fe2d9",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"let schema = pm.variables.get(\"schema.response.error_general\");",
+							"",
+							"pm.test(\"Matches JSON Schema\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    var valid = tv4.validate(jsonData, schema);",
+							"    if (!valid) {",
+							"        console.log(JSON.stringify(tv4.error, null, 4));",
+							"    }",
+							"    pm.expect(valid).to.be.true;",
+							"});",
+							"",
+							"pm.test(\"Correct error message.\", function() {",
+							"    var jsonData = pm.response.json();",
+							"    var forecasts = jsonData.forecasts;",
+							"    pm.expect(jsonData.errors.detail).to.be.equal(\"Forecast type not found\");",
+							"});"
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "a6f16077-3cd9-4eb1-836b-cf4f2ab71c71",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{host}}/api/forecasts?type=other",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"forecasts"
+					],
+					"query": [
+						{
+							"key": "type",
+							"value": "other"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "list forecasts by farm id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0b860de7-6fea-4a46-9ac5-0e0cc2e98ee6",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"let farm_name = \"A Farm 1\";",
+							"let farm;",
+							"",
+							"let schema = pm.variables.get(\"schema.response.list_forecasts\");",
+							"",
+							"pm.test(\"Matches JSON Schema\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    var valid = tv4.validate(jsonData, schema);",
+							"    if (!valid) {",
+							"        console.log(JSON.stringify(tv4.error, null, 4));",
+							"    }",
+							"    pm.expect(valid).to.be.true;",
+							"    ",
+							"    farm = jsonData.farms.find((e) => {",
+							"        return e.name == farm_name;",
+							"    });",
+							"});",
+							"",
+							"pm.test(\"Only returns forecasts for given farm.\", () => {",
+							"    pm.sendRequest(`${pm.variables.get(\"host\")}/api/forecasts?farm_id=${farm.id}`, function (err, response) {",
+							"        const jsonData = response.json();",
+							"        pm.expect(jsonData.forecasts).length.to.be.above(0);",
+							"        jsonData.forecasts.forEach((f) => {",
+							"            pm.expect(f.farm_id).to.be.equal(farm.id);",
+							"        });",
+							"    });",
+							"});",
+							"",
+							"// TODO AJA: implement",
+							"pm.test(\"Contains expected forecasts.\", () => {",
+							"    const expected = [",
+							"",
+							"    ];",
+							"    const received = pm.response.json().forecasts;",
+							"",
+							"//    util.containsExpected(received, expected);",
+							"});"
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "9ef2f745-7312-4f08-bd52-62c3c2b80b63",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{host}}/api/farms",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"farms"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "list forecasts with invalid farm id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "93b3c90c-a732-45e4-b957-d62b46882714",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"let schema = pm.variables.get(\"schema.response.error_general\");",
+							"",
+							"pm.test(\"Matches JSON Schema\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    var valid = tv4.validate(jsonData, schema);",
+							"    if (!valid) {",
+							"        console.log(JSON.stringify(tv4.error, null, 4));",
+							"    }",
+							"    pm.expect(valid).to.be.true;",
+							"});",
+							"",
+							"pm.test(\"Correct error message.\", function() {",
+							"    var jsonData = pm.response.json();",
+							"    var forecasts = jsonData.forecasts;",
+							"    pm.expect(jsonData.errors.detail).to.be.equal(\"Farm not found\");",
+							"});"
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "9ef2f745-7312-4f08-bd52-62c3c2b80b63",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{host}}/api/forecasts?farm_id=0",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"forecasts"
+					],
+					"query": [
+						{
+							"key": "farm_id",
+							"value": "0"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create forecast",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n \"forecast\":{\r\n  \"type\": \"point\",\r\n  \"farm_id\": 257,\r\n  \"provider_id\": 11,\r\n  \"provider_forecast_ref\": \"{{$guid}}\",\r\n\r\n  \"generated_at\": \"2017-11-29 04:54:48.849000+00:00\",\r\n  \"begins_at\": \"2012-04-30 06:00:00+00:00\",\r\n  \"horizon_minutes\": 99360,\r\n\r\n\r\n  \"data\": [\r\n\r\n   [\"2012-04-30 06:00:00+00:00\",3.33820459176],\r\n   [\"2012-04-30 07:00:00+00:00\",6.5967726605],\r\n   [\"2012-04-30 08:00:00+00:00\",3.62173156575],\r\n   [\"2012-04-30 09:00:00+00:00\",1.65031263351],\r\n   [\"2012-04-30 10:00:00+00:00\",1.03500327647],\r\n   [\"2012-04-30 11:00:00+00:00\",2.15073017229]\r\n  ]\r\n }\r\n}\r\n"
+				},
+				"url": {
+					"raw": "{{host}}/api/forecasts",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"forecasts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create forecast with invalid farm id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c3fa2d72-dc65-44fa-a50a-f69c29644b98",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 422\", function () {",
+							"    pm.response.to.have.status(422);",
+							"});",
+							"",
+							"let schema = {",
+							"    \"type\": \"object\",",
+							"    \"required\": [",
+							"        \"errors\"",
+							"    ],",
+							"    \"properties\": {",
+							"        \"errors\": {",
+							"            \"type\": \"object\",",
+							"            \"required\": [",
+							"                \"farm\",",
+							"                \"forecast_provider\"",
+							"            ],",
+							"            \"properties\": {",
+							"                \"farm\": { ",
+							"                    \"type\": \"array\",",
+							"                    \"items\": {",
+							"                        \"type\": \"string\"",
+							"                    }",
+							"                },",
+							"                \"forecast_provider\": { ",
+							"                    \"type\": \"array\",",
+							"                    \"items\": {",
+							"                        \"type\": \"string\"",
+							"                    }",
+							"                }",
+							"            }",
+							"        }",
+							"    }",
+							"};",
+							"",
+							"",
+							"pm.test(\"Matches JSON Schema\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    var valid = tv4.validate(jsonData, schema, true, true);",
+							"    if (!valid) {",
+							"        console.log(JSON.stringify(tv4.error, null, 4));",
+							"    }",
+							"    pm.expect(valid).to.be.true;",
+							"});",
+							"",
+							"pm.test(\"Error message is correct\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    var valid = tv4.validate(jsonData, schema, true, true);",
+							"    if (!valid) {",
+							"        console.log(JSON.stringify(tv4.error, null, 4));",
+							"    }",
+							"    pm.expect(jsonData.errors.farm).to.include(\"must exist\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n \"forecast\":{\r\n  \"type\": \"point\",\r\n  \"farm_id\": 0,\r\n  \"provider_id\": 11,\r\n  \"provider_forecast_ref\": \"{{$guid}}\",\r\n\r\n  \"generated_at\": \"2017-11-29 04:54:48.849000+00:00\",\r\n  \"begins_at\": \"2012-04-30 06:00:00+00:00\",\r\n  \"horizon_minutes\": 99360,\r\n\r\n\r\n  \"data\": [\r\n\r\n   [\"2012-04-30 06:00:00+00:00\",3.33820459176],\r\n   [\"2012-04-30 07:00:00+00:00\",6.5967726605],\r\n   [\"2012-04-30 08:00:00+00:00\",3.62173156575],\r\n   [\"2012-04-30 09:00:00+00:00\",1.65031263351],\r\n   [\"2012-04-30 10:00:00+00:00\",1.03500327647],\r\n   [\"2012-04-30 11:00:00+00:00\",2.15073017229]\r\n  ]\r\n }\r\n}\r\n"
+				},
+				"url": {
+					"raw": "{{host}}/api/forecasts",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"forecasts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create forecast with invalid parameter",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6588248f-c75c-4efb-9b17-0852e275fab2",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 422\", function () {",
+							"    pm.response.to.have.status(422);",
+							"});",
+							"",
+							"let schema = pm.variables.get(\"schema.response.invalid_params\");",
+							"",
+							"pm.test(\"Matches JSON Schema\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    var valid = tv4.validate(jsonData, schema, true, true);",
+							"    if (!valid) {",
+							"        console.log(JSON.stringify(tv4.error, null, 4));",
+							"    }",
+							"    pm.expect(valid).to.be.true;",
+							"});",
+							"",
+							"pm.test(\"Error has bad parameters\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.errors.invalid_params).to.have.members([\"badparam\"]);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n \"forecast\":{\r\n  \"type\": \"point\",\r\n  \"farm_id\": 0,\r\n  \"badparam\": \"foo\",\r\n  \"provider_id\": 11,\r\n  \"provider_forecast_ref\": \"{{$guid}}\",\r\n\r\n  \"generated_at\": \"2017-11-29 04:54:48.849000+00:00\",\r\n  \"begins_at\": \"2012-04-30 06:00:00+00:00\",\r\n  \"horizon_minutes\": 99360,\r\n\r\n\r\n  \"data\": [\r\n\r\n   [\"2012-04-30 06:00:00+00:00\",3.33820459176],\r\n   [\"2012-04-30 07:00:00+00:00\",6.5967726605],\r\n   [\"2012-04-30 08:00:00+00:00\",3.62173156575],\r\n   [\"2012-04-30 09:00:00+00:00\",1.65031263351],\r\n   [\"2012-04-30 10:00:00+00:00\",1.03500327647],\r\n   [\"2012-04-30 11:00:00+00:00\",2.15073017229]\r\n  ]\r\n }\r\n}\r\n"
+				},
+				"url": {
+					"raw": "{{host}}/api/forecasts",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"forecasts"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "11d2458f-b0e4-48f2-8fe5-bf897d212008",
+				"type": "text/javascript",
+				"exec": [
+					"util = {",
+					"    containsExpected: (received, expected) => {",
+					"        pm.expect(received).to.have.length(expected.length);",
+					"        expected.forEach((exp) => {",
+					"            let x = received.find((rec) => {",
+					"                return (rec.atom === exp.atom && rec.label === exp.label);",
+					"            });",
+					"            pm.expect(x, exp.atom).not.to.be.undefined;",
+					"        });",
+					"    }",
+					"};",
+					"",
+					"pm.variables.set(\"schema.model.lookup\", {",
+					"    \"type\": \"object\",",
+					"    \"required\": [",
+					"        \"label\",",
+					"        \"id\",",
+					"        \"atom\"",
+					"    ],",
+					"    \"properties\": {",
+					"        \"label\": {",
+					"            \"type\": \"string\"",
+					"        },",
+					"        \"id\": {",
+					"            \"type\": \"integer\"",
+					"        },",
+					"        \"atom\": {",
+					"            \"type\": \"string\"",
+					"        }",
+					"    }",
+					"});",
+					"",
+					"",
+					"pm.variables.set(\"schema.model.forecast\", {",
+					"    \"type\": \"object\",",
+					"    \"required\": [",
+					"        \"begins_at\",",
+					"        \"data\",",
+					"        \"farm_id\",",
+					"        \"generated_at\",",
+					"        \"horizon_minutes\",",
+					"        \"id\",",
+					"        \"provider_forecast_ref\",",
+					"        \"provider_id\",",
+					"        \"type\"",
+					"    ],",
+					"    \"properties\": {",
+					"        \"begins_at\": {",
+					"            \"type\": \"string\"",
+					"        },",
+					"        \"data\": {",
+					"            \"type\": \"array\"",
+					"        },",
+					"        \"farm_id\": {",
+					"            \"type\": \"number\"",
+					"        },",
+					"        \"generated_at\": {",
+					"            \"type\": \"string\"",
+					"        },",
+					"        \"horizon_minutes\": {",
+					"            \"type\": \"number\"",
+					"        },",
+					"        \"id\": {",
+					"            \"type\": \"number\"",
+					"        },",
+					"        \"provider_forecast_ref\": {",
+					"            \"type\": \"string\"",
+					"        },",
+					"        \"provider_id\": {",
+					"            \"type\": \"number\"",
+					"        },",
+					"        \"type\": {",
+					"            \"type\": \"string\",",
+					"            \"enum\": [\"point\", \"probabilistic\"]",
+					"        }",
+					"    }",
+					"});",
+					"",
+					"pm.variables.set(\"schema.model.farm\", {",
+					"    \"type\": \"object\",",
+					"    \"required\": [",
+					"        \"provider_id\",",
+					"        \"provider_farm_ref\",",
+					"        \"name\",",
+					"        \"longitude\",",
+					"        \"latitude\",",
+					"        \"id\",",
+					"        \"capacity_mw\"",
+					"    ],",
+					"    \"properties\": {",
+					"        \"provider_id\": {",
+					"            \"type\": \"integer\"",
+					"        },",
+					"        \"provider_farm_ref\": {",
+					"            \"type\": \"string\"",
+					"        },",
+					"        \"name\": {",
+					"            \"type\": \"string\"",
+					"        },",
+					"        \"longitude\": {",
+					"            \"type\": \"number\"",
+					"        },",
+					"        \"latitude\": {",
+					"            \"type\": \"number\"",
+					"        },",
+					"        \"id\": {",
+					"            \"type\": \"integer\"",
+					"        },",
+					"        \"capacity_mw\": {",
+					"            \"type\": \"integer\"",
+					"        }",
+					"    }",
+					"});",
+					"",
+					"",
+					"pm.variables.set(\"schema.response.list_forecast_types\", {",
+					"    \"type\": \"object\",",
+					"    \"required\": [",
+					"        \"forecast_types\"",
+					"    ],",
+					"    \"properties\": {",
+					"        \"forecast_types\": {",
+					"            \"type\": \"array\",",
+					"            \"items\": pm.variables.get(\"schema.model.lookup\")",
+					"        }",
+					"    }",
+					"});",
+					"",
+					"pm.variables.set(\"schema.response.list_forecast_providers\", {",
+					"    \"type\": \"object\",",
+					"    \"required\": [",
+					"        \"forecast_providers\"",
+					"    ],",
+					"    \"properties\": {",
+					"        \"forecast_providers\": {",
+					"            \"type\": \"array\",",
+					"            \"items\": pm.variables.get(\"schema.model.lookup\")",
+					"        }",
+					"    }",
+					"});",
+					"",
+					"pm.variables.set(\"schema.response.list_farm_providers\", {",
+					"    \"type\": \"object\",",
+					"    \"required\": [",
+					"        \"farm_providers\"",
+					"    ],",
+					"    \"properties\": {",
+					"        \"farm_providers\": {",
+					"            \"type\": \"array\",",
+					"            \"items\": pm.variables.get(\"schema.model.lookup\")",
+					"        }",
+					"    }",
+					"});",
+					"",
+					"pm.variables.set(\"schema.response.list_farms\", {",
+					"    \"type\": \"object\",",
+					"    \"required\": [",
+					"        \"farms\"",
+					"    ],",
+					"    \"properties\": {",
+					"        \"farms\": {",
+					"            \"type\": \"array\",",
+					"            \"items\": pm.variables.get(\"schema.model.farm\")",
+					"        }",
+					"    }",
+					"});",
+					"",
+					"pm.variables.set(\"schema.response.get_forecast\", {",
+					"    \"type\": \"object\",",
+					"    \"required\": [",
+					"        \"forecast\"",
+					"    ],",
+					"    \"properties\": {",
+					"        \"forecast\": pm.variables.get(\"schema.model.forecast\")",
+					"    }",
+					"});",
+					"",
+					"pm.variables.set(\"schema.response.list_forecasts\", {",
+					"    \"type\": \"object\",",
+					"    \"properties\": {",
+					"        \"requried\": [",
+					"            \"forecasts\"",
+					"        ],",
+					"        \"forecasts\": {",
+					"            \"type\": \"array\",",
+					"            \"items\": pm.variables.get(\"schema.model.forecast\")",
+					"        }",
+					"    }",
+					"});",
+					"",
+					"pm.variables.set(\"schema.response.error_general\", {",
+					"    \"type\": \"object\",",
+					"    \"requrired\": [",
+					"        \"detail\"",
+					"    ],",
+					"    \"properties\": {",
+					"        \"errors\": {",
+					"            \"type\": \"object\",",
+					"            \"requrired\": [",
+					"                \"detail\"",
+					"            ],",
+					"            \"properties\": {",
+					"                \"detail\": { \"type\": \"string\" }",
+					"            }",
+					"        }",
+					"    }",
+					"});",
+					"",
+					"pm.variables.set(\"schema.response.invalid_params\", {",
+					"    \"type\": \"object\",",
+					"    \"required\": [",
+					"        \"errors\"",
+					"    ],",
+					"    \"properties\": {",
+					"        \"errors\": {",
+					"            \"type\": \"object\",",
+					"            \"required\": [",
+					"                \"invalid_params\"",
+					"            ],",
+					"            \"properties\": {",
+					"                \"invalid_params\": { ",
+					"                    \"type\": \"array\",",
+					"                    \"items\": {",
+					"                        \"type\": \"string\"",
+					"                    }",
+					"                }",
+					"            }",
+					"        }",
+					"    }",
+					"});"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "977312f4-3d78-42ef-bdcf-a6a1a06c7c59",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "ec8d7793-404c-42fb-afdd-d787bf0de455",
+			"key": "host",
+			"value": "http://localhost:3000",
+			"type": "string",
+			"description": ""
+		}
+	]
+}
