@@ -3,6 +3,8 @@ class ForecastsController < ApplicationController
 
   # GET /forecasts
   def index
+    params.permit('farm_id', 'provider_id', 'type', 'horizon_minutes', 'limit', 'offset', 'order_by', 'order_dir')
+
     @forecasts = Forecast
     if params['farm_id']
       farm = Farm.find(params['farm_id'])
@@ -71,7 +73,7 @@ class ForecastsController < ApplicationController
     if @forecast.save
       render json: @forecast, status: :created, location: @forecast
     else
-      render json: @forecast.errors, status: :unprocessable_entity
+      render json: { errors: @forecast.errors }, status: :unprocessable_entity
     end
   end
 
