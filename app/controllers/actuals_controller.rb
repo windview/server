@@ -10,11 +10,11 @@ class ActualsController < ApplicationController
     end
 
     if params['starting_at']
-      @actuals = @actuals.where('timestamp >= ?', params[:starting_at])
+      @actuals = @actuals.where('timestamp_utc >= ?', params[:starting_at])
     end
 
     if params['ending_at']
-      @actuals = @actuals.where('timestamp <= ?', params[:ending_at])
+      @actuals = @actuals.where('timestamp_utc <= ?', params[:ending_at])
     end
 
     limit = params['limit'] || 1000
@@ -23,8 +23,8 @@ class ActualsController < ApplicationController
     offset = params['offset'] || 0
     @actuals = @actuals.offset(offset)
 
-    order_by = 'timestamp'
-    if ['timestamp', 'actual_mw'].include?(params['order_by'])
+    order_by = 'timestamp_utc'
+    if ['timestamp_utc', 'actual_mw'].include?(params['order_by'])
       order_by = params['order_by']
     end
 
@@ -75,6 +75,6 @@ class ActualsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def actual_params
-      params.require(:actual).permit(:farm_id, :timestamp, :actual_mw)
+        params.require(:actual).permit(:farm_id, :timestamp_utc, :actual_mw)
     end
 end

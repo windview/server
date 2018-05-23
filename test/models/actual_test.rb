@@ -8,11 +8,11 @@ class ActualTest < ActiveSupport::TestCase
     assert actual.errors[:farm].include?('can\'t be blank')
   end
   
-  test "timestamp is required" do
+  test "timestamp_utc is required" do
     actual = actuals(:a)
-    actual.timestamp = nil
+    actual.timestamp_utc = nil
     assert actual.save == false
-    assert actual.errors[:timestamp].include?('can\'t be blank')
+    assert actual.errors[:timestamp_utc].include?('can\'t be blank')
   end
 
   test "actual_mw is required" do

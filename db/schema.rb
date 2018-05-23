@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(version: 20180227173242) do
 
   create_table "actuals", force: :cascade do |t|
     t.bigint "farm_id", null: false
-    t.datetime "timestamp", null: false
+    t.datetime "timestamp_utc", null: false
     t.float "actual_mw", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

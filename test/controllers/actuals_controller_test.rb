@@ -274,7 +274,7 @@ class ActualsControllerTest < ActionDispatch::IntegrationTest
     {
       "id" => a.id,
       "farm_id" => a.farm_id,
-      "timestamp" => a.timestamp.iso8601,
+      "timestamp_utc" => a.timestamp_utc.iso8601,
       "actual_mw" => a.actual_mw
     }
   end
@@ -282,7 +282,7 @@ class ActualsControllerTest < ActionDispatch::IntegrationTest
   def other_actual_api_attrs()
     {
       "farm_id" => @actual_b.farm_id,
-      "timestamp" => @actual_b.timestamp.iso8601,
+      "timestamp_utc" => @actual_b.timestamp_utc.iso8601,
       "actual_mw" => 9.3
     }
   end
