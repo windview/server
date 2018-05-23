@@ -6,7 +6,7 @@ class ForecastsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get index" do
-    get forecasts_url, as: :json
+    get forecasts_url
     assert_response :success
 
     returned = response.parsed_body
@@ -27,7 +27,7 @@ class ForecastsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get index by specified farm_id" do
-    get forecasts_url(farm_id: farms(:b)), as: :json
+    get forecasts_url(farm_id: farms(:b))
     assert_response :success
 
     returned = response.parsed_body
@@ -43,7 +43,7 @@ class ForecastsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get index by specified provider_id" do
-    get forecasts_url(provider_id: forecast_providers(:b).id), as: :json
+    get forecasts_url(provider_id: forecast_providers(:b).id)
     assert_response :success
 
     returned = response.parsed_body
@@ -62,7 +62,7 @@ class ForecastsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get index by specified type" do
-    get forecasts_url(type: 'probabilistic'), as: :json
+    get forecasts_url(type: 'probabilistic')
     assert_response :success
 
     returned = response.parsed_body
@@ -77,7 +77,7 @@ class ForecastsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get index by specified horizon minutes" do
-    get forecasts_url(horizon_minutes: 1440), as: :json
+    get forecasts_url(horizon_minutes: 1440)
     assert_response :success
 
     returned = response.parsed_body
@@ -95,7 +95,7 @@ class ForecastsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get index by specified offset, limit, order by, and order dir" do
-    get forecasts_url(offset: 1, limit: 2, order_by: 'generated_at', order_dir: 'asc'), as: :json
+    get forecasts_url(offset: 1, limit: 2, order_by: 'generated_at', order_dir: 'asc')
     assert_response :success
 
     returned = response.parsed_body
