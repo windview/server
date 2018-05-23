@@ -142,7 +142,9 @@ class ForecastsControllerTest < ActionDispatch::IntegrationTest
 
     returned = response.parsed_body
     expected = {
-      'errors' => { 'detail' => 'Resource not found' }
+      'errors' => {
+        'detail' => 'Farm not found'
+      }
     }
 
     diff = HashDiff.diff expected, returned
@@ -168,7 +170,7 @@ class ForecastsControllerTest < ActionDispatch::IntegrationTest
 
     returned = response.parsed_body
     expected = {
-      'errors' => { 'detail' => 'Resource not found' }
+      'errors' => { 'detail' => 'Forecast provider not found' }
     }
 
     diff = HashDiff.diff expected, returned
@@ -195,7 +197,9 @@ class ForecastsControllerTest < ActionDispatch::IntegrationTest
 
     returned = response.parsed_body
     expected = {
-      'errors' => { 'detail' => 'Resource not found' }
+      'errors' => {
+        'detail' => 'Forecast type not found'
+      }
     }
 
     diff = HashDiff.diff expected, returned
@@ -233,7 +237,9 @@ class ForecastsControllerTest < ActionDispatch::IntegrationTest
 
     returned = response.parsed_body
     expected = {
-      'farm' => ['must exist', 'can\'t be blank']
+      'errors' => {
+        'farm' => ['must exist', 'can\'t be blank']
+      }
     }
 
     diff = HashDiff.diff expected, returned
@@ -251,7 +257,9 @@ class ForecastsControllerTest < ActionDispatch::IntegrationTest
 
     returned = response.parsed_body
     expected = {
-      'farm' => ['must exist', 'can\'t be blank']
+      'errors' => {
+        'farm' => ['must exist', 'can\'t be blank']
+      }
     }
 
     diff = HashDiff.diff expected, returned
@@ -269,7 +277,9 @@ class ForecastsControllerTest < ActionDispatch::IntegrationTest
 
     returned = response.parsed_body
     expected = {
-      'forecast_type' => ['must exist', 'can\'t be blank']
+      'errors' => {
+        'forecast_type' => ['must exist', 'can\'t be blank']
+      }
     }
 
     diff = HashDiff.diff expected, returned
@@ -287,7 +297,9 @@ class ForecastsControllerTest < ActionDispatch::IntegrationTest
 
     returned = response.parsed_body
     expected = {
-      'forecast_type' => ['must exist', 'can\'t be blank']
+      'errors' => {
+        'forecast_type' => ['must exist', 'can\'t be blank']
+      }
     }
 
     diff = HashDiff.diff expected, returned
@@ -311,7 +323,9 @@ class ForecastsControllerTest < ActionDispatch::IntegrationTest
 
     returned = response.parsed_body
     expected = {
-      'forecast_provider_forecast_ref' => ['has already been taken']
+      'errors' => {
+        'forecast_provider_forecast_ref' => ['has already been taken']
+      }
     }
 
     diff = HashDiff.diff expected, returned
@@ -402,7 +416,9 @@ class ForecastsControllerTest < ActionDispatch::IntegrationTest
 
     returned = response.parsed_body
     expected = {
-      'begins_at' => ['can\'t be blank']
+      'errors' => {
+        'begins_at' => ['can\'t be blank']
+      }
     }
 
     diff = HashDiff.diff expected, returned
@@ -420,7 +436,9 @@ class ForecastsControllerTest < ActionDispatch::IntegrationTest
 
     returned = response.parsed_body
     expected = {
-      'generated_at' => ['can\'t be blank']
+      'errors' => {
+        'generated_at' => ['can\'t be blank']
+      }
     }
 
     diff = HashDiff.diff expected, returned
@@ -438,7 +456,9 @@ class ForecastsControllerTest < ActionDispatch::IntegrationTest
 
     returned = response.parsed_body
     expected = {
-      'horizon_minutes' => ['can\'t be blank', 'is not a number']
+      'errors' => {
+        'horizon_minutes' => ['can\'t be blank', 'is not a number']
+      }
     }
 
     diff = HashDiff.diff expected, returned
@@ -456,7 +476,9 @@ class ForecastsControllerTest < ActionDispatch::IntegrationTest
 
     returned = response.parsed_body
     expected = {
-      'horizon_minutes' => ['is not a number']
+      'errors' => {
+        'horizon_minutes' => ['is not a number']
+      }
     }
 
     diff = HashDiff.diff expected, returned
@@ -474,7 +496,9 @@ class ForecastsControllerTest < ActionDispatch::IntegrationTest
 
     returned = response.parsed_body
     expected = {
-      'horizon_minutes' => ['must be greater than 0']
+      'errors' => {
+        'horizon_minutes' => ['must be greater than 0']
+      }
     }
 
     diff = HashDiff.diff expected, returned
@@ -492,7 +516,9 @@ class ForecastsControllerTest < ActionDispatch::IntegrationTest
 
     returned = response.parsed_body
     expected = {
-      'horizon_minutes' => ['must be an integer']
+      'errors' => {
+        'horizon_minutes' => ['must be an integer']
+      }
     }
 
     diff = HashDiff.diff expected, returned
@@ -510,7 +536,9 @@ class ForecastsControllerTest < ActionDispatch::IntegrationTest
 
     returned = response.parsed_body
     expected = {
-      'data' => ['can\'t be blank']
+      'errors' => {
+        'data' => ['can\'t be blank']
+      }
     }
 
     diff = HashDiff.diff expected, returned
@@ -528,7 +556,9 @@ class ForecastsControllerTest < ActionDispatch::IntegrationTest
 
     returned = response.parsed_body
     expected = {
-      'data' => ['must be a JSON array of arrays']
+      'errors' => {
+        'data' => ['must be a JSON array of arrays']
+      }
     }
 
     diff = HashDiff.diff expected, returned
@@ -546,7 +576,9 @@ class ForecastsControllerTest < ActionDispatch::IntegrationTest
 
     returned = response.parsed_body
     expected = {
-      'data' => ['must be a JSON array of arrays']
+      'errors' => {
+        'data' => ['must be a JSON array of arrays']
+      }
     }
 
     diff = HashDiff.diff expected, returned
@@ -564,7 +596,9 @@ class ForecastsControllerTest < ActionDispatch::IntegrationTest
 
     returned = response.parsed_body
     expected = {
-      'data' => ['must be a JSON array of arrays']
+      'errors' => {
+        'data' => ['must be a JSON array of arrays']
+      }
     }
 
     diff = HashDiff.diff expected, returned
@@ -582,7 +616,9 @@ class ForecastsControllerTest < ActionDispatch::IntegrationTest
 
     returned = response.parsed_body
     expected = {
-      'data' => ['must be a JSON array of arrays']
+      'errors' => {
+        'data' => ['must be a JSON array of arrays']
+      }
     }
 
     diff = HashDiff.diff expected, returned
