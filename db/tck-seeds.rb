@@ -228,3 +228,45 @@ Forecast.create!({
   begins_at: begins_at,
   data: [[]]
 })
+
+# Actuals a_farm_1
+# -------------------------------------------------------------------------
+timestamp = parse_iso8601("2021-04-14T07:00:00.000000Z")
+
+Actual.create!({
+  farm_id: a_farm_1.id,
+  timestamp_utc: timestamp,
+  actual_mw: 2.1
+})
+
+Actual.create!({
+  farm_id: a_farm_1.id,
+  timestamp_utc: timestamp + 60,
+  actual_mw: 2.2
+})
+
+Actual.create!({
+  farm_id: a_farm_1.id,
+  timestamp_utc: timestamp + 60,
+  actual_mw: 2.2
+})
+
+Actual.create!({
+  farm_id: a_farm_1.id,
+  timestamp_utc: timestamp + 60,
+  actual_mw: 2.8
+})
+
+# Actuals b_farm_2
+# -------------------------------------------------------------------------
+Actual.create!({
+  farm_id: b_farm_2.id,
+  timestamp_utc: timestamp,
+  actual_mw: 4.1
+})
+
+Actual.create!({
+  farm_id: b_farm_2.id,
+  timestamp_utc: timestamp + 60,
+  actual_mw: 4.2
+})
