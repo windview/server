@@ -111,6 +111,7 @@ class ForecastsController < ApplicationController
           end
         }
         .tap {|p|
+          # lookup the type model
           if p.keys.include?('type')
             type_name = p.delete('type')
             forecast_type = ForecastType.where(name: type_name).first()
