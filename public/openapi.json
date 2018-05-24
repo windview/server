@@ -105,6 +105,41 @@
             }
           }
         ]
+      },
+      "post": {
+        "summary": "Create a new forecast",
+        "description": "Create a forecast",
+        "operationId": "ForecastsController.create",
+        "tags": [
+          "Forecasts"
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "The forecast attributes",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ForecastCreateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Forecast sucessfully created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForecastShowResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Forecast delete failed"
+          }
+        },
+        "parameters": [ ]
       }
     },
     "/api/forecasts/{id}": {
@@ -125,6 +160,30 @@
                 }
               }
             }
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Forecast ID",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Delete a forecast",
+        "description": "Delete a forecast",
+        "operationId": "ForecastsController.delete",
+        "tags": [
+          "Forecasts"
+        ],
+        "responses": {
+          "204": {
+            "description": "Forecast successfully deleted"
           }
         },
         "parameters": [
@@ -186,88 +245,6 @@
             "required": false,
             "schema": {
               "type": "string"
-            }
-          }
-        ]
-      }
-    },
-    "/api/forecast_providers/{forecast_provider_id}/forecasts/{id}": {
-      "delete": {
-        "summary": "Delete a forecast",
-        "description": "Delete a forecast",
-        "operationId": "ForecastsController.delete",
-        "tags": [
-          "Forecasts"
-        ],
-        "responses": {
-          "204": {
-            "description": "Forecast successfully deleted"
-          }
-        },
-        "parameters": [
-          {
-            "in": "path",
-            "name": "forecast_provider_id",
-            "description": "Forecast Provider ID",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "in": "path",
-            "name": "id",
-            "description": "Forecast ID",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          }
-        ]
-      }
-    },
-    "/api/forecast_providers/{forecast_provider_id}/forecasts": {
-      "post": {
-        "summary": "Create a new forecast",
-        "description": "Create a forecast",
-        "operationId": "ForecastsController.create",
-        "tags": [
-          "Forecasts"
-        ],
-        "requestBody": {
-          "required": true,
-          "description": "The forecast attributes",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ForecastCreateRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Forecast sucessfully created",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ForecastShowResponse"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Forecast delete failed"
-          }
-        },
-        "parameters": [
-          {
-            "in": "path",
-            "name": "forecast_provider_id",
-            "description": "Forecast Provider ID",
-            "required": true,
-            "schema": {
-              "type": "integer"
             }
           }
         ]
@@ -554,77 +531,7 @@
             }
           }
         ]
-      }
-    },
-    "/api/actuals/{id}": {
-      "get": {
-        "summary": "Show an actual",
-        "operationId": "ActualsController.show",
-        "description": "Show an actual power output observation for a given farm.",
-        "tags": [
-          "Actuals"
-        ],
-        "responses": {
-          "200": {
-            "description": "Actual",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ActualShowResponse"
-                }
-              }
-            }
-          }
-        },
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "description": "Actual ID",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          }
-        ]
-      }
-    },
-    "/api/farms/{farm_id}/actuals/{id}": {
-      "delete": {
-        "summary": "Delete an actual",
-        "operationId": "ActualsController.delete",
-        "description": "Delete a actual power output observation for a given farm",
-        "tags": [
-          "Actuals"
-        ],
-        "responses": {
-          "204": {
-            "description": "Actual successfully deleted"
-          }
-        },
-        "parameters": [
-          {
-            "in": "path",
-            "name": "farm_id",
-            "description": "Farm ID",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "in": "path",
-            "name": "id",
-            "description": "Actual ID",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          }
-        ]
-      }
-    },
-    "/api/farms/{farm_id}/actuals": {
+      },
       "post": {
         "summary": "Create an actual",
         "operationId": "ActualsController.create",
@@ -663,6 +570,63 @@
             "in": "path",
             "name": "farm_id",
             "description": "Farm ID",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ]
+      }
+    },
+    "/api/actuals/{id}": {
+      "get": {
+        "summary": "Show an actual",
+        "operationId": "ActualsController.show",
+        "description": "Show an actual power output observation for a given farm.",
+        "tags": [
+          "Actuals"
+        ],
+        "responses": {
+          "200": {
+            "description": "Actual",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActualShowResponse"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Actual ID",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Delete an actual",
+        "operationId": "ActualsController.delete",
+        "description": "Delete a actual power output observation for a given farm",
+        "tags": [
+          "Actuals"
+        ],
+        "responses": {
+          "204": {
+            "description": "Actual successfully deleted"
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Actual ID",
             "required": true,
             "schema": {
               "type": "integer"
