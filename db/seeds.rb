@@ -23,3 +23,11 @@ _probabilistic_forecast_type = ForecastType.create!({
     name: "probabilistic",
     label: "Probabilistic Forecast",
 })
+_openei_farm_provider = FarmProvider.create!({
+  name: 'openei',
+  label: 'OpenEI'
+})
+_m3_forecast_provider = ForecastProvider.create!({
+  name: 'm3',
+  label: 'M3'
+})
