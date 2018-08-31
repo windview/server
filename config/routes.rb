@@ -2,7 +2,9 @@ Rails.application.routes.draw do
   get '/apidocs' => redirect('/swagger/dist/index.html?url=/openapi.json')
   scope "api" do
 
-    resources :farm_providers
+    resources :farm_providers do
+      resources :forecasts, only: [:create]
+    end
     resources :farms
 
     resources :forecast_providers

@@ -99,6 +99,12 @@ class ForecastsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def forecast_params
+      farm_provider_id = params.delete('farm_provider_id')
+      if farm_provider_id
+        farm_provider = FarmProvider.find(farm_provider_id)
+      end
+
+
       # NOTE AJA: have to permit! until rails supports permitting array of arrays
       params.require(:forecast)
         .permit!
@@ -116,6 +122,14 @@ class ForecastsController < ApplicationController
             type_name = p.delete('type')
             forecast_type = ForecastType.where(name: type_name).first()
             p['forecast_type_id'] = (forecast_type ? forecast_type.id : nil)
+          end
+
+          # support route posting to FarmProvider with farm_provider_farm_ref
+          if farm_provider && p.keys.include?('farm_provider_farm_ref')
+            provider_farm = farm_provider.farms.where(farm_provider_farm_ref: p.delete('farm_provider_farm_ref')).first()
+            if (provider_farm)
+              p['farm_id'] = provider_farm.id
+            end
           end
         }
     end

@@ -690,6 +690,43 @@
           }
         ]
       }
+    },
+    "/api/farm_providers/{id}/forecasts": {
+      "post": {
+        "summary": "Create a new forecast based on the FarmProviders farm reference",
+        "description": "Create a forecast for the farm_provider with the given id, and the farm as specified in the JSON document with farm_provider_farm_ref. Basically, allows you to post a forecast with out having to know that farm's internal WindView assigned ID",
+        "operationId": "ForecastsController.create2",
+        "tags": [
+          "Forecasts"
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "The forecast attributes",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ForecastCreateForFarmProviderRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Forecast sucessfully created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForecastShowResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Forecast created failed"
+          }
+        },
+        "parameters": [ ]
+      }
     }
   },
   "components": {
@@ -900,6 +937,111 @@
             "horizon_minutes": 10080,
             "generated_at": "2017-11-08T11:06:08.151000Z",
             "farm_id": 3,
+            "data": [
+              [
+                "2012-07-01T06:00:00Z",
+                0.002265,
+                0.030678,
+                0.053068,
+                0.078155,
+                0.119901
+              ],
+              [
+                "2012-07-01T07:00:00Z",
+                0.001503,
+                0.035193,
+                0.060025,
+                0.083806,
+                0.125948
+              ],
+              [
+                "2012-07-01T08:00:00Z",
+                0.001539,
+                0.025189,
+                0.047912,
+                0.067608,
+                0.113922
+              ]
+            ],
+            "begins_at": "2017-11-08T11:06:08.151000Z"
+          }
+        },
+        "description": "Creates single forecast",
+        "additionalProperties": false
+      },
+      "ForecastCreateForFarmProviderRequest": {
+        "title": "ForecastCreateForFarmProviderRequest",
+        "type": "object",
+        "required": [
+          "forecast"
+        ],
+        "properties": {
+          "forecast": {
+            "type": "object",
+            "title": "Forecast",
+            "required": [
+              "provider_forecast_ref",
+              "farm_provider_farm_ref",
+              "begins_at",
+              "generated_at",
+              "horizon_minutes",
+              "type",
+              "data"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "description": "Type of forecast 'point' or 'probabilistic'",
+                "additionalProperties": true
+              },
+              "provider_forecast_ref": {
+                "type": "string",
+                "description": "Reference (e.g. an id) to the forecast in the provider's system",
+                "additionalProperties": true
+              },
+              "horizon_minutes": {
+                "type": "integer",
+                "description": "Forecast horizon in minutes",
+                "additionalProperties": true
+              },
+              "generated_at": {
+                "type": "string",
+                "description": "Timestamp of actual",
+                "additionalProperties": true
+              },
+              "farm_provider_farm_ref": {
+                "type": "string",
+                "description": "Farm Provider Farm Ref - the providers unique identifier for this farm",
+                "additionalProperties": true
+              },
+              "data": {
+                "type": "array",
+                "items": {
+                  "type": "array",
+                  "items": {},
+                  "description": "  Positionally defined values based on type of forecast\n  \n  * point\n    1. UTC timestamp of forecast entry (string)\n    1. forecast value in MW (number)\n  * probabilistic\n    1. UTC timestamp of forecast entry (string)\n    1. 1st quantile forecast value in MW (number)\n    1. 25th quantile forecast value in MW (number)\n    1. 50th quantile forecast value in MW (number)\n    1. 75th quantile forecast value in MW (number)\n    1. 99th quantile forecast value in MW (number)\n",
+                  "additionalProperties": false
+                },
+                "description": "The forecast data",
+                "additionalProperties": false
+              },
+              "begins_at": {
+                "type": "string",
+                "description": "Timestamp of actual",
+                "additionalProperties": true
+              }
+            },
+            "description": "A forecast",
+            "additionalProperties": false
+          }
+        },
+        "example": {
+          "forecast": {
+            "type": "probabilistic",
+            "provider_forecast_ref": "8123c45e-c442-11e7-a0dd-8019346dc012",
+            "horizon_minutes": 10080,
+            "generated_at": "2017-11-08T11:06:08.151000Z",
+            "farm_provider_farm_ref": "wtk-3892",
             "data": [
               [
                 "2012-07-01T06:00:00Z",

@@ -3,7 +3,7 @@
 a:
   name: Farm A
   farm_provider: a
-  farm_provider_farm_ref:
+  farm_provider_farm_ref: provider_a_farm_a
   latitude: 1.2
   longitude: 1.3
   capacity_mw: 1.4

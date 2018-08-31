@@ -3,6 +3,8 @@ require 'test_helper'
 class ForecastsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @forecast_a, @forecast_b = forecasts(:a, :b)
+    @farm_a = farms(:a)
+    @farm_provider_a = farm_providers(:a)
   end
 
   test "should get index" do
@@ -623,6 +625,30 @@ class ForecastsControllerTest < ActionDispatch::IntegrationTest
 
     diff = HashDiff.diff expected, returned
     assert diff == [ ], msg: diff
+  end
+
+  test "should create forecast using farm_providers route" do
+    forecast_attrs = other_forecast_api_attrs()
+    forecast_attrs.delete('farm_id')
+    forecast_attrs.store('farm_provider_farm_ref', @farm_a.farm_provider_farm_ref)
+
+    assert_difference('Forecast.count') do
+      post farm_provider_forecasts_url(@farm_provider_a), params: {
+        forecast: forecast_attrs
+      }, as: :json
+    end
+
+    assert_response 201
+
+    returned = response.parsed_body
+    expected = {
+      'forecast' => other_forecast_api_attrs()
+    }
+
+    diff = HashDiff.diff expected, returned
+    assert diff == [
+      ['+', 'forecast.id', returned['forecast']['id']]
+    ], msg: diff
   end
 
   def forecast_api_attrs(f)
