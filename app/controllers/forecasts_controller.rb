@@ -70,9 +70,11 @@ class ForecastsController < ApplicationController
   def create
     @forecast = Forecast.new(forecast_params)
 
+
     if @forecast.save
       render json: @forecast, status: :created, location: @forecast
     else
+      Rails.logger.warn("Unable to create forecast: #{@forecast.errors.full_messages}")
       render json: { errors: @forecast.errors }, status: :unprocessable_entity
     end
   end

@@ -36,9 +36,10 @@ namespace :load do
 
 
   desc "Loads forecast with given provider from JSON file in directory."
-  task :forecasts, [:provider_name, :directory] => :environment do |task, args|
-    provider = ForecastProvider.where(name: args.provider_name)
-      .first_or_create(name: args.provider_name, label: "provider_name")
+  task :forecasts, [:farm_provider_name, :forecast_provider_name, :directory] => :environment do |task, args|
+    farm_provider = FarmProvider.where(name: args.farm_provider_name).first
+    forecast_provider = ForecastProvider.where(name: args.forecast_provider_name)
+      .first_or_create(name: args.forecast_provider_name, label: "provider_name")
 
     directory = args.directory
     puts("Loading files from #{directory}...")
@@ -68,7 +69,13 @@ namespace :load do
             farm = Farm.where(farm_provider_farm_ref: nrel_wtk_site_id.to_s).first()
             p['farm_id'] = farm.id
           end
-          p['forecast_provider'] = provider
+          if farm_provider && p.keys.include?('farm_provider_farm_ref')
+            provider_farm = farm_provider.farms.where(farm_provider_farm_ref: p.delete('farm_provider_farm_ref')).first()
+            if (provider_farm)
+              p['farm_id'] = provider_farm.id
+            end
+          end
+          p['forecast_provider'] = forecast_provider
         }
 
       forecast = Forecast.new attrs
@@ -84,7 +91,7 @@ namespace :load do
   end
 
   desc "Loads Texas sample data, modified for our demo purposes."
-  task :texas, [:provider_name, :directory] => :environment do |task, args|
+  task :texas, [:farm_provider_name, :forecast_provider_name, :directory] => :environment do |task, args|
     # to get to forecasts to appear for 2/22/2018
     shift_days = 5 * 365 + 83
     shift_seconds = shift_days * 24 * 60 * 60
@@ -92,7 +99,8 @@ namespace :load do
     provider_name = 'argusprima'
     directory = './examples/argus_prima-wtk_texas_under_10mw/forecasts'
 
-    provider = ForecastProvider.where(name: provider_name)
+    farm_provider = FarmProvider.where(name: args.farm_provider_name).first
+    forecast_provider = ForecastProvider.where(name: provider_name)
       .first_or_create(name: provider_name, label: "provider_name")
 
     # the week of data we are interested in
@@ -121,12 +129,13 @@ namespace :load do
             forecast_type = ForecastType.where(name: type_name).first()
             p['forecast_type_id'] = forecast_type.id
           end
-          if p.keys.include?('nrel_wtk_site_id')
-            nrel_wtk_site_id = p.delete('nrel_wtk_site_id')
-            farm = Farm.where(farm_provider_farm_ref: nrel_wtk_site_id.to_s).first()
-            p['farm_id'] = farm.id
+          if p.keys.include?('farm_provider_farm_ref')
+            provider_farm = farm_provider.farms.where(farm_provider_farm_ref: p.delete('farm_provider_farm_ref')).first()
+            if (provider_farm)
+              p['farm_id'] = provider_farm.id
+            end
           end
-          p['forecast_provider'] = provider
+          p['forecast_provider'] = forecast_provider
         }
 
       week_data = filter_data_by_datetime_range(attrs['data'], week_begins_at, week_ends_at)
@@ -185,10 +194,41 @@ namespace :load do
   end
 
   def shift_data_to_begin_on_feb22(data, shift_seconds)
-    #puts "XAJA: data #{data}"
     data.map { |row|
       row[0] = (Time.parse(row[0]) + shift_seconds).iso8601
       row
     }
   end
+
+  desc "Transform texas"
+  task :transform_texas => :environment do |task, args|
+    directory = './examples/argus_prima-wtk_texas_under_10mw/forecasts'
+
+    puts("Processing texas files from #{directory}...")
+
+    files = Dir.glob("#{directory}/*.json")
+    files.each do |f|
+      json = JSON.parse(File.read(f))
+
+      new_json = json['forecast']
+        .tap {|p|
+          if p.keys.include?('nrel_wtk_site_id')
+            p['farm_provider_farm_ref'] = p.delete('nrel_wtk_site_id').to_s
+          end
+          if p.keys.include?('farm_id')
+            p.delete('farm_id')
+          end
+
+          p['provider_id'] = 2
+        }
+
+      to_file = f.sub('/forecasts/', '/forecasts_xform/')
+      File.open("#{to_file}", 'w') do |o|
+        o.write((JSON.pretty_generate({ forecast: new_json })))
+      end
+    end
+
+    puts("Transformed #{files.count} files.")
+  end
+
 end
