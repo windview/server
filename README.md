@@ -78,10 +78,9 @@ Loaded 229 of 229 sites
 **WIP**
 
 ```bash
-$ rails gen_forecasts:texas[argusprima,./examples/argus_prima-wtk_texas_under_10mw/forecasts]
-Loading files from ./examples/argus_prima-wtk_texas_under_10mw/forecasts... 
-Loaded 457 week-ahead forecasts and 3199 day-ahead forecasts from 457 files.
-XAJA|Loaded 1832 forecasts for 229 forecast files.
+$ rake load:texas[windtoolkit,argusprima,examples/argus_prima-wtk_texas_under_10mw/forecasts/]
+Loading texas files from ./examples/argus_prima-wtk_texas_under_10mw/forecasts...
+Loaded 3664 forecasts from 458 files.
 ```
 
 ### ARGUS-PRIMA demo data for WIND Toolkit Sites
