@@ -31,14 +31,9 @@ $ rails s
       * to list the seeded forcasts http://localhost:3000/api/forecasts
   * Swagger API Doc: http://localhost:3000/apidocs
 
-## Checking Quality
+## Deployment
 
-### Test Coverage
-
-**TODO**
-
-
-## Included Examples
+  Full notes on deploying a Rails web application are beyond the scope of this document. In our test environment we are using Foreman to create a `systemd` installation. For more details and documentation please visit [the Rails homepage](https://rubyonrails.org/).
 
 ### ARGUS-PRIMA forecasts for 12 WIND Toolkit Sites
 
@@ -91,3 +86,11 @@ Loaded 3664 forecasts from 458 files.
 2. Click the down arrow icon next to the "Wind Toolkit" layer
 3. Click on the GeoJSON button
 4. Copy the downloaded file, nrel-wind_3tier_site_metadata.json, to the data directory
+
+## License
+
+[View License](LICENSE)
+
+## Links
+
+[Demo Site](https://windview-beta.nrel.gov)
